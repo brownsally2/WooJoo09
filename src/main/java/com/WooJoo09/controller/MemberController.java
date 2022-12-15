@@ -92,12 +92,13 @@ public class MemberController {
     public ResponseEntity<Boolean> memberFindId(@RequestBody Map<String, String> findIdData) {
         String realName = findIdData.get("findIdName");
         String email = findIdData.get("findIdEmail");
-        boolean result = memberService.findId(realName, email);
-        if (result) {
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(true, HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.ok(memberService.findId(realName, email));
+//        boolean result = memberService.findId(realName, email);
+//        if (result) {
+//            return new ResponseEntity<>(true, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(false, HttpStatus.OK);
+//        }
     }
 
     //이메일로 회원정보 받아오기
@@ -106,6 +107,14 @@ public class MemberController {
         String email = findIdDataEmail.get("findIdEmail");
         List<MemberDTO> list = memberService.getMemberList(email);
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    //비밀번호 찾기
+    @PostMapping("/findpwd")
+    public ResponseEntity<Boolean> memberFindPwd(@RequestBody Map<String, String> findPwdData) {
+        String realName = findPwdData.get("findPwdName");
+        String email = findPwdData.get("findPwdEmail");
+        return ResponseEntity.ok(memberService.findPwd(realName, email));
     }
 
     //휴대폰번호 인증
