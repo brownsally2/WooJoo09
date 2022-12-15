@@ -38,7 +38,7 @@ dependencies {
 	implementation 'org.json:json:20220924'
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.0'
 }
 
 tasks.named('test') {
