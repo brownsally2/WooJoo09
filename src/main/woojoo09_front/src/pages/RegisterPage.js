@@ -25,8 +25,8 @@ const RegisterPage = () =>{
   const [isRegNickCk, setIsRegNickCk] = useState(false);
   const [isRegName, setIsRegName] = useState(false);
   const [isRegEmail, setIsRegEmail] = useState(false);
-  const [isRegPhone, setIsRegPhone] = useState(false); //false로 바꾸기
-  const [isRegPhoneVer, setIsRegPhoneVer] = useState(false); //false로 바꾸기
+  const [isRegPhone, setIsRegPhone] = useState(true); //false로 바꾸기
+  const [isRegPhoneVer, setIsRegPhoneVer] = useState(true); //false로 바꾸기
   const [isRegOnPhone, setIsRegOnPhone] = useState(false);
   const [isRegVerifyCode, setIsRegVerifyCode] = useState(false);
   
@@ -290,15 +290,6 @@ const RegisterPage = () =>{
   const onChangeRegPhone = (e) => {
     const inputPhone = e.target.value;
     setRegPhone(e.target.value);
-    // setIsRegPhone(false);
-    // if(!phoneRegEx.test(inputPhone)) {
-    //   setRegPhoneOkMsg("전화번호 형식을 확인해 주세요.");
-    //   setIsRegPhone(false);  
-    // } else {
-    //   setRegPhoneMsg("사용 가능한 전화번호 입니다.");
-    //   setIsRegPhone(true);
-    // }
-
     if(phoneRegEx.test(inputPhone)) {
       setRegPhoneOkMsg("사용 가능한 전화번호 입니다.");
       setIsRegPhone(true); 
@@ -396,6 +387,8 @@ const RegisterPage = () =>{
     setRegPhoneVer(regphoneVer);
     if(CodeRegEx.test(regphoneVer)) {
       setIsRegVerifyCode(true);
+    } else {
+      setIsRegVerifyCode(false);
     }
   }
 

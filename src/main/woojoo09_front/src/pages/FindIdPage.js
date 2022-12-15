@@ -87,8 +87,7 @@ const FindIdPage = () =>{
               <FindIdComplete 
               findIdEmail={findIdEmail}
               />
-            }
-              
+            }              
             {!changeFindIdComplete &&
             <>
             <div className="findIdSmallBox">           

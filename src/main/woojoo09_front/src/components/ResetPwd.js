@@ -1,10 +1,11 @@
 import "../style/resetpwd.scss";
 import { useState } from "react";
 import ResetPwdComplete from "./ResetPwdComplete";
+import api from "../api/api";
 
 
-const ResetPwd = () => {
-  const [changeResetPwdCom, setChangeResetCom] = useState(false);
+const ResetPwd = ({findPwdId}) => {
+  const [changeResetPwdCom, setChangeResetPwdCom] = useState(false);
 
   const [resetPwd, setResetPwd] = useState('');
   const [resetPwdCk, setResetPwdCk] = useState('');
@@ -58,8 +59,23 @@ const ResetPwd = () => {
     }
   }
 
-  const onClickResetPwd = () => {
-    
+  //변경하기 버튼 
+  const onClickResetPwdBtn = () => {
+    const resetPwdFetchData = async () => {
+      try {
+        const response = await api.resetPwdData(findPwdId, resetPwd);
+        console.log(response.data);
+        if(response.data === true) {
+          setChangeResetPwdCom(true);
+        } else {
+          setIsResetPwdCk(false);
+          setResetPwdCkMsg("비밀번호 변경이 실패하였습니다.");
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    resetPwdFetchData();
   }
 
 
@@ -91,7 +107,8 @@ const ResetPwd = () => {
         </div>          
         <div className="resetPwdComplete">
           <button className={(isResetPwd && isResetPwdCk) ? 'resetPwdCompleteBut' : 'resetPwdNotCompleteBut'}
-          onClick={(isResetPwd && isResetPwdCk) ? ()=>{setChangeResetCom(true)} : ()=>{setChangeResetCom(false)}}>확인</button>     
+          onClick={onClickResetPwdBtn}>변경하기</button>     
+          {/* (isResetPwd && isResetPwdCk) ? ()=>{setChangeResetCom(true)} : ()=>{setChangeResetCom(false)} */}
         </div>
         </>
       }

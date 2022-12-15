@@ -269,12 +269,29 @@ const api = {
   },
 
   //비밀번호 찾기
-  nameEmailCk: async function(findPwdName, findPwdEmail) {
+  idEmailCk: async function(findPwdId, findPwdEmail) {
     const findPwd = {
-      findPwdName: findPwdName,
+      findPwdId: findPwdId,
       findPwdEmail: findPwdEmail
     }
     return await axios.post(BASE_URL + "findpwd", findPwd, HEADER);
+  },
+
+  //이메일 인증번호 전송
+  verifyCodeEmailSend: async function(findPwdEmail) {
+    const findPwdCodeSend = {
+      findPwdEmail: findPwdEmail
+    }
+    return await axios.post(BASE_URL + "findpwdverify", findPwdCodeSend, HEADER);
+  },
+
+  //비밀번호 재설정
+  resetPwdData: async function(findPwdId, resetPwd) {
+    const resetPwdData = {
+      findPwdId: findPwdId,
+      resetPwd: resetPwd
+    }
+    return await axios.post(BASE_URL + "resetpwd", resetPwdData, HEADER);
   },
 
   //휴대폰번호 인증

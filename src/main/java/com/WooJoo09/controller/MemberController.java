@@ -112,9 +112,32 @@ public class MemberController {
     //비밀번호 찾기
     @PostMapping("/findpwd")
     public ResponseEntity<Boolean> memberFindPwd(@RequestBody Map<String, String> findPwdData) {
-        String realName = findPwdData.get("findPwdName");
+        String id = findPwdData.get("findPwdId");
         String email = findPwdData.get("findPwdEmail");
-        return ResponseEntity.ok(memberService.findPwd(realName, email));
+        return ResponseEntity.ok(memberService.findPwd(id, email));
+    }
+
+    //이메일 인증번호 전송
+    @PostMapping("/findpwdverify")
+    @ResponseBody
+    public String findPwdVerify(@RequestBody Map<String, String> findPwdEmail) throws Exception {
+        String email = findPwdEmail.get("findPwdEmail");
+        String code = emailService.sendSimpleMessage(email);
+        log.info("인증코드 : " + code);
+        return code;
+    }
+
+    //비밀번호 재설정
+    @PostMapping("/resetpwd")
+    @ResponseBody
+    public ResponseEntity<Boolean> resetPwd(@RequestBody Map<String, String> resetPwdData) {
+        String id = resetPwdData.get("findPwdId");
+        String newPwd = resetPwdData.get("resetPwd");
+//        boolean getId = memberService.memberIdService(id, newPwd);
+        return ResponseEntity.ok(memberService.memberIdService(id, newPwd));
+
+
+
     }
 
     //휴대폰번호 인증
