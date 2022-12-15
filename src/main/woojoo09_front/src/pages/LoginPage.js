@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const LoginPage = () =>{
   const { state } = useLocation();
+  const navigate = useNavigate();
 
   const [loginId, setLoginId] = useState('');
   const [loginPwd, setLoginPwd] = useState('');
@@ -69,7 +70,7 @@ const LoginPage = () =>{
   }
 
   const onClickGoToTermAgree = () => {
-    window.location.replace("/termagree")
+    navigate("/termagree");
   }
 
   const onClickLogin = () => {

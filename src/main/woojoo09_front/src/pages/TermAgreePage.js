@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 const TermAgreePage = () =>{
+  const navigate = useNavigate();
+
   //체크 된 아이템을 담을 배열
   const [checkItems, setCheckItems] = useState([]);
 
@@ -31,9 +34,19 @@ const TermAgreePage = () =>{
     }
   }
 
-  // const onClickGoToReg = () => {
-  //   window.location.replace("/register")
-  // }
+  // state 광고수신여부가 없으면 다른 페이지로 이동 
+  const onClickGoToReg = () => {
+    if(checkItems.includes("chk3")) {
+      window.localStorage.setItem("adOk", "POSITIVE");
+    } else {
+      window.localStorage.setItem("adOk", "NEGATIVE");
+    }
+    navigate("/register", {
+      state: {
+        
+      }
+    });
+  }
 
 
   return(
@@ -302,16 +315,7 @@ const TermAgreePage = () =>{
               && <button className="termAgreeFail">다음</button>}
 
               {(checkItems.includes("chk1") && checkItems.includes("chk2"))
-              && <button className="termAgreeOk" onClick={()=>{
-                if(checkItems.includes("chk3")) {
-                  window.localStorage.setItem("adOk", "POSITIVE");
-                } else {
-                  window.localStorage.setItem("adOk", "NEGATIVE");
-                }
-                // window.localStorage.setItem("chk1", "Y")
-                // window.localStorage.setItem("chk2", "Y")
-                window.location.replace("/register");
-              }}>다음</button>}             
+              && <button className="termAgreeOk" onClick={onClickGoToReg}>다음</button>}             
             </div>
           </div>         
         </div>
