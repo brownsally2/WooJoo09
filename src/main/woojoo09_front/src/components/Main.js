@@ -8,7 +8,7 @@ import Loader from "./Loader";
 
 const Main = ({categoryName, target, isLogin, isAdmin})=>{
 
-  const [lineUp, setLineUp] = useState('recommand');
+  const [lineUp, setLineUp] = useState('recommend');
   const [city, setCity] = useState('');
   const [town, setTown] = useState('');
 
@@ -188,7 +188,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
           >
             <option value="recent">최신순</option>
             <option value="dateLimit">마감 임박순</option>
-            <option value="recommand">추천순</option>
+            <option value="recommend">추천순</option>
             <option value="lowPrice">낮은 가격순</option>
             <option value="highPrice">높은 가격순</option>
           </select>

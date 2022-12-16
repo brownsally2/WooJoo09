@@ -224,11 +224,24 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
         <Loader/>
       </div>
     )
+  } 
+
+  if(!loading && data && !data.detail.product){
+    return(
+      <div className="detail">
+      <div className="errorDetail">
+      <p>잘못된 접근입니다</p>
+      <p>삭제되었거나</p>
+      <p>존재하지 않는 게시글입니다</p>
+      <Link to="/"><button style={{width: "100%"}}>메인 페이지로 이동</button></Link>
+      </div>
+      </div>
+    );
   }
 
   return(
     <div className="detail">
-      { data && data.detail.product ?
+      { data &&
         <>
         <div className="detailCard">
         <div className="detailImg">
@@ -365,13 +378,8 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
           {deleteMsg && <p className="deleteMsg"><span style={{whiteSpace : "pre-line"}}>{deleteMsg}</span></p>}
         </div>
       </div>
-      </> : 
-      <div className="errorDetail">
-      <p>잘못된 접근입니다</p>
-      <p>삭제되었거나</p>
-      <p>존재하지 않는 게시글입니다</p>
-      <Link to="/"><button style={{width: "100%"}}>메인 페이지로 이동</button></Link>
-      </div>}
+      </>
+     }
     </div>
   );
 }

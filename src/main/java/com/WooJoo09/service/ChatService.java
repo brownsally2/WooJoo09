@@ -1,5 +1,10 @@
 package com.WooJoo09.service;
 
+import com.WooJoo09.constant.IsRead;
+import com.WooJoo09.constant.MsgType;
+import com.WooJoo09.entity.Chat;
+import com.WooJoo09.entity.Member;
+import com.WooJoo09.entity.Partner;
 import com.WooJoo09.repository.ChatRepository;
 import com.WooJoo09.repository.MemberRepository;
 import com.WooJoo09.repository.PartnerRepository;
@@ -36,18 +41,28 @@ public class ChatService {
         return new ArrayList<>(chatRooms.values());
     }
     public ChatRoom findRoomById(String roomId) {
+        log.warn("chatRooms.get(roomId) : " + chatRooms.get(roomId).toString());
         return chatRooms.get(roomId);
     }
 
+//    // 방을 만들기
+//    public ChatRoom createRoom(String name) {
+//        String randomId = UUID.randomUUID().toString();
+//        log.info("UUID : " + randomId);
+//        ChatRoom chatRoom = ChatRoom.builder()
+//                .roomId(randomId)
+//                .name(name)
+//                .build();
+//        chatRooms.put(randomId, chatRoom);
+//        return chatRoom;
+//    }
+
     // 방을 만들기
-    public ChatRoom createRoom(String name) {
-        String randomId = UUID.randomUUID().toString();
-        log.info("UUID : " + randomId);
+    public ChatRoom createRoom(String roomId) {
         ChatRoom chatRoom = ChatRoom.builder()
-                .roomId(randomId)
-                .name(name)
+                .roomId(roomId)
                 .build();
-        chatRooms.put(randomId, chatRoom);
+        chatRooms.put(roomId, chatRoom);
         return chatRoom;
     }
 
@@ -114,5 +129,20 @@ public class ChatService {
             result.add(map);
         }
         return result;
+    }
+    public boolean ChatInsertService(Long partnerNum, String inputMsg, Long memberNum, String msgType) {
+        Partner partner = partnerRepository.findByPartnerNum(partnerNum);
+        Member member = memberRepository.findByMemberNum(memberNum);
+        Chat chat = new Chat();
+        chat.setPartnerNum(partner);
+        chat.setChatContent(inputMsg);
+        chat.setSender(member);
+        chat.setIsRead(IsRead.UNREAD);
+        if (msgType.equals("text")) chat.setMsgType(MsgType.TEXT);
+        else if (msgType.equals("enter")) chat.setMsgType(MsgType.ENTER);
+        else chat.setMsgType(MsgType.IMG);
+        Chat savedChat = chatRepository.save(chat);
+        log.info(savedChat.toString());
+        return true;
     }
 }

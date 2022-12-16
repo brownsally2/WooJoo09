@@ -60,12 +60,12 @@ const Banner = () =>{
         <div className="window">
           <div className="flexbox" style={style}>
             {banner && banner.map((data, i) => (
-              <Link
-                to={data.directUrl}
+              <a
+                href={data.directUrl}
                 key={i}
                 className="img"
                 style={{ backgroundImage: `url(${data.imgUrl})` }}
-              ></Link>
+              ></a>
             ))}
           </div>
         </div>

@@ -38,7 +38,14 @@ public class MemberService {
 
     //로그인
     public boolean loginService(String id, String pwd) {
-        return !memberRepository.findByIdAndPwd(id, pwd).isEmpty();
+        Optional<Member> loginMember = memberRepository.findById(id);
+        if(loginMember.isEmpty()) {
+            return false;
+        }else {
+            if (!passwordEncoder.matches(pwd, loginMember.get().getPwd())){
+                return false;
+            } else return true;
+        }
     }
 
     //회원가입

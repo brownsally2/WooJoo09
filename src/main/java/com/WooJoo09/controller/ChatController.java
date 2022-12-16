@@ -24,9 +24,10 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping("/chat")
-    public ResponseEntity<String> createRoom(@RequestBody String name) {
-        ChatRoom room = chatService.createRoom(name);
-        System.out.println(room.getRoomId());
+    public ResponseEntity<String> createRoom(@RequestBody Map<String, String> Data) {
+        String partnerNum = Data.get("partnerNum");
+        ChatRoom room = chatService.createRoom(partnerNum);
+        log.warn("room.getRoomId()" + room.getRoomId());
         return new ResponseEntity(room.getRoomId(), HttpStatus.OK);
     }
     @GetMapping
@@ -92,15 +93,16 @@ public class ChatController {
         //int memberNum = Integer.parseInt(Data.get("target"));
         //int memberNumInt = Integer.parseInt(memberNum);
         //log.info("들어온값 " + memberNum + " 변환된값 " + memberNumInte);
-        List<?> list = new ArrayList<>();
+        List<Object> list = new ArrayList<>();
         if (token != null) {
             log.info("로그인상태입니당");
             String memberNumStr = jwtController.tokenCheck(token);
             int tokenInt = Integer.parseInt(memberNumStr);
             if (memberNumStr.equals("admin")) {
-                list = chatService.chatList(tokenInt);
+                list = (List<Object>) chatService.chatList(tokenInt);
             }
-            list = chatService.chatList(tokenInt);
+            list = (List<Object>) chatService.chatList(tokenInt);
+            list.add(memberNumStr);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
@@ -115,5 +117,23 @@ public class ChatController {
            List<?> list = new ArrayList<>();
            list =  chatService.chatContent(partnerNum);
            return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @PostMapping("/chatInsert")
+    @ResponseBody
+    public ResponseEntity<Boolean> chatInsert(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> InsertChat) throws Exception {
+        if (token != null) {
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            String partnerNumStr = InsertChat.get("partner_num");
+            Long partnerNum = Long.parseLong(partnerNumStr);
+            String inputMsg = InsertChat.get("inputMsg");
+            String msgType = InsertChat.get("msgType");
+
+            return ResponseEntity.ok(chatService.ChatInsertService(partnerNum, inputMsg, memberNum, msgType));
+        }
+        else return ResponseEntity.ok(false);
     }
 }

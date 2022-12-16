@@ -7,9 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ChatMessage {
-    public void configure(JsonParser.Feature allowUnquotedControlChars, boolean b) {
-    }
-
     public enum MessageType {
         ENTER, TALK
     }

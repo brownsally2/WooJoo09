@@ -387,15 +387,32 @@ const api = {
     }
     return await axios.post(BASE_URL + "chatContentSelect", chatContent, HEADER);
   },
+  // // 웹소켓
+  // // 채팅방 개설 API
+  // chatRoomOpen: async function(name) {
+  //   const chatObject = {
+  //       "name" : name,
 
-  // 웹소켓
-  // 채팅방 개설 API
-  chatRoomOpen: async function(name) {
+  //   }
+  //   return await axios.post(BASE_URL + "chat", chatObject, HEADER);
+  // }, 
+  chatRoomOpen: async function(partnerNum) {
     const chatObject = {
-        "name" : name
+      partnerNum : partnerNum
+
     }
     return await axios.post(BASE_URL + "chat", chatObject, HEADER);
-  }
+  }, 
+  chatContentInsert : async function(partner_num, inputMsg, msgType, memberNum) {
+    const chatObject = {
+      partner_num : partner_num,
+      inputMsg :inputMsg,
+      msgType : msgType,
+      memberNum : memberNum
+
+    }
+    return await axios.post(BASE_URL + "chatInsert", chatObject, HEADER);
+  }, 
 
 }
 

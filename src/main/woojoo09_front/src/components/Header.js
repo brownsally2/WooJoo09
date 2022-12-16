@@ -41,10 +41,10 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
       }
     };
     fetchData();
-    // setTimeout(() => { 
-    //   fetchData();
-    // }, 30000); // 30초마다 한번
-  });
+    setTimeout(() => { 
+      fetchData();
+    }, 30000); // 30초마다 한번
+  },[]);
 
 
   const [scrollPosition, setScrollPosition] = useState(0);

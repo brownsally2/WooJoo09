@@ -22,7 +22,7 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                      "(select count(*) from star s where s.trade_num = t.trade_num) countStar " +
                      "from category c, trade t where t.category = c.category_num and product like :target and done_trade != 'DELETE' " +
                      "and host not in (select member_num from member where is_active = 'INACTIVE') " +
-                     "order by countStar desc, writeDate desc",
+                     "order by countStar desc, tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -38,7 +38,7 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "(select count(*) from star s where s.trade_num = t.trade_num and s.member_num = :memberNum) as myStar " +
                     "from category c, trade t where t.category = c.category_num and product like :target and done_trade != 'DELETE' " +
                     "and host not in (select member_num from member where is_active = 'INACTIVE') " +
-                    "order by countStar desc, writeDate desc",
+                    "order by countStar desc, tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -57,7 +57,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -77,7 +78,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -97,7 +99,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -118,7 +121,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -138,7 +142,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -159,7 +164,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -179,7 +185,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -200,7 +207,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -220,7 +228,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -241,7 +250,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -261,7 +271,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true
@@ -282,7 +293,8 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case when :option = 'recent' then writeDate end desc, " +
                     "case when :option = 'dateLimit' then dueDate end asc, " +
                     "case when :option = 'lowPrice' then price end asc, " +
-                    "case when :option = 'highPrice' then price end desc",
+                    "case when :option = 'highPrice' then price end desc, " +
+                    "tradeNum desc",
             countQuery = "select count(*) from trade where host not in " +
                     "(select member_num from member where is_active = 'INACTIVE') and done_trade != 'DELETE'",
             nativeQuery = true

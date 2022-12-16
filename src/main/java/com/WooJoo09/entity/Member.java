@@ -72,19 +72,27 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private IsActive isActive;
 
-    // Member 엔티티를 생성하는 메소드. Member 엔티티에 회원을 생성하는 메소드를 만들어서 관리하면
-    // 코드가 변경되더라도 한 군데만 수정하면 되는 이점이 있음
-//    public static Member createMember(MemberDTO memberDTO, PasswordEncoder passwordEncoder) {
-//        Member member = new Member();
-//        member.setName(memberDTO.getName());
-//        member.setEmail(memberFormDto.getEmail());
-//        member.setAddress(memberFormDto.getAddress());
-//        String password = passwordEncoder.encode(memberFormDto.getPassword());
-//        member.setPassword(password);
-//        member.setRole(Role.USER);
-//        return member;
-//    }
-
+    public static Member createMemberAdmin(PasswordEncoder passwordEncoder) {
+        Member member = new Member();
+        member.setId("admin");
+        String password = passwordEncoder.encode("#%^45weg2%^@#z");
+        member.setPwd(password);
+        member.setNickname("관리자");
+        member.setRealName("관리자");
+        member.setEmail("developerkirby1@gmail.com");
+        member.setPhone("010-9999-9999");
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            Date date = formatter.parse("2022/12/26");
+            member.setBirthDate(date);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        member.setRegDate(LocalDateTime.now());
+        member.setReceiveAd(ReceiveAd.POSITIVE);
+        member.setIsActive(IsActive.ACTIVE);
+        return member;
+    }
     // 테스트용
     public static Member createMember1(PasswordEncoder passwordEncoder) {
         Member member = new Member();
