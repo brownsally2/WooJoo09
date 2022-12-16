@@ -1,11 +1,35 @@
 import { useEffect, useState } from "react";
-import { useNavigate  } from "react-router-dom";
+import { Router, useLocation, useNavigate  } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import api from "../api/api";
+import { Navigate } from "react-router-dom";
+
 
 const RegisterPage = () =>{
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.state.checkItems);
+  console.log(location.state.isAdOk);
+
+  if(!location.state.checkItems) {    
+    navigate('/termagree', {replace: true});
+  }
+
+  // useEffect(() => {
+  //   if(!location.state.checkItems) {
+  //     return navigate('/termagree', {replace: true});
+  //   }
+  // }, []);
+
+  // if(!location.state.checkItems) {
+  //   return <Navigate to = "/termagree"
+  //   replace={true} />
+  // }
+
+  const isAdOk = location.state.isAdOk;
+  const isActive = location.state.isActive;
+
   
   const [regId, setRegId] = useState('');
   const [regPwd, setRegPwd] = useState('');
@@ -71,9 +95,9 @@ const RegisterPage = () =>{
         const birthDate = form.year+"-"+form.month+"-"+form.day
         console.log(birthDate);
         console.log(date);
-        const response = await api.memberReg(regId, regPwd, regNick, regName, regEmail, birthDate, regPhone);
+        const response = await api.memberReg(regId, regPwd, regNick, regName, regEmail, birthDate, regPhone, isAdOk, isActive);
         if(response.data === true) {
-          localStorage.removeItem("adOk")          
+          // localStorage.removeItem("adOk")          
           const sendEmailfetchData = async () => {
             try {
               const response = await api.celMailSend(regEmail);
@@ -336,27 +360,27 @@ const RegisterPage = () =>{
     regPhoneInput.style.boxShadow = '0 0 0px 1000px rgb(220, 220, 220) inset';
 
 
-    const fetchSearchData = async () => {
-      console.log("인증번호 요청하는 전화번호 " + regPhone);
-      try {
-        const response = await api.memberPhoneReg(regPhone);
-        console.log(response.data.result);
-        setRegVerifyCode(response.data.code);
-        // console.log(response.data.code);
-        if(response.data.result === "OK") {
-          setRegPhoneOkMsg("인증번호가 발송되었습니다.");
-        }else if(response.data.result === "DUP") {
-          setIsRegPhone(false);
-          setRegPhoneMsg("이미 가입 된 전화번호 입니다.");
-        } else {
-          setIsRegPhone(false);
-          setRegPhoneMsg("인증번호 발송에 실패했습니다.");
-        }
-      }catch (e) {
-        console.log(e);
-      }
-    };
-    fetchSearchData();
+    // const fetchSearchData = async () => {
+    //   console.log("인증번호 요청하는 전화번호 " + regPhone);
+    //   try {
+    //     const response = await api.memberPhoneReg(regPhone);
+    //     console.log(response.data.result);
+    //     setRegVerifyCode(response.data.code);
+    //     // console.log(response.data.code);
+    //     if(response.data.result === "OK") {
+    //       setRegPhoneOkMsg("인증번호가 발송되었습니다.");
+    //     }else if(response.data.result === "DUP") {
+    //       setIsRegPhone(false);
+    //       setRegPhoneMsg("이미 가입 된 전화번호 입니다.");
+    //     } else {
+    //       setIsRegPhone(false);
+    //       setRegPhoneMsg("인증번호 발송에 실패했습니다.");
+    //     }
+    //   }catch (e) {
+    //     console.log(e);
+    //   }
+    // };
+    // fetchSearchData();
   }
 
   //전화번호 다시 입력 버튼
@@ -404,6 +428,7 @@ const RegisterPage = () =>{
     }
   }
   
+
 
   return(
     <div className="registerwrapper">

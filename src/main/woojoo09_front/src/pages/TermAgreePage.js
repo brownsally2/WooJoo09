@@ -34,18 +34,32 @@ const TermAgreePage = () =>{
     }
   }
 
-  // state 광고수신여부가 없으면 다른 페이지로 이동 
+
   const onClickGoToReg = () => {
     if(checkItems.includes("chk3")) {
-      window.localStorage.setItem("adOk", "POSITIVE");
+      // window.localStorage.setItem("adOk", "POSITIVE");
+      const isAdOk = "POSITIVE";
+      const isActive = "ACTIVE";
+      navigate("/register", {
+        state: {
+          checkItems: true,
+          isAdOk: isAdOk,
+          isActive: isActive
+        }
+      });
     } else {
-      window.localStorage.setItem("adOk", "NEGATIVE");
+      // window.localStorage.setItem("adOk", "NEGATIVE");
+      const isAdOk = "NEGATIVE";
+      const isActive = "ACTIVE";
+      navigate("/register", {
+        state: {
+          checkItems: true,
+          isAdOk: isAdOk,
+          isActive: isActive
+        }
+      });
     }
-    navigate("/register", {
-      state: {
-        
-      }
-    });
+    
   }
 
 

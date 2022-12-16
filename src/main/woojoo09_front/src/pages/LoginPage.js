@@ -2,6 +2,7 @@ import { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import api from "../api/api";
 
 const LoginPage = () =>{
   const { state } = useLocation();
@@ -73,8 +74,22 @@ const LoginPage = () =>{
     navigate("/termagree");
   }
 
+  //로그인 버튼
   const onClickLogin = () => {
-     
+     const loginFetchDate = async () => {
+      try {
+        const response = await api.loginData(loginId, loginPwd);
+        if(response.data === true) {
+          navigate('/main')
+        } else {
+          setIsLoginPwd(false);
+          setLoginPwdMsg("아이디와 비밀번호가 일치하지 않습니다.")
+        }
+      }catch (e) {
+        console.log(e)
+      }
+     }
+     loginFetchDate();
   }
 
 

@@ -1,5 +1,6 @@
 package com.WooJoo09.service;
 
+import com.WooJoo09.constant.IsActive;
 import com.WooJoo09.constant.ReceiveAd;
 import com.WooJoo09.dto.MemberDTO;
 import com.WooJoo09.entity.Member;
@@ -8,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -19,6 +23,9 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class MemberService {
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     private final MemberRepository memberRepository;
 
     public List<Member> findMember() {
@@ -29,18 +36,25 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
+    //로그인
+    public boolean loginService(String id, String pwd) {
+        return !memberRepository.findByIdAndPwd(id, pwd).isEmpty();
+    }
+
     //회원가입
-    public boolean regMember(String id, String pwd, String nickname,
-                             String realName, String email, Date birthDate, String phone, String receiveAd) {
+    public boolean regMember(String id, String pwd, String nickname, String realName,
+                             String email, Date birthDate, String phone, String receiveAd, String isActive) {
         Member member = new Member();
         member.setId(id);
-        member.setPwd(pwd);
+        member.setPwd(passwordEncoder.encode(pwd));
         member.setNickname(nickname);
         member.setRealName(realName);
         member.setEmail(email);
         member.setBirthDate(birthDate);
         member.setPhone(phone);
         member.setReceiveAd(ReceiveAd.valueOf(receiveAd));
+        member.setIsActive(IsActive.valueOf(isActive));
+
         Member rst = memberRepository.save(member);
         log.warn(rst.toString());
         return true;

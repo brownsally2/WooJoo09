@@ -23,7 +23,6 @@ public class SecurityConfig {
                 .csrf().disable()			//csrf 방지
                 .formLogin().disable()		//기본 로그인페이지 없애기
                 .headers().frameOptions().disable();
-
         return http.build();
     }
 }

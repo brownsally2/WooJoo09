@@ -37,6 +37,14 @@ public class MemberController {
         return ResponseEntity.ok().body(memberService.findMember());
     }
 
+    //로그인
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> memberLogin(@RequestBody Map<String, String> loginData) {
+        String id = loginData.get("loginId");
+        String pwd = loginData.get("loginPwd");
+        return ResponseEntity.ok(memberService.loginService(id, pwd));
+    }
+
     //회원가입
     @PostMapping("/memberinsert")
     public ResponseEntity<Boolean> registerMember(@RequestBody Map<String, String> regData) throws ParseException {
@@ -48,8 +56,9 @@ public class MemberController {
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         Date birthDate = date.parse(regData.get("birthDate"));
         String phone = regData.get("regPhone");
-        String receiveAd = regData.get("adOk");
-        boolean result = memberService.regMember(id, pwd, nickname, realName, email, birthDate, phone, receiveAd);
+        String receiveAd = regData.get("isAdOk");
+        String isActive = regData.get("isActive");
+        boolean result = memberService.regMember(id, pwd, nickname, realName, email, birthDate, phone, receiveAd, isActive);
         if (result) {
             return new ResponseEntity(true, HttpStatus.OK);
         } else {
@@ -60,11 +69,9 @@ public class MemberController {
     //가입 후 소개 이메일 전송
     @PostMapping("/sendcelmail")
     @ResponseBody
-    public String mailConfirm(@RequestBody Map<String, String> regEmailSend) throws Exception {
+    public ResponseEntity<Boolean> mailConfirm(@RequestBody Map<String, String> regEmailSend) throws Exception {
         String email = regEmailSend.get("regEmail");
-        String code = emailService.sendSimpleMessage(email);
-        log.info("인증코드 : " + code);
-        return code;
+        return ResponseEntity.ok(emailService.sendSimpleRegMessage(email));
     }
 
     //아이디 중복 체크
@@ -135,9 +142,6 @@ public class MemberController {
         String newPwd = resetPwdData.get("resetPwd");
 //        boolean getId = memberService.memberIdService(id, newPwd);
         return ResponseEntity.ok(memberService.memberIdService(id, newPwd));
-
-
-
     }
 
     //휴대폰번호 인증
