@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from 'react'
-import fashionImg from "../resources/fashion_sample.png";
 import star from "../resources/star.png";
 import api from "../api/api";
 import yellowStar from "../resources/starFill.png"
+import { defaultImgs } from "../util/util"
 
 const Card = ({lists, isLogin, isAdmin, changeLists}) =>{
   const [thisDate, setThisDate] =  useState(new Intl.DateTimeFormat('kr').format(new Date()));
@@ -69,11 +69,18 @@ const Card = ({lists, isLogin, isAdmin, changeLists}) =>{
     <div className="card">
       <Link to={`/detail/${list.tradeNum}`} >
       <div className="cardImg">
-        <img src={list.representImg} alt="상품 대표 이미지"/>
+        {list.representImg? <img src={list.representImg} alt="상품 대표 이미지"/> : 
+        <img src={list.categoryName === "패션" ? defaultImgs.패션.imgUrl :
+        (list.categoryName === "뷰티" ? defaultImgs.뷰티.imgUrl : 
+        (list.categoryName === "생활" ? defaultImgs.생활.imgUrl : 
+        (list.categoryName === "식품" ? defaultImgs.식품.imgUrl :
+        (list.categoryName === "취미" ? defaultImgs.취미.imgUrl : defaultImgs.반려동물.imgUrl))))
+          
+        } alt="상품 대표 이미지"/>}
       </div>
       <div className="cardDesc">
         <p>{list.categoryName}</p>
-        <p className="cardName">{list.product.length > 12 ? list.product.substring(0,12)+"..." : list.product}</p>
+        <p className="cardName">{list.product.length > 16 ? list.product.substring(0,16)+"..." : list.product}</p>
         <p>{list.price}원</p>
         <p>{list.city && <span>{list.city}</span>}{list.town && <span>{list.town}</span>}</p>
         {list.doneTrade === 'ONGOING' && <p><span>{list.acceptPartner} / {list.limitPartner}</span><span>D - {

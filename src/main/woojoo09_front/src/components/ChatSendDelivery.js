@@ -27,7 +27,7 @@ const SendDelivery = () => {
             >
               <option value={""} >택배사 선택</option>
               {logisticsCompanys.map((e) => (
-              <option key={e.gisvalue} value={e.gisvalue}>
+              <option key={e.gisvalue} value={e.logisticsCompany}>
                 {e.logisticsCompany}
               </option>
             ))}

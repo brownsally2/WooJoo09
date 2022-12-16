@@ -25,7 +25,7 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     List<Chat> findByPartnerNum(Partner partnerNum);
 
     @Query(
-            value = "select m.nickname, pi2.img_url, max(c.chat_time) as chat_time, c.chat_content, c.is_read\n" +
+            value = "select m.nickname, m.member_num, pi2.img_url, max(c.chat_time) as chat_time, c.chat_content, c.is_read, p.partner_num  \n" +
                     "from (\n" +
                     "select *\n" +
                     "from chat\n" +
@@ -40,6 +40,13 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
             nativeQuery = true
     )
     List<Map<?,?>> chatList(@Param("memberNum") int memberNum);
+
+    @Query(
+            value = "select chat_content, chat_time, sender from chat where partner_num = :partner_num ;" ,
+            nativeQuery = true
+    )
+    List<Map<?,?>> chatContent (@Param("partner_num") int partnerNum);
+
 
 
 }

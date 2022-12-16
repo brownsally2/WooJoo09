@@ -232,5 +232,79 @@ public class TradeController {
         return ResponseEntity.ok().body(map);
     }
 
+    @PostMapping("/tradecount")
+    public ResponseEntity<Map<?, ?>> tradeCount(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){ // 어드민은 애초에 버튼 노출 안되게 프론트에서 처리
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            map.put("countTrade", tradeService.tradeCount(memberNum)+1);
+            map.put("memberNum", memberNum);
+        }else {
+            map.put("countTrade", "loginError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
 
+    @PostMapping("/tradeclose") // 거래 마감하기 -> 인원 꽉 안찼더라도 채팅 안받고싶을때
+    public ResponseEntity<Map<?, ?>> tradeClose(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        Map<String ,String> map = new HashMap<>();
+        String tradeNumStr = Data.get("tradeNum");
+        Long tradeNum = Long.parseLong(tradeNumStr);
+        if(token != null){ // 어드민은 애초에 버튼 노출 안되게 프론트에서 처리
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            map = tradeService.tradeClose(tradeNum);
+            return ResponseEntity.ok().body(map);
+        }else {
+            map.put("closeTrade", "loginError");
+            return ResponseEntity.ok().body(map);
+        }
+    }
+
+    @PostMapping("/tradefinish") // 거래 종료하기
+    public ResponseEntity<Map<?, ?>> tradeFinish(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String > Data) throws Exception {
+        Map<String ,String> map = new HashMap<>();
+        String tradeNumStr = Data.get("tradeNum");
+        Long tradeNum = Long.parseLong(tradeNumStr);
+        if(token != null){ // 어드민은 애초에 버튼 노출 안되게 프론트에서 처리
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            map = tradeService.tradeFinish(tradeNum);
+            return ResponseEntity.ok().body(map);
+        }else {
+            map.put("finishTrade", "loginError");
+            return ResponseEntity.ok().body(map);
+        }
+    }
+    @PostMapping("/tradeimgupdate")
+    public ResponseEntity<Map<?, ?>> tradeImageUpdate(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        Long tradeNum = Long.parseLong(Data.get("tradeNum"));
+        Map<String ,?> map = new HashMap<>();
+        map = tradeService.tradeImageUpdate(tradeNum);
+        return ResponseEntity.ok().body(map);
+    }
+
+    @PostMapping("/countnthtrade")
+    public ResponseEntity<Map<?, ?>> countNthTrade(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        Long tradeNum = Long.parseLong(Data.get("tradeNum"));
+        String memberNumStr = jwtController.tokenCheck(token);
+        Long memberNum = Long.parseLong(memberNumStr);
+        Map<String ,?> map = new HashMap<>();
+        map = tradeService.countNthTrade(tradeNum, memberNum);
+        return ResponseEntity.ok().body(map);
+    }
 }

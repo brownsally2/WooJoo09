@@ -15,6 +15,7 @@ import TermPage from "./pages/TermPage";
 import LoginPage from "./pages/LoginPage"
 import MyTradePage from "./pages/MyTradePage"
 import SearchPage from "./pages/SearchPage"
+import UpdatePage from "./pages/UpdatePage";
 
 import "./style/common.scss";
 import "./style/detail.scss";
@@ -51,10 +52,11 @@ function App() {
           <Route path='/detail/:tradeNum' element={<DetailPage/>}/>
           <Route path='/search/:target' element={<SearchPage/>}/>
           <Route path='/chatlist' element={<ChatListPage/>}/>
-          <Route path='/chat' element={<ChatPage/>}/>
+          <Route path='/chat/:partner_num' element={<ChatPage/>}/>
           <Route path='/member' element={<MemberPage/>}/>
           <Route path='/MyTrade' element={<MyTradePage/>}/>
           <Route path='/write' element={<WritePage/>}/>
+          <Route path='/update' element={<UpdatePage/>}/>
           <Route path='/term' element={<TermPage/>}/>
           <Route path='/privacypolicy' element={<PrivacyPolicyPage/>}/>
           

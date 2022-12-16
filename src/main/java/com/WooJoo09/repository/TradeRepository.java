@@ -1,5 +1,7 @@
 package com.WooJoo09.repository;
 
+import com.WooJoo09.constant.DoneTrade;
+import com.WooJoo09.entity.Member;
 import com.WooJoo09.entity.Trade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -338,5 +340,9 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
     List<Map<?,?>> tradeDetailImgSelect(@Param("tradeNum") int tradeNum);
 
     Trade findByTradeNum(Long tradeNum);
+    Long countByHost(Member host);
+    Optional<Trade> findByTradeNumAndDoneTrade(Long tradeNum, DoneTrade doneTrade);
+
+    List<Trade> findByHostOrderByWriteDate(Member host);
 
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Map from './Map'
 import {categories, citys, towns, uuidv4} from "../util/util"
 import { storage } from "../api/firebase"
@@ -7,70 +7,43 @@ import representIcon from "../resources/representImg_icon.png"
 import imgIcon from "../resources/images_icon.png"
 import api from '../api/api'
 
-const Write = () =>{
+const Update = () =>{
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [category, setCategory] = useState("패션");
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [city, setCity] = useState('');
-  const [town, setTown] = useState('');
-  const [countPartner, setCountPartner] = useState("1");
-  const [productDetail, setProductDetail] = useState('');
-  var now = new Date();
-  const [thisDate, setThisDate] =  useState(new Intl.DateTimeFormat('kr').format(now));
-  const firstDate = new Date(now.setDate(now.getDate() + 1)); // 최소 1일부터
-  const middleDate = new Date(now.setDate(now.getDate() + 7)); // 기본값 날짜
-  const lastDate = new Date(now.setDate(now.getDate() + 14)); // 최대 14일
-  const [dueYear, setDueYear] = useState(Number(thisDate.split('.')[0]));
-  const [dueMonth, setDueMonth] = useState(Number(thisDate.split('.')[1]));
-  const [dueDay, setDueDay] = useState(Number(thisDate.split('.')[2])+7); // 기본값 일주일
-  const [dueDate, setDueDate] = useState(middleDate.getFullYear() +
-  '-' + ( (middleDate.getMonth()+1) < 9 ? "0" + (middleDate.getMonth()+1) : (middleDate.getMonth()+1) )+
-  '-' + ( (middleDate.getDate()) < 9 ? "0" + (middleDate.getDate()) : (middleDate.getDate()) ))
-  const [tradeMethod, setTradeMethod] = useState('');
-  const [images, setImages] = useState([]);
-  const [urls, setUrls] = useState([]);
-  const [representImg, setRepresentImg] = useState(null);
-  const [representUrl, setRepresentUrl] = useState("");
-  const [representErr, setRepresentErr] = useState("");
-  const [error, setError] = useState("");
+  const tradeNum = location.state.tradeNum;
+  const memberNum = location.state.memberNum;
+  const previousData = location.state.data.detail;
 
-  const [categoryErr, setCategoryErr] = useState("카테고리를 확인해 주세요!");
-  const [nameErr, setNameErr] = useState("");
-  const [priceErr, setPriceErr] = useState("");
-  const [limitPartErr, setLimitPartErr] = useState("인원수를 확인해 주세요!");
-  const [tradeMethodErr, setTradeMethodErr] = useState("거래 방법을 확인해 주세요!");
-  const [dueDateErr, setDueDateErr] = useState("마감 기한을 확인해 주세요!");
-  const [detailErr, setDetailErr] = useState("");
-
-  const [isName, setIsName] = useState('');
-  const [isPrice, setIsPrice] = useState('');
-  const [isTradeMethod, setIsTradeMethod] = useState('');
-  const [isDetail, setIsDetail] = useState('');
-  const [isDate, setIsDate] = useState('');
-
-  const [inputTradePlace, setInputTradePlace] = useState('');
-  const [tradePlace, setTradePlace] = useState('');
-
-  const [displayMap, setDisplayMap] = useState(false);
-  const [insertMsg, setInsertMsg] = useState("");
-
-  const [numOfTrade, setNumOfTrade] = useState("");
-  const [memberNum, setMemberNum] = useState("");
-
-  const [tradePlaceErr, setTradePlaceErr] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.tradeImgUpdate(tradeNum);
+        console.log(response.data);
+        if(response.data.tradeImageUpdate === "OK"){
+          if(response.data.images){
+            setUrls(response.data.images);
+          }
+          setRepresentUrl(response.data.representImg[0]);
+        } else{
+          
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
 
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
-  //       const response = await api.tradeCount();
+  //       const response = await api.countnthtrade(tradeNum);
   //       console.log(response.data);
-  //       if(response.data.countTrade === "loginError"){
+  //       if(response.data.numOfTrade === "error"){
   //         navigate('/main');
   //       } else{
-  //         setNumOfTrade(response.data.countTrade);
-  //         setMemberNum(response.data.memberNum);
+  //         setNumOfTrade(response.data.numOfTrade);
   //       }
   //     } catch (e) {
   //       console.log(e);
@@ -79,7 +52,59 @@ const Write = () =>{
   //   fetchData();
   // }, []);
 
-  const tradeInsert = () =>{
+  const [category, setCategory] = useState(previousData.categoryName);
+  const [name, setName] = useState(previousData.product);
+  const [price, setPrice] = useState(previousData.price);
+  const [city, setCity] = useState(previousData.city);
+  const [town, setTown] = useState(previousData.town);
+  const [countPartner, setCountPartner] = useState(String(previousData.limitPartner));
+  const [productDetail, setProductDetail] = useState(previousData.productDetail);
+  var now = new Date();
+  const [thisDate, setThisDate] =  useState(new Intl.DateTimeFormat('kr').format(now));
+  const firstDate = new Date(now.setDate(now.getDate() + 1)); // 최소 1일부터
+  const middleDate = new Date(now.setDate(now.getDate() + 7)); // 기본값 날짜
+  const lastDate = new Date(now.setDate(now.getDate() + 14)); // 최대 14일
+  var prevDateStr = String(previousData.dueDate);
+  const [dueYear, setDueYear] = useState(Number(prevDateStr.split('-')[0]));
+  const [dueMonth, setDueMonth] = useState(Number(prevDateStr.split('-')[1]));
+  const [dueDay, setDueDay] = useState(Number(prevDateStr.split('-')[2].substring(0,2))); // 기본값 일주일
+  var prevDate = new Date(dueYear, dueMonth, dueDay);
+  const [dueDate, setDueDate] = useState(prevDate.getFullYear() +
+  '-' + ( (prevDate.getMonth()+1) < 9 ? "0" + (prevDate.getMonth()+1) : (prevDate.getMonth()+1) )+
+  '-' + ( (prevDate.getDate()) < 9 ? "0" + (prevDate.getDate()) : (prevDate.getDate()) ))
+  const [tradeMethod, setTradeMethod] = useState(previousData.tradeMethod.toLowerCase());
+  const [images, setImages] = useState([]);
+  const [urls, setUrls] = useState([]);
+  const [representImg, setRepresentImg] = useState(null);
+  const [representUrl, setRepresentUrl] = useState("");
+  const [representErr, setRepresentErr] = useState("");
+  const [error, setError] = useState("");
+
+  const [categoryErr, setCategoryErr] = useState("");
+  const [nameErr, setNameErr] = useState("");
+  const [priceErr, setPriceErr] = useState("");
+  const [limitPartErr, setLimitPartErr] = useState("");
+  const [tradeMethodErr, setTradeMethodErr] = useState("");
+  const [dueDateErr, setDueDateErr] = useState("");
+  const [detailErr, setDetailErr] = useState("");
+
+  const [isName, setIsName] = useState(true);
+  const [isPrice, setIsPrice] = useState(true);
+  const [isTradeMethod, setIsTradeMethod] = useState(true);
+  const [isDetail, setIsDetail] = useState(true);
+  const [isDate, setIsDate] = useState(true);
+
+  const [inputTradePlace, setInputTradePlace] = useState(previousData.tradePlace);
+  const [tradePlace, setTradePlace] = useState(previousData.tradePlace);
+
+  const [displayMap, setDisplayMap] = useState(false);
+  const [insertMsg, setInsertMsg] = useState("");
+
+  const [numOfTrade, setNumOfTrade] = useState("");
+
+  const [tradePlaceErr, setTradePlaceErr] = useState("");
+
+  const tradeUpdate = () =>{
     //imgUrl,representUrl, category, product, price, limitPartner, 
     //dueDate, tradeMethod, city, town, tradePlace, productDetail
     console.log("imgUrl : " + urls + "\nrepresentUrl : " + representUrl + "\ncategory : " + category +
@@ -88,19 +113,19 @@ const Write = () =>{
       "\ninputTradePlace : " + inputTradePlace + "\nproductDetail : " + productDetail)
     const fetchData = async () => {
       try {
-        const response = await api.tradeInsert(urls, representUrl, category, name, String(price), countPartner,
+        const response = await api.tradeUpdate(tradeNum, urls, representUrl, category, name, String(price), countPartner,
           dueDate, tradeMethod, city, town, inputTradePlace, productDetail);
         console.log(response.data);
         if(response.data.completeTrade === "loginError") {
           setInsertMsg("로그인 상태를 확인 해주세요");
         } 
         else if(response.data.completeTrade === "OK"){
-          setInsertMsg("공동구매가 등록 되었습니다\n 메인으로 이동됩니다");
+          setInsertMsg("공동구매가 수정 되었습니다\n 메인으로 이동됩니다");
           setTimeout(()=>{ 
             navigate('/main');
           }, 5000);
         }else{
-          setInsertMsg("공동구매 등록에 실패했습니다");
+          setInsertMsg("공동구매 수정에 실패했습니다");
         }
       } catch (e) {
         console.log(e);
@@ -399,7 +424,7 @@ const Write = () =>{
 
   return(
     <div className="write">
-      <p className="writeTitle">공동 구매 등록</p>
+      <p className="writeTitle">공동 구매 수정</p>
       <div className="writeInput">
       <div className='representInput'>
           <form className="writeRepresentInput" onSubmit={onSubmitRepresent}>
@@ -462,12 +487,12 @@ const Write = () =>{
       </div>
       <div className="nameInput">
         <label><span>상품명<span className="essential3">*</span></span>
-        <input onChange={onChangeName}/></label>
+        <input value={name} onChange={onChangeName}/></label>
         {!isName && <span className="writeErr">{nameErr}</span>}
       </div>
       <div className="priceInput">
         <label><span>가격<span className="essential2">*</span></span>
-        <input type="number" onChange={onChangePrice}/>
+        <input type="number" value = {price} onChange={onChangePrice}/>
         <span>원</span></label>
         {!isPrice && <span className="writeErr">{priceErr}</span>}
       </div>
@@ -506,9 +531,12 @@ const Write = () =>{
       <div className="tradeMethodInput">
         <label><span>거래 방법<span className="essential5">*</span></span>
         <div>
-        <label><input type="radio" name="method" onChange={onChangeTradeMethod} onClick={()=>{setTradeMethodErr("")}} value="direct" />직거래</label>
-        <label><input type="radio" name="method" onChange={onChangeTradeMethod} onClick={()=>{setTradeMethodErr("")}} value="delivery"/>택배거래</label>
-        <label><input type="radio" name="method" onChange={onChangeTradeMethod} onClick={()=>{setTradeMethodErr("")}} value="both"/>모두 가능</label>
+        <label><input type="radio" name="method" onChange={onChangeTradeMethod} onClick={()=>{setTradeMethodErr("")}} 
+        value="direct" checked={tradeMethod === "direct"}/>직거래</label>
+        <label><input type="radio" name="method" onChange={onChangeTradeMethod} onClick={()=>{setTradeMethodErr("")}} 
+        value="delivery" checked={tradeMethod === "delivery"}/>택배거래</label>
+        <label><input type="radio" name="method" onChange={onChangeTradeMethod} onClick={()=>{setTradeMethodErr("")}} 
+        value="both" checked={tradeMethod === "both"}/>모두 가능</label>
         </div>
         </label>
         {tradeMethodErr && <span className="tradeMethodErr">{tradeMethodErr}</span>}
@@ -560,17 +588,17 @@ const Write = () =>{
       </div>
       <div className="productDetailInput">
       <label><span>상세 설명<span className="essential52">*</span></span>
-      <textarea name="writecontent" className="productDetailTextarea" 
+      <textarea name="writecontent" className="productDetailTextarea" value={productDetail}
         placeholder="상품의 설명을 자세하게 기재해주세요" onChange={onChangeProductDetail} cols="50" wrap="hard"></textarea>
       </label>
       <span className="writecontentlength">{productDetail.length}/2000</span>
       {detailErr && <span className="detailErr">{detailErr}</span>}
       </div>
       </div>
-      {isName && isPrice && isTradeMethod && isDetail && isDate ? <button className="writeSubmitBtn" onClick={tradeInsert}>등록</button> :
-      <button className="writeSubmitBtn nobutton">등록</button>}
+      {isName && isPrice && isTradeMethod && isDetail && isDate ? <button className="writeSubmitBtn" onClick={tradeUpdate}>수정</button> :
+      <button className="writeSubmitBtn nobutton">수정</button>}
       {insertMsg && <p>{insertMsg}</p>}
     </div>
   );
 }
-export default Write
+export default Update

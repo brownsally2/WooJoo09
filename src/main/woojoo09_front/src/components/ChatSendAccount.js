@@ -28,7 +28,7 @@ const SendAccount = () => {
           <select onChange= {onChangeBank} >
            <option value={""} >은행 선택</option>
               {BankKind.map((e) => (
-              <option key={e.bankValue} value={e.bankValue}>
+              <option key={e.bankValue} value={e.bankName}>
                 {e.bankName}
               </option>
                ))}

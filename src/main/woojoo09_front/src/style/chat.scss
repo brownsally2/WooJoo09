@@ -35,9 +35,12 @@
     border-radius: 5px;
     // background-color: $lightGray1Alpha6;
     div{
-        position: relative;
+        // position: absolute;
         // left: -16%; 
-        top : 4.5vh;
+
+    }
+    div{
+        display: flex;
     }
   }
   a{
@@ -65,18 +68,30 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    img{
+    display: relative;
+    span > img{
         width: 100px;
         height: 70px;
         margin: 3%;
+        border-radius: 10px;
+    }
+    .chatButton > span{
+        display: absolute;
+        // left: -16%; 
+        top : 4.5vh;
     }
     p{
-        // padding-top: 1%;
         display: flex;
     }
+    // p{
+    //     // padding-top: 1%;
+    //     display: flex;
+    // }
     .chatDetailNick{
         padding-top: 2%;
+        display: flex;
     }
+    
 }
 .chatTime{
     // height: 10vh;
@@ -203,6 +218,8 @@
 
     // padding-top: 3%;
     // overflow: hidden;
+    margin : 140px 0px 0px 0px ;
+    padding : 0px 0px 150px 0px ;
 }
 .chatContent::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
@@ -234,7 +251,7 @@
     border-top: 1px solid $darkGray2Alpha3;
     display: flex;
     justify-content: center;
-    height:15vh;
+    height:145px;
     width:70%;
     position:fixed;
     bottom:20px;
@@ -331,7 +348,6 @@
     display: flex;
     justify-content: center;
     left: 60%;
-    margin-top: 19vh;
     // background-color:$darkGray1;
 }
 
@@ -420,9 +436,9 @@
         }
     }
     .chatContent{
-        .chatDate{
-                margin-top: 20vh;
-            }
+        // .chatDate{
+        //         margin-top: 20vh;
+        //     }
     }
     .chattingProduct{
         div{

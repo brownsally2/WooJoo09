@@ -120,7 +120,9 @@ public class TradeService {
         trade.setDoneTrade(DoneTrade.ONGOING);
         Trade savedTrade = tradeRepository.save(trade);
         log.info(savedTrade.toString());
-        if(productImgRepository.findByTradeNum(savedTrade).isEmpty()){
+        if(productImgRepository.findByTradeNum(savedTrade).isEmpty() 
+                && representUrl.length() > 0){
+            log.info("이미지 있움");
             ProductImg productImg = new ProductImg();
             productImg.setTradeNum(savedTrade);
             productImg.setImgUrl(representUrl);
@@ -137,7 +139,7 @@ public class TradeService {
             }
             map.put("completeTrade", "OK");
         } else {
-            map.put("completeTrade", "duplicateTrade");
+            map.put("completeTrade", "OK");
         }
         return map;
     }
@@ -207,4 +209,94 @@ public class TradeService {
         map.put("completeDeleteTrade", "OK");
         return map;
     }
+
+    public Long tradeCount(Long memberNum){
+        Member member = memberRepository.findByMemberNum(memberNum);
+        return tradeRepository.countByHost(member);
+    }
+
+    public Map<String, String> tradeClose(Long tradeNum){
+        Map<String ,String> map = new HashMap<>();
+        Trade trade= tradeRepository.findByTradeNum(tradeNum);
+        if (trade == null) {
+            map.put("closeTrade", "notData");
+            return map;
+        }
+        if (tradeRepository.findByTradeNumAndDoneTrade(tradeNum, DoneTrade.FULL).isEmpty()) {
+            trade.setDoneTrade(DoneTrade.FULL);
+            Trade savedTrade = tradeRepository.save(trade);
+            log.info(savedTrade.toString());
+            map.put("closeTrade", "OK");
+        } else {
+            map.put("closeTrade", "duplicate");
+        }
+        return map;
+    }
+
+    public Map<String, String> tradeFinish(Long tradeNum){
+        Map<String ,String> map = new HashMap<>();
+        Trade trade= tradeRepository.findByTradeNum(tradeNum);
+        if (trade == null) {
+            map.put("finishTrade", "notData");
+            return map;
+        }
+        if (tradeRepository.findByTradeNumAndDoneTrade(tradeNum, DoneTrade.DONE).isEmpty()) {
+            trade.setDoneTrade(DoneTrade.DONE);
+            Trade savedTrade = tradeRepository.save(trade);
+            log.info(savedTrade.toString());
+            map.put("finishTrade", "OK");
+        }else {
+            map.put("finishTrade", "duplicate");
+        }
+        return map;
+    }
+
+    public Map<String, Object> tradeImageUpdate(Long tradeNum){
+        Map<String ,Object> map = new HashMap<>();
+        Trade trade= tradeRepository.findByTradeNum(tradeNum);
+        if (trade == null) {
+            map.put("tradeImageUpdate", "noTradeData");
+            return map;
+        }else {
+            if (productImgRepository.findByTradeNumAndIsRepresent(trade, IsRepresent.REPRESENT).isEmpty()) {
+                map.put("tradeImageUpdate", "noImgData");
+            } else{
+                List<ProductImg> representImg = productImgRepository.findByTradeNumAndIsRepresent(trade, IsRepresent.REPRESENT);
+                List<String> list1 = new ArrayList<>();
+                for (ProductImg e : representImg){
+                    String str = e.getImgUrl();
+                    list1.add(str);
+                }
+                map.put("representImg", list1);
+                if(!productImgRepository.findByTradeNumAndIsRepresent(trade, IsRepresent.NOREPRESENT).isEmpty()){
+                    List<ProductImg> imgList = productImgRepository.findByTradeNumAndIsRepresent(trade, IsRepresent.NOREPRESENT);
+                    List<String> list2 = new ArrayList<>();
+                    for (ProductImg e : imgList){
+                        String str = e.getImgUrl();
+                        list2.add(str);
+                    }
+                    map.put("images", list2);
+                }
+                map.put("tradeImageUpdate", "OK");
+            }
+        }
+        return map;
+    }
+
+    public Map<String, String> countNthTrade(Long tradeNum, Long memberNum){
+        Map<String ,String> map = new HashMap<>();
+        Member member = memberRepository.findByMemberNum(memberNum);
+        List<Trade> trades = tradeRepository.findByHostOrderByWriteDate(member);
+        int cnt = 1;
+        for (Trade e : trades){
+            if(e.getTradeNum() == tradeNum){
+                map.put("numOfTrade", String.valueOf(cnt));
+                return map;
+            }
+            cnt++;
+        }
+        map.put("numOfTrade", "error");
+        return map;
+    }
+
 }

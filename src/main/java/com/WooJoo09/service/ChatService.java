@@ -1,11 +1,5 @@
 package com.WooJoo09.service;
 
-import com.WooJoo09.constant.IsRead;
-import com.WooJoo09.constant.MsgType;
-import com.WooJoo09.entity.Chat;
-import com.WooJoo09.entity.Member;
-import com.WooJoo09.entity.Partner;
-import com.WooJoo09.entity.Trade;
 import com.WooJoo09.repository.ChatRepository;
 import com.WooJoo09.repository.MemberRepository;
 import com.WooJoo09.repository.PartnerRepository;
@@ -14,8 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -113,4 +105,14 @@ public class ChatService {
         return result;
     }
 
+    public List<?> chatContent(int partnerNum){
+        List<Map<String, List<?>>> result = new ArrayList<>();
+        Map<String, List<?>>map = new HashMap<>();
+        map.put("chattingContent", chatRepository.chatContent(partnerNum));
+        System.out.print(map);
+        for(int i = 0; i < map.size(); i++){
+            result.add(map);
+        }
+        return result;
+    }
 }

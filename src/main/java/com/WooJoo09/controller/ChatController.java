@@ -69,6 +69,8 @@ public class ChatController {
 //        return ResponseEntity.ok().body(map);
 //    }
 
+
+
     // 토큰 없이 채팅 리스트 조회
 //    @PostMapping("/chatListSelect")
 //    public ResponseEntity<List<?>> chatSelectList(
@@ -101,5 +103,17 @@ public class ChatController {
             list = chatService.chatList(tokenInt);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    @PostMapping("/chatContentSelect")
+    public ResponseEntity<Map<?,?>> chatSelectContent(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+           String partnerNumStr = Data.get("partner_num");
+           int partnerNum = Integer.parseInt(partnerNumStr);
+           log.info("들어온값 " + partnerNumStr + " 변환된값 " + partnerNum);
+           Map<?, ?> map = new HashMap<>();
+           List<?> list = new ArrayList<>();
+           list =  chatService.chatContent(partnerNum);
+           return new ResponseEntity(list, HttpStatus.OK);
     }
 }

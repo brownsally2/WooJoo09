@@ -71,8 +71,14 @@ const api = {
     }
     return await axios.post(BASE_URL+ "stardelete", starDeleteCmd, HEADER);
   },
-  tradeInsert: async function( imgUrl,
-    representUrl, category, product, price, limitPartner, dueDate, tradeMethod, city, town, tradePlace, productDetail) {
+  tradeCount: async function() {
+    const tradeDetailSelectCmd = {
+      cmd: "countTrade"
+    }
+    return await axios.post(BASE_URL+ "tradecount", tradeDetailSelectCmd, HEADER);
+  },
+  tradeInsert: async function( imgUrl, representUrl, category, product, price, 
+    limitPartner, dueDate, tradeMethod, city, town, tradePlace, productDetail) {
     const tradeInsertCmd = {
       representUrl: representUrl,
       category : category,
@@ -88,6 +94,18 @@ const api = {
       imgUrl: imgUrl
     }
     return await axios.post(BASE_URL+ "tradeinsert", tradeInsertCmd, HEADER);
+  },
+  tradeImgUpdate: async function(tradeNum) {
+    const tradeImgUpdateCmd = {
+      tradeNum: tradeNum
+    }
+    return await axios.post(BASE_URL+ "tradeimgupdate", tradeImgUpdateCmd, HEADER);
+  },
+  countNthTrade: async function(tradeNum) {
+    const countNthTradeCmd = {
+      tradeNum: tradeNum
+    }
+    return await axios.post(BASE_URL+ "countnthtrade", countNthTradeCmd, HEADER);
   },
   tradeUpdate: async function( tradeNum, imgUrl,
     representUrl, category, product, price, limitPartner, dueDate, tradeMethod, city, town, tradePlace, productDetail) {
@@ -158,6 +176,18 @@ const api = {
     }
     return await axios.post(BASE_URL+ "tradedelete", tradeDeleteCmd, HEADER);
   },
+  tradeClose: async function(tradeNum) {
+    const tradeCloseCmd = {
+      tradeNum: tradeNum
+    }
+    return await axios.post(BASE_URL+ "tradeclose", tradeCloseCmd, HEADER);
+  },
+  tradeFinish: async function(tradeNum) {
+    const tradeFinishCmd = {
+      tradeNum: tradeNum
+    }
+    return await axios.post(BASE_URL+ "tradefinish", tradeFinishCmd, HEADER);
+  },
   doneTradeUpdateFull: async function(target) {
     const doneTradeUpdateFullCmd = {
       target: target
@@ -211,6 +241,34 @@ const api = {
       target: target
     }
     return await axios.post(BASE_URL+ "dislikeinsert", dislikeInsertCmd, HEADER);
+  },
+  bannerSelect: async function() {
+    const bannerSelectCmd = {
+      cmd: "bannerSelect"
+    }
+    return await axios.post(BASE_URL+ "bannerselect", bannerSelectCmd, HEADER);
+  },  
+  bannerInsert: async function(name, url) {
+    const bannerInsertCmd = {
+      name: name,
+      url : url
+    }
+    return await axios.post(BASE_URL+ "bannerinsert", bannerInsertCmd, HEADER);
+  },  
+  bannerUpdate: async function(bannerNum, name, url, isActive) {
+    const bannerUpdateCmd = {
+      bannerNum : bannerNum,
+      name: name,
+      url : url,
+      isActive : isActive
+    }
+    return await axios.post(BASE_URL+ "bannerupdate", bannerUpdateCmd, HEADER);
+  },  
+  bannerDelete: async function(bannerNum) {
+    const bannerDeleteCmd = {
+      bannerNum: bannerNum
+    }
+    return await axios.post(BASE_URL+ "bannerdelete", bannerDeleteCmd, HEADER);
   },  
   //회원가입
   memberReg: async function(regId, regPwd, regNick, regName, regEmail, birthDate, regPhone) {
@@ -309,8 +367,25 @@ const api = {
 
     }
     return await axios.post(BASE_URL + "chatListSelect", chatList, HEADER);
-  }
+  },
   
+  // 채팅 내용 가져오기
+  chatContent: async function(partner_num){
+    const chatContent = {
+      partner_num: partner_num
+    }
+    return await axios.post(BASE_URL + "chatContentSelect", chatContent, HEADER);
+  },
+
+  // 웹소켓
+  // 채팅방 개설 API
+  chatRoomOpen: async function(name) {
+    const chatObject = {
+        "name" : name
+    }
+    return await axios.post(BASE_URL + "chat", chatObject, HEADER);
+  }
+
 }
 
 export default api;
