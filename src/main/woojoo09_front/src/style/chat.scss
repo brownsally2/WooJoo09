@@ -37,8 +37,8 @@
     position: relative;
     div{
         position: absolute;
-        left: 30%; 
-        top: 50px;
+        left: 110px; 
+        top: 45px;
 
     }
     div{
@@ -90,6 +90,8 @@
     //     display: flex;
     // }
     .chatDetailNick{
+        display: absolute;
+        padding-top : 10px;
         padding-left: 4%;
         display: flex;
         width: 250vw;
@@ -166,10 +168,27 @@
     }
 }
 
-.chatState{
-    // background-color: $lightGray1Alpha6;
-  
+.chatStateWait, .chatStatejoin, .chatStatedone{
+    width: 3vw;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 7px;
+    margin-left : 2vw;
 }
+.chatStateWait{
+    background-color: $lightGray2;
+}
+
+.chatStatejoin{
+    background-color: $yellow3;
+}
+.chatStatedone{
+    background-color: $lightGray1Alpha6;
+}
+
 .chattingProduct{
     border-bottom: 1px solid $darkGray2Alpha3;
     height:90px;
@@ -202,16 +221,22 @@
         display: flex;
     }
 }
-.chatProductName{
+.chatProInfo{
+    width: 60%;
     position: relative;
+.chatProductName{
+    position: absolute;
     left: 0.5vw;
-    top : 2.5vh;
+    top : 20px;
+    // height: 30px;
+    // width: auto;
 
 }
 .chatPrice{
-    position: relative;
-    left: -2.7vw;
-    top : 6vh;
+    position: absolute;
+    left: 0.7vw;
+    top : 60px;
+}
 }
 .chatContent{
     // display: flex;
@@ -456,7 +481,7 @@
         }
     }
     .chattingProduct{
-        div{
+        div{width: 70%;
            button{
             width: 7vw;
             height: 4.7vh;

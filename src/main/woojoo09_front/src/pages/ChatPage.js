@@ -15,8 +15,18 @@ import "../style/chat.scss"
 const ChatPage = () =>{
 
   let { partner_num } = useParams();
+  // {nickname, img_url, chat_time, chat_content, is_read, partner_num}
    const location = useLocation();
    const memberNum = location.state.memberNum;
+   const nickname = location.state.list.nickname;
+   const acceptTrade = location.state.list.accept_trade;
+   const doneTrade = location.state.list.done_trade;
+   const product = location.state.list.product;
+   const price = location.state.list.price;
+   const imgUrl = location.state.list.img_url;
+   const host = location.state.list.host;
+   console.log("doneTrade:" + doneTrade);
+   console.log("acceptTrade:" + acceptTrade);
 
   const [socketConnected, setSocketConnected] = useState(false);
   const [inputMsg, setInputMsg] = useState("");
@@ -36,6 +46,9 @@ const ChatPage = () =>{
   const [loading, setLoading] = useState(false);
   const [prepared, setPrepared] = useState(false);
   const [sender, setSender] = useState();
+
+  // const $element = document.querySelecotr("div");
+  // $element.scrollTop = $element.scrollHeight;
 
 
   useEffect(() => {
@@ -65,9 +78,6 @@ const ChatPage = () =>{
 
   // const EntranceBuy  = visible?
     //  <ChattingProductBuy /> :  <ChattingProduct />;
-
-
-
 
 
   const onChangMsg = (e) => {
@@ -153,19 +163,25 @@ const ChatPage = () =>{
       <div className="chatLeft"><ChatList/></div>
       <div className="chatRight">
         
-        <ChatHeader/>
+      <div className="chatNickname">
+        <span>{nickname}</span> 
+        {/* {{doneTrade} === 'ONGOING' && {acceptTrade} === 'REJECT' && <div className="chatStateWait">대기</div>} 
+        {{doneTrade} == 'ONGOING' && {acceptTrade} == 'ACCEPT' && <div className="chatStatejoin">참여</div>} 
+        {{doneTrade} == 'DONE' && <div className="chatStatedone">완료</div>} */}
+      </div>
 
         <div className="chattingProduct">
           <div>
               <Link to="/write">
-                <img src={fashion} alt="패션"/>
+                <img img src = {imgUrl} alt="물품이미지"/>
               </Link>
-                <div>
-                  <p className="chatProductName">상품이름</p>
-                  <div className="chatPrice">가격</div>
+                <div className="chatProInfo">
+                  <p className="chatProductName">{product}</p>
+                  <div className="chatPrice">{price}원</div>
                   
-                    <button>공구승인</button>
-                    <button>공구거절</button>
+
+                  {host == memberNum?  <div><button>공구승인</button><button>공구거절</button></div>
+                     : <button>공구나가기</button>  }
                     {/* 공구 구매자 */}
                     {/* <button>공구나가기</button> */}
                 </div>
@@ -213,26 +229,12 @@ const ChatPage = () =>{
                     <p/>
                     <button className="msg_close" onClick={onClickMsgClose}>채팅 종료 하기</button>
                   </div> */}
-
-       
-{/* 
-          <div>
-            <div>socket</div>
-            <div>socket connected : {`${socketConnected}`}</div>
-            <div>방번호: {roomId}</div>
-            <h2>소켓으로 문자 전송하기 테스트</h2>
-                      <div>
-                          {items.map((item) => {
-                          return <div>{ `${item.message}`}</div>;
-                          })}
-                      </div> 
-            </div>    */}
         </div>
-        <ChatSellButton/>
+        {host == memberNum? <ChatSellButton/>: <ChatBuyButton/> }
         <div className="chatBottom">
           <input className="chatSend" value ={inputMsg} onChange={onChangMsg} onKeyUp={onEnterKey}/>
           <button onClick={ (e) => {onClickMsgSend(e); msgInsert();}}><img src={send1} alt="send"/></button>
-          <button className="msg_close" onClick={onClickMsgClose}>채팅 종료 하기</button>
+          {/* <button className="msg_close" onClick={onClickMsgClose}>채팅 종료 하기</button> */}
         </div>
         
       </div>

@@ -2,6 +2,7 @@ package com.WooJoo09.service;
 
 import com.WooJoo09.constant.IsActive;
 import com.WooJoo09.constant.ReceiveAd;
+import com.WooJoo09.controller.JwtController;
 import com.WooJoo09.dto.MemberDTO;
 import com.WooJoo09.entity.Member;
 import com.WooJoo09.repository.MemberRepository;
@@ -23,10 +24,11 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class MemberService {
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     private final MemberRepository memberRepository;
+
+    private final JwtController jwtController;
 
     public List<Member> findMember() {
         return memberRepository.findAll();
@@ -37,15 +39,28 @@ public class MemberService {
     }
 
     //로그인
-    public boolean loginService(String id, String pwd) {
+    public Map<?, ?> loginService(String id, String pwd) throws Exception {
+        Map<String, Object> map = new HashMap<>();
         Optional<Member> loginMember = memberRepository.findById(id);
         if(loginMember.isEmpty()) {
-            return false;
+            map.put("login", false);
         }else {
             if (!passwordEncoder.matches(pwd, loginMember.get().getPwd())){
-                return false;
-            } else return true;
+                map.put("login", false);
+            } else {
+                String token;
+                if(id.equals("admin")){
+                    log.info("관리자입니다 관리자용 토큰 발급합니다");
+                    token = jwtController.tokenCreate("admin");
+                    map.put("token", token);
+                } else {
+                    token = jwtController.tokenCreate(loginMember.get().getMemberNum().toString());
+                    map.put("token", token);
+                }
+                map.put("login", true);
+            }
         }
+        return map;
     }
 
     //회원가입

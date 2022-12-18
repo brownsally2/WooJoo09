@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavLink ,Link, useNavigate } from "react-router-dom";
+import { NavLink ,Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../resources/logo.png";
 import logoWhite from "../resources/logoWhite.png";
 import search from "../resources/search_purple.png";
@@ -19,10 +19,12 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
 
   const [NewChat, setNewChat] = useState(0);
   const [searchTarget, setSearchTarget] = useState("");
+  const [viewLogin, setViewLogin] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
+      setViewLogin(true)
       try {
         const response = await api.chatReadCheck();
         if(response.data.state === 'login'){
@@ -32,6 +34,7 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
         } else if(response.data.state === 'admin'){
           changeIsLogin(true);
           changeIsAdmin(true);
+          console.log("관리자입니다")
         }
         else{
           changeIsLogin(false);
@@ -59,14 +62,14 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
   const handleKeyPress = e => {
     if(e.key === 'Enter') {
       console.log(e.target.value);
-      navigate(`/search/${e.target.value}`);
+      navigate(`/search/${e.target.value}`, {state : {isLogin : isLogin}});
     }
   }
 
   const handleButton = () => {
     if(searchTarget) {
       console.log(searchTarget);
-      navigate(`/search/${searchTarget}`);
+      navigate(`/search/${searchTarget}`, {state : {isLogin : isLogin}});
     }
   }
 
@@ -79,7 +82,7 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
     <div className={scrollPosition < 150 ? "header" : "changedHeader"}>
       <div className="headerTop">
         <div className="headerLogo">
-          <Link to="/main">
+          <Link to="/main" state={{isLogin : isLogin}}>
             {scrollPosition < 150 && <img src={logo} alt="우주공구"/>}
             {scrollPosition >= 150 && <img src={logoWhite} alt="우주공구"/>}
           </Link>
@@ -90,26 +93,28 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
           onChange={onChangeTarget}/>
           <img src={search} alt="검색" onClick={handleButton}/>
         </div>
-        <div className="headerLogin">
-          { isLogin ?
+        {viewLogin && <div className="headerLogin">
+          { isLogin && !isAdmin ?
           <>
           <Link to="/member">
             <img src={scrollPosition < 150 ? profileBlack : profileWhite} alt="내정보"/>
           </Link>
           <Link to="/chatlist">
-            {NewChat === 0 ?
+            {NewChat == 0 ?
               <img src={scrollPosition < 150 ? chatBlack : chatWhite} alt="채팅"/>
               : <img src={scrollPosition < 150 ? chatMovingBlack : chatMovingWhite} alt="채팅"/>}
           </Link>
-          </> : (isAdmin? <button>관리자(admin)</button>: 
-          <button>로그인</button>)}
-         
-        </div>
+          </> : (isAdmin? <Link to="/ilovekirby/member">관리자(admin)</Link>: 
+          <button onClick={()=>{
+            navigate("/login");
+          }} className="headerLoginBtn">로그인</button>)}
+        </div>}
       </div>
       <div className="headerBottom">
         <div className="headerCategory">
           {categories.map((category) => (
             <NavLink to ={`/category/${category.value}`}
+            state = {{ isLogin : isLogin }}
             // className={category.value === current? "selected" : ""}
             // onClick={()=>{
             //   setCurrent(category.value)

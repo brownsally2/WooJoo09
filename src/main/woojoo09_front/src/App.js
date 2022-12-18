@@ -33,9 +33,6 @@ import "./style/termagree.scss";
 import "./admin/admin.scss";
 
 import MemberManagement from "./admin/pages/memberManagement/MemberManagement";
-import CategoryManagement from "./admin/pages/contentManagement/CategoryManagement";
-import CategoryManagementAdd from "./admin/pages/contentManagement/CategoryManagementAdd";
-import CategoryManagementDetail from "./admin/pages/contentManagement/CategoryManagementDetail";
 import WriteManagement from "./admin/pages/contentManagement/WriteManagement";
 import WriteManagementSearch from "./admin/pages/contentManagement/WriteManagementSearch";
 import WriteManagementDetail from "./admin/pages/contentManagement/WriteManagementDetail";
@@ -76,9 +73,6 @@ function App() {
           {/* 여기서부터 어드민 */}
           {/* {!isLogin && <Navigate to="/login" />} */}
           <Route path="/ilovekirby/member" element={<MemberManagement/>}/>
-          <Route path="/ilovekirby/content/categoryManagement" element={<CategoryManagement/>}/>
-          <Route path="/ilovekirby/content/categoryManagement/add" element={<CategoryManagementAdd/>}/>
-          <Route path="/ilovekirby/content/categoryManagement/detail/:board" element={<CategoryManagementDetail/>}/>
           <Route path="/ilovekirby/content/writeManagement" element={<WriteManagement/>}/>
           <Route path="/ilovekirby/content/writeManagement/search/:query" element={<WriteManagementSearch/>}/>
           <Route path="/ilovekirby/content/writeManagement/detail/:writeId" element={<WriteManagementDetail/>}/>

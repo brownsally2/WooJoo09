@@ -16,6 +16,10 @@ const RegisterPage = () =>{
     navigate('/termagree', {replace: true});
   }
 
+   useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [])
+
   // useEffect(() => {
   //   if(!location.state.checkItems) {
   //     return navigate('/termagree', {replace: true});

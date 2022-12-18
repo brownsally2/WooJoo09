@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import api from "../api/api";
 
 const ChangeMemberInfo = (props) =>{
-  console.log(this.props.memberNum);
+  console.log(props.memberNum);
 
   const [changeNickname, setChangeNickname] = useState(false);
   const [changeProfileImg, setChangeProfileImg] = useState(false);

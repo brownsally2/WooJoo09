@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -73,6 +73,11 @@ const LoginPage = () =>{
      }
      loginFetchDate();
   }
+
+  
+  useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [])
 
 
   return(

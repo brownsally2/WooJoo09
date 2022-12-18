@@ -270,6 +270,13 @@ const api = {
     }
     return await axios.post(BASE_URL+ "bannerdelete", bannerDeleteCmd, HEADER);
   },  
+  //로그아웃
+  logout: async function() {
+    const logoutCmd = {
+      cmd: "logout"
+    }
+    return await axios.post(BASE_URL + "logout", logoutCmd, HEADER);
+  },
 
   //로그인
   loginData: async function(loginId, loginPwd) {
