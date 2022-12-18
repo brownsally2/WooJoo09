@@ -63,6 +63,7 @@ public class ChatService {
                 .roomId(roomId)
                 .build();
         chatRooms.put(roomId, chatRoom);
+        log.info("chatRoom : " + chatRoom);
         return chatRoom;
     }
 

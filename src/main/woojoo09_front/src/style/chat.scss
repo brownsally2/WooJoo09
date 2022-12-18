@@ -34,9 +34,11 @@
     height: 10vh;
     border-radius: 5px;
     // background-color: $lightGray1Alpha6;
+    position: relative;
     div{
-        // position: absolute;
-        // left: -16%; 
+        position: absolute;
+        left: 30%; 
+        top: 50px;
 
     }
     div{
@@ -88,15 +90,17 @@
     //     display: flex;
     // }
     .chatDetailNick{
-        padding-top: 2%;
+        padding-left: 4%;
         display: flex;
+        width: 250vw;
+        height: 10px;
     }
     
 }
 .chatTime{
     // height: 10vh;
-    position: relative;
-    left: 50%;
+    position: absolute;
+    left: 60%;
     top: 2vh;
 }
 
@@ -119,12 +123,16 @@
 }
 
 .chatAlert{
-    width: 1vw;
-    height: 1.5vh;
+    width: 150px;
+    height: 10px;
     border-radius: 50%;
     background-color: #FAef91;
-    margin-left: 45%;
-    margin-top: 30px;
+    // position: absolute;
+    // top: 2vh;
+    // left: 60%;
+  
+    // margin-left: 45%;
+    // margin-top: 30px;
 
 }
 .chatRight{
@@ -209,13 +217,13 @@
     // display: flex;
     // justify-content: center;
     // align-items: center;
-    overflow-y: scroll;
+    overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none; /* Firefox */
     // width:70%;
-    height: 800px;
+    height: 500px;
     // display:flex;
-    // flex-direction: column-reverse;
+    // flex-direction: column;
 
     // padding-top: 3%;
     // overflow: hidden;
@@ -246,7 +254,7 @@
     // justify-content: center;
     position :fixed;
     // right:40;
-    bottom:20vh;
+    bottom:180px;
 }
 .chatSell{
     border-top: 1px solid $darkGray2Alpha3;
@@ -299,7 +307,14 @@
 }
 .sendAccount, .sendDelivery{
     display: flex;
+    text-align: center;
     justify-content: center;
+    // align-items: center;
+
+    select{
+        border-radius: 5px;
+        text-align: center;
+    }
     input{
         width: 10vw;
         height: 3vh;
@@ -353,8 +368,9 @@
 }
 
 .chatMessage{
+    padding : 15px;
     width: 12vw;
-    height: 5.5vh;
+    height: auto;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -368,27 +384,28 @@
 
 
 .chatMessage-My{
-    width: 10vw;
-    height: 5.5vh;
+    padding : 15px;
+    width: 12vw;
+    height: auto;
     justify-content: center;
     align-items: center;
     display: flex;
     border-radius: 5px;
-    margin-left: 75%;
-    margin-top:  2.7%;
+    margin-left: 70%;
+    margin-top:  20px;
     background-color: $lightPurple4Alpha5;
 
 }
 .chatTalkTime{
     position:relative ;
     left: 17.5vw;
-    top: -2vh;
+    top: -20px;
 
 }
 .chatTalkTime-My{
     position:relative ;
-    left: 33vw;
-    top: 4.5vh;
+    left: 42vw;
+    top: 80px;
 }
 
 .chatContainer{
