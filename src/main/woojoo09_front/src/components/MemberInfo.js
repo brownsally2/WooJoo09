@@ -7,7 +7,7 @@ import api from "../api/api";
 import MemberInfoList from "./MemeberInfoList";
 
 
-const MemberInfo = () =>{
+const MemberInfo = ({memberNum}) =>{
 
     const [memberInfo, setMemberInfo] = useState('');
     const getNickname = window.localStorage.getItem("userNickname");
@@ -21,7 +21,9 @@ const MemberInfo = () =>{
       <div className="memberinfomain">
         <MemberInfoList/>
         <div className="memberinfocenter">
-          <ChangeMemberInfo changeIsChange={changeIsChange}/>
+          <ChangeMemberInfo 
+          changeIsChange={changeIsChange}
+          memberNum={memberNum} />
           <MyTrade/>
           <div className="unReg">회원 탈퇴</div>
         </div>

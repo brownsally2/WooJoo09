@@ -29,14 +29,6 @@ const LoginPage = () =>{
   const onChangeLoginId = (e) => {
     const loginInputId = e.target.value;
     setLoginId(loginInputId);
-    // if(loginInputId.length > 15 || loginInputId.length < 3) {
-    //   setIsLoginId(false);
-    //   setLoginIdMsg("3~15자리 영문자 또는 숫자를 입력해주세요.");
-    // }
-    // else{
-    //   setIsLoginId(false);
-    //   setLoginIdMsg("아이디 중복 확인이 필요합니다.")
-    // }
     
     if(!idRegEx.test(loginInputId)) {
       setIsLoginId(false);
@@ -50,16 +42,6 @@ const LoginPage = () =>{
   const onChangeLoginPwd = (e) => {
     const loginInputPwd = e.target.value;
     setLoginPwd(loginInputPwd);
-    // if(pwdRegEx.test(loginInputPwd)) {
-    //   setIsLoginPwd(true);
-    //   setLoginPwdOkMsg("사용 가능한 비밀번호 입니다.");
-    // } else if (loginInputPwd.length === 0) {
-    //   setIsLoginPwd(false);
-    //   setLoginPwdMsg("비밀번호는 필수 항목 입니다.")
-    // } else {
-    //   setIsLoginPwd(false);
-    //   setLoginPwdMsg("8~20자리 소문자, 숫자, 특수문자를 입력해주세요.")
-    // }
 
     if(!pwdRegEx.test(loginInputPwd)) {
       setIsLoginPwd(false);

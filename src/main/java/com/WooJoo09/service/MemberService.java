@@ -127,4 +127,5 @@ public class MemberService {
     public boolean getPhoneVer(String phone) {
         return memberRepository.findByPhone(phone).isEmpty();
     }
+
 }

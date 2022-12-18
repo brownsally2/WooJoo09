@@ -371,6 +371,13 @@ const api = {
     return await axios.post(BASE_URL + "phoneverify", regPhoneCk, HEADER);
   },
 
+  //닉네임 변경하기
+  infoNewNickOk: async function(infoNewNickInput) {
+    const infoNewNick = {
+      infoNewNickInput: infoNewNickInput
+    }
+    return await axios.post(BASE_URL + "infoNewNick", infoNewNick, HEADER); 
+  },
 
   // 채팅 리스트 가져오기
   chatList: async function(chatListContent){
