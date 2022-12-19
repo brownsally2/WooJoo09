@@ -361,6 +361,15 @@ const api = {
     return await axios.post(BASE_URL + "findpwdverify", findPwdCodeSend, HEADER);
   },
 
+  //현재 비밀번호 맞는지 체크
+  currentPwd: async function(memberNum, inputPwd1) {
+    const currentPwdData = {
+      memberNum: memberNum,
+      inputPwd1: inputPwd1
+    }
+    return await axios.post(BASE_URL + "currentPwd", currentPwdData, HEADER);
+  },
+
   //비밀번호 재설정
   resetPwdData: async function(findPwdId, resetPwd) {
     const resetPwdData = {
@@ -378,9 +387,18 @@ const api = {
     return await axios.post(BASE_URL + "phoneverify", regPhoneCk, HEADER);
   },
 
+  //현재 닉네임 가져오기
+  memberInfoNewNick: async function(memberNum) {
+    const memberNick = {
+      memberNum: memberNum
+    }
+    return await axios.post(BASE_URL + "memberNick", memberNick, HEADER);
+  },
+
   //닉네임 변경하기
-  infoNewNickOk: async function(infoNewNickInput) {
+  infoNewNickOk: async function(memberNum, infoNewNickInput) {
     const infoNewNick = {
+      memberNum: memberNum,
       infoNewNickInput: infoNewNickInput
     }
     return await axios.post(BASE_URL + "infoNewNick", infoNewNick, HEADER); 

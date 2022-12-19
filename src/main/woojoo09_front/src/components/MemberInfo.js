@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../style/member.scss"
 import "../style/common.scss"
 import ChangeMemberInfo from "./ChangeMemberInfo";
@@ -7,9 +7,9 @@ import api from "../api/api";
 import MemberInfoList from "./MemeberInfoList";
 
 
-const MemberInfo = ({memberNum}) =>{
+const MemberInfo = ({memberNum, memberInfo}) =>{
 
-    const [memberInfo, setMemberInfo] = useState('');
+
     const getNickname = window.localStorage.getItem("userNickname");
     const [isChange, setIsChange] = useState('');
     const changeIsChange = (value) => {
@@ -19,11 +19,12 @@ const MemberInfo = ({memberNum}) =>{
   
     return(
       <div className="memberinfomain">
-        <MemberInfoList/>
+        <MemberInfoList memberInfo={memberInfo}/>
         <div className="memberinfocenter">
           <ChangeMemberInfo 
           changeIsChange={changeIsChange}
-          memberNum={memberNum} />
+          memberNum={memberNum} 
+          memberInfo={memberInfo}/>
           <MyTrade/>
           <div className="unReg">회원 탈퇴</div>
         </div>

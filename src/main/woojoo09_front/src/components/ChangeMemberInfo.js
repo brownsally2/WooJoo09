@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import api from "../api/api";
 
 const ChangeMemberInfo = (props) =>{
-  console.log(props.memberNum);
+  const memberNum = props.memberNum;
+  // console.log(memberNum);
+  // console.log(props.memberNum);
 
   const [changeNickname, setChangeNickname] = useState(false);
   const [changeProfileImg, setChangeProfileImg] = useState(false);
@@ -50,13 +52,14 @@ const ChangeMemberInfo = (props) =>{
 
   //닉네임 관련
   const nickRegEx = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{1,15}$/;
+  const [newNickInfo, setNewNickInfo] = useState('');
   const [infoNewNickInput, setInfoNewNickInput] = useState('');
   const [infoNewNickMsg, setInfoNewNickMsg] = useState("");
   const [infoNewNickOkMsg, setInfoNewNickOkMsg] = useState("");
   const [isInfoNewNick, setIsInfoNewNick] = useState(false);
   const [isInfoNewNickCk, setIsInfoNewNickCk] = useState(false);
 
-
+const [inputIntroduce, setInputIntroduce] = useState(props.memberInfo.introduce);
 
 
 
@@ -106,6 +109,20 @@ const ChangeMemberInfo = (props) =>{
     );
   };
 
+  // useEffect(() => {
+  //   const newNickData = async () => {
+  //     try {
+  //       const response = await api.memberInfoNewNick(memberNum);
+  //       setNewNickInfo(response.data);
+  //       console.log(response.data)
+  //       setChangeNickname(true)     
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //   newNickData();
+  // }, []);
+
   //닉네임 input
   const onChangeMemberInfoNewNickInput = (e) => {
     const infoNewNickInput = e.target.value;
@@ -147,11 +164,11 @@ const ChangeMemberInfo = (props) =>{
     }
   }
 
-  //닉네임 변경 버튼
+  //닉네임 변경 완료 버튼
   const onClickInfoNewNickChangeBtn = () => {
     const newNickOkFetchData = async () => {
       try {
-        const response = await api.infoNewNickOk(infoNewNickInput);
+        const response = await api.infoNewNickOk(memberNum, infoNewNickInput);
         console.log(response.data);
         if(response.data === true) {
           setIsInfoNewNick(true)
@@ -170,17 +187,17 @@ const ChangeMemberInfo = (props) =>{
   //현재 비밀번호 맞는지 ck
   const onClickPwdUpdate1 = async() => {
       try {
-          const res = await api.userLogin(getNickname, inputPwd1);
+          const res = await api.currentPwd(memberNum, inputPwd1);
           console.log(res.data);
-          if(res.data.result === "OK") {
+          if(res.data === true) {
               console.log("비밀번호 체크중");
-              onClickPwdUpdate2();
-          } else {
+              // onClickPwdUpdate2();
           }           
       } catch (e) {
-          console.log("로그인 에러..");
+          console.log("현재 비밀번호 체크 에러..");
       }
   }
+
   //새 비밀번호 변경
   const onClickPwdUpdate2 = async() => {
       try {
@@ -196,6 +213,7 @@ const ChangeMemberInfo = (props) =>{
           console.log("비밀번호 변경 에러...!");
       }
   }
+
   //새 비밀번호 유효성 ck
   const onChangepwd2 = (e) => {
       //const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
@@ -223,17 +241,18 @@ const ChangeMemberInfo = (props) =>{
           setIsConPw(true);
       }      
   }
+
   //현재 비밀번호 맞는지 ck
   const onChangepwd1 = (e) => {
-      const passwordCurrent = e.target.value;
-      setInputPwd1(passwordCurrent)
-      if (passwordCurrent !== getPwd) {
-          setConPwMessage('비밀 번호가 일치하지 않습니다.')
-          setIsConPw(false)
-      } else {
-          setConPwMessage('비밀 번호가 일치 합니다.')
-          setIsConPw(true);
-      }      
+      const currentPwd = e.target.value;
+      setInputPwd1(currentPwd)
+      // if (passwordCurrent !== getPwd) {
+      //     setConPwMessage('비밀 번호가 일치하지 않습니다.')
+      //     setIsConPw(false)
+      // } else {
+      //     setConPwMessage('비밀 번호가 일치 합니다.')
+      //     setIsConPw(true);
+      // }      
   }
 
   // 통신 부분 에러때문에 주석 처리
@@ -262,22 +281,19 @@ const ChangeMemberInfo = (props) =>{
   // };
 
 
-
-
-
     //기존 이메일 출력
-    useEffect(() => {    
-    const memberData = async () => {
-        try {
-            const response = await api.memberInfo(getNickname);
-            setMemberInfo(response.data);
-            console.log(response.data)
-        } catch (e) {
-            console.log(e);
-        }
-    };
-    memberData();
-    }, []);
+    // useEffect(() => {    
+    // const memberData = async () => {
+    //     try {
+    //         const response = await api.memberInfo(getNickname);
+    //         setMemberInfo(response.data);
+    //         console.log(response.data)
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // };
+    // memberData();
+    // }, []);
 
     //새 이메일 변경
     //변경을 누르면 새로운 이메일이 db에 변경됨
@@ -319,21 +335,24 @@ const ChangeMemberInfo = (props) =>{
     <div className="changememberinfo">
       <p>회원정보 수정</p>
 
-      {!changeProfileImg && !changeEmail && !changePwd  && !changeReceiveAd && !changeHost && <p onClick={()=>{setChangeNickname(true)}}
-      onDoubleClick={()=>{setChangeNickname(false)}}>닉네임 변경</p>}
+      {!changeProfileImg && !changeEmail && !changePwd  && !changeReceiveAd && !changeHost && 
+      <p onClick={()=>{setChangeNickname(true)}} onDoubleClick={()=>{setChangeNickname(false)}}>닉네임 변경</p>}
       {changeNickname && 
         <div className="pfImgChange">
-          {error && {error}}
+          {error && {error}} 
           <div className="pwdchange_container">
-            <p className="pwd_current">현재 닉네임 : 폼폼푸린
-            </p>
+          {
+            <>
+            <div>              
+              <p className="pwd_current">현재 닉네임 : {props.memberInfo.nickname}</p>
+            </div>
             <div className="current_pwd_hint">
-            {inputPwd1.length > 0 && (
+              {inputPwd1.length > 0 && (
                 <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage}</span>)}
             </div>
             <p className="pwd_change_ck">새 닉네임
-            <input type="text" value={infoNewNickInput} className="pwd_change_input" onChange={onChangeMemberInfoNewNickInput}></input>
-            <button className="infoNewNickDupBtn" onClick={onClickInfoNewNickDupBtn}>중복확인</button>
+              <input type="text" value={infoNewNickInput} className="pwd_change_input" onChange={onChangeMemberInfoNewNickInput}></input>
+              <button className="infoNewNickDupBtn" onClick={onClickInfoNewNickDupBtn}>중복확인</button>
             </p>
             <div className="infoNewNickMsg">
               {!isInfoNewNick && <span className="infoNewNickMsg">{infoNewNickMsg}</span>}
@@ -341,8 +360,10 @@ const ChangeMemberInfo = (props) =>{
             </div>
             <div>
               <button className="infoNewNickChangeBtn" onClick={onClickInfoNewNickChangeBtn}>변경</button>
-            </div>
-          </div>
+            </div> 
+            </>          
+          }
+          </div>           
         </div>
       }
 
@@ -383,7 +404,7 @@ const ChangeMemberInfo = (props) =>{
       onDoubleClick={()=>{setChangeEmail(false)}}>이메일 변경</p>}
           {changeEmail &&
             <div className="pfImgChange">
-              <p className="email_current">현재 이메일 주소 : pompom1234@naver.com</p>
+              <p className="email_current">{props.memberInfo.email}</p>
               {/* {memberInfo && memberInfo.map(member => (
                   <div key={member.nickname}>
                       <p className="email_current2">{member.email}</p>
@@ -407,18 +428,16 @@ const ChangeMemberInfo = (props) =>{
             {changeReceiveAd && 
               <div className="pfImgChange">
                 <div className="pwdchange_container">
-                  <p className="pwd_current">현재 광고 수신 여부는 허용입니다.</p>
+                  <p className="pwd_current">현재 광고 수신 여부는 {props.memberInfo.receiveAd === "ACTIVE"? "허용" : "거부"}입니다.</p>
                     <div>
-                    <label><input type="radio" name="Ad"/>허용</label>
-                    <label><input type="radio" name="Ad"/>거부</label>
+                    <label><input type="radio" name="Ad" checked={props.memberInfo.receiveAd === "ACTIVE"}/>허용</label>
+                    <label><input type="radio" name="Ad" checked={props.memberInfo.receiveAd === "NEGATIVE"}/>거부</label>
                     </div>
                     
                   <span className="pwd_change_yes" onClick={onClickPwdUpdate1} disabled ={disabled}>변경</span>
               </div>
               </div>
             }
-
-
 
       {!changeEmail && !changePwd && !changeNickname && !changeReceiveAd && !changeHost && <p onClick={()=>{setChangeProfileImg(true) }}
       onDoubleClick={()=>{setChangeProfileImg(false)}}>프로필 사진 변경</p>}
@@ -446,7 +465,9 @@ const ChangeMemberInfo = (props) =>{
       onDoubleClick={()=>{setChangeHost(false)}}>주최자 소개 변경</p>}
           {changeHost &&
             <div className="pfImgChange">
-              <p className="email_current">현재 주최자 소개는 '안녕하세요 000의 상점입니다' 입니다.</p>
+              <div>
+                {!props.memberInfo.introduce && <p>현재 주최자 소개가 없습니다.</p>}
+              </div>
               {memberInfo && memberInfo.map(member => (
                   <div key={member.nickname}>
                       <p className="email_current2">{member.email}</p>
@@ -457,7 +478,7 @@ const ChangeMemberInfo = (props) =>{
               </div> */}
               <p className="email_new">
                   <p>새 주최자 소개
-                  <input type="email" value={inputEmail} className="pwd_change_input" onChange={onChangemail}></input>
+                  <textarea  value={inputIntroduce} className="pwd_change_input" onChange={onChangemail}/>
                   </p>
               </p>
               <div className="email_hint">
@@ -469,7 +490,7 @@ const ChangeMemberInfo = (props) =>{
         </div>
         }
 
-
+      
     </div>
   );
 };

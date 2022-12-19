@@ -138,9 +138,47 @@ public class MemberService {
         return true;
     }
 
+    //현재 비밀번호 맞는지 체크
+    public boolean currentPwdService(Long memberNum, String pwd) {
+//        return !memberRepository.findByMemberNumAndPwd(memberNum, pwd).isEmpty();
+        Member member = memberRepository.findByMemberNum(memberNum);
+        if(passwordEncoder.matches(pwd, member.getPwd())){
+            return true;
+        } else return false;
+    }
+
     //전화번호 중복체크
     public boolean getPhoneVer(String phone) {
         return memberRepository.findByPhone(phone).isEmpty();
     }
 
+    //회원번호로 회원정보 가져오기
+    public MemberDTO memberNumList(Long memberNum) {
+        Member member = memberRepository.findByMemberNum(memberNum);
+            MemberDTO memberDTO = new MemberDTO();
+            memberDTO.setMemberNum(member.getMemberNum());
+            memberDTO.setId(member.getId());
+            memberDTO.setNickname(member.getNickname());
+            memberDTO.setRealName(member.getRealName());
+            memberDTO.setEmail(member.getEmail());
+            memberDTO.setPhone(member.getPhone());
+            memberDTO.setBirthDate(member.getBirthDate());
+            memberDTO.setRegDate(member.getRegDate());
+            memberDTO.setPfImg(member.getPfImg());
+            if(member.getReceiveAd() == ReceiveAd.POSITIVE) memberDTO.setReceiveAd("POSITIVE");
+            else memberDTO.setReceiveAd("NEGATIVE");
+            String grade = memberRepository.memberGrade(memberNum).get("grade");
+            memberDTO.setGrade(grade);
+            memberDTO.setIntroduce(member.getIntroduce());
+            return memberDTO;
+    }
+
+    //닉네임 변경
+    public boolean newNick(Long memberNum, String nickName) {
+        Member memberInfo = memberRepository.findByMemberNum(memberNum);
+        memberInfo.setNickname(nickName);
+        Member savedMember = memberRepository.save(memberInfo);
+        log.info(savedMember.toString());
+        return  true;
+    }
 }

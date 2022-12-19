@@ -13,6 +13,7 @@ const MemberPage = () =>{
   const [isLogin, setIsLogin] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [memberNum, setMemberNum] = useState();
+  const [memberInfo, setMemberInfo] = useState('');
   const changeIsLogin = (value) => {
     setIsLogin(value);
   };
@@ -27,6 +28,13 @@ const MemberPage = () =>{
         if(response.data.result === "OK"){
           setIsLogin(true);
           setMemberNum(response.data.memberNum);
+          try {
+            const res = await api.memberInfoNewNick(response.data.memberNum);
+            setMemberInfo(res.data);
+            console.log(res.data)
+          } catch (e) {
+            console.log(e);
+          }
         } else{
           setIsLogin(false);
         }
@@ -36,6 +44,7 @@ const MemberPage = () =>{
     };
     fetchData();
   }, []);
+
 
   if (!isLogin){
     navigate("/login", {state : "유효하지 않은 접근입니다\n로그인 후 이용해 주세요"});
@@ -50,7 +59,8 @@ const MemberPage = () =>{
       isAdmin={isAdmin}
       changeIsAdmin={changeIsAdmin}/>
       <MemberInfo
-      memberNum = {memberNum} />
+      memberNum = {memberNum}
+      memberInfo ={memberInfo} />
       <Footer/>
     </div>
   );

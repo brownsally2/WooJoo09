@@ -155,6 +155,15 @@ public class MemberController {
         return ResponseEntity.ok(memberService.memberIdService(id, newPwd));
     }
 
+    //현재 비밀번호 맞는지 체크
+    @PostMapping("/currentPwd")
+    @ResponseBody
+    public ResponseEntity<Boolean> currentPwd(@RequestBody Map<String, String> currentPwdData) {
+        Long memberNum = Long.parseLong(currentPwdData.get("memberNum"));
+        String pwd = currentPwdData.get("inputPwd1");
+        return ResponseEntity.ok(memberService.currentPwdService(memberNum, pwd));
+    }
+
     //휴대폰번호 인증
     @PostMapping("/phoneverify")
     public ResponseEntity<Map<String, String>> memberPhoneVerify(@RequestBody Map<String, String> phoneVerData) {
@@ -199,15 +208,23 @@ public class MemberController {
         response.addCookie(cookie); // 응답 헤더에 추가해서 없어지도록 함
         map.put("logout", "OK");
         return new ResponseEntity<>(map, HttpStatus.OK);
-    }    
+    }
+
+    //회원번호로 회원정보 가져오기
+    @PostMapping("/memberNick")
+    public ResponseEntity<MemberDTO> memberInfoNum(@RequestBody Map<String, String> memberInfoData) {
+        Long memberNum = Long.parseLong(memberInfoData.get("memberNum"));
+        MemberDTO numList = memberService.memberNumList(memberNum);
+        return new ResponseEntity<>(numList, HttpStatus.OK);
+    }
 	
 	//닉네임 변경하기
-    //값 두개 가져와야 함
-//    @PostMapping("/infoNewNick")
-//    @ResponseBody
-//    public ResponseEntity<Boolean> infoNewNick(@RequestBody Map<String, String> infoNewNickData) {
-//        String nickname = infoNewNickData.get("infoNewNickInput");
-//        return ResponseEntity.ok(memberService.newNick(nickname));
-//    }
+    @PostMapping("/infoNewNick")
+    @ResponseBody
+    public ResponseEntity<Boolean> infoNewNick(@RequestBody Map<String, String> infoNewNickData) {
+        Long memberNum = Long.parseLong(infoNewNickData.get("memberNum"));
+        String nickname = infoNewNickData.get("infoNewNickInput");
+        return ResponseEntity.ok(memberService.newNick(memberNum, nickname));
+    }
 
 }

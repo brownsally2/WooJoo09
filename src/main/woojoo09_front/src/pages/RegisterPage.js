@@ -20,17 +20,6 @@ const RegisterPage = () =>{
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [])
 
-  // useEffect(() => {
-  //   if(!location.state.checkItems) {
-  //     return navigate('/termagree', {replace: true});
-  //   }
-  // }, []);
-
-  // if(!location.state.checkItems) {
-  //   return <Navigate to = "/termagree"
-  //   replace={true} />
-  // }
-
   const isAdOk = location.state.isAdOk;
   const isActive = location.state.isActive;
 
