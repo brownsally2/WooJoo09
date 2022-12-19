@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,10 +41,19 @@ public class MemberController {
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity<Boolean> memberLogin(@RequestBody Map<String, String> loginData) {
+    public ResponseEntity<Boolean> memberLogin(HttpServletResponse response, @RequestBody Map<String, String> loginData) throws Exception {
         String id = loginData.get("loginId");
         String pwd = loginData.get("loginPwd");
-        return ResponseEntity.ok(memberService.loginService(id, pwd));
+        if((boolean)memberService.loginService(id, pwd).get("login")){
+            log.info("로그인 성공 해서 토큰을 발급");
+            String token = (String)memberService.loginService(id, pwd).get("token");
+            Cookie cookie = new Cookie("token", token); // 생성된 토큰을 cookie에 세팅
+            cookie.setMaxAge(60 * 60); // 유효기간 60분으로 설정
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+            response.addCookie(cookie); // 응답에 쿠키 추가
+            return ResponseEntity.ok(true);
+        }else return ResponseEntity.ok(false);
     }
 
     //회원가입
@@ -176,5 +187,27 @@ public class MemberController {
         }
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+
+    //로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<Map<?,?>> logout(HttpServletResponse response, @RequestBody Map<String, String> Data) {
+        Map<String, String> map = new HashMap<>();
+        Cookie cookie = new Cookie("token", null); // choiceCookieName(쿠키 이름)에 대한 값을 null로 지정
+        cookie.setMaxAge(0); // 유효시간을 0으로 설정
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie); // 응답 헤더에 추가해서 없어지도록 함
+        map.put("logout", "OK");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }    
+	
+	//닉네임 변경하기
+    //값 두개 가져와야 함
+//    @PostMapping("/infoNewNick")
+//    @ResponseBody
+//    public ResponseEntity<Boolean> infoNewNick(@RequestBody Map<String, String> infoNewNickData) {
+//        String nickname = infoNewNickData.get("infoNewNickInput");
+//        return ResponseEntity.ok(memberService.newNick(nickname));
+//    }
 
 }

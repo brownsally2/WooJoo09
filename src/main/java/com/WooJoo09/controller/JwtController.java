@@ -142,6 +142,7 @@ public class JwtController {
             String memberNum = tokenCheck(token);
             log.info("/tokencheck 토큰에 담긴 회원정보 memberNum" + memberNum);
             result.put("result", "OK");
+            result.put("memberNum", memberNum);
         }else{
             result.put("result", "NOK");
         }

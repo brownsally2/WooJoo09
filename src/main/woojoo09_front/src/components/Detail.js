@@ -226,7 +226,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
     )
   } 
 
-  if(!loading && data && !data.detail.product){
+  if(!isAdmin && !loading && data && data.detail.doneTrade === "DELETE"){
     return(
       <div className="detail">
       <div className="errorDetail">

@@ -12,21 +12,27 @@ const ChatSellButton = () => {
     const visibleAccount = (e) => {
         // console.log("선택한 값 : " +e.target.value)
         setVisible(!visible);
+        setVisibleDel(false);
+        setVisiblePho(false);
         setType(e.target.value)
     }
         // console.log("값이 있나요?" +type);
     const visibleDelivery = (e) => {
         setVisibleDel(!visibleDel);
+        setVisible(false);
+        setVisiblePho(false);
 
     }
     const visiblePhoto = (e) => {
         setVisiblePho(!visiblePho);
+        setVisible(false);
+        setVisibleDel(false);
     }
 
     return(
         <>
         <div className="sendPrivacy">
-            { visible &&<SendAccount /> }
+            { visible && <SendAccount /> }
             { visibleDel && <SendDelivery /> }
             { visiblePho && <SendPhoto />}
         </div>

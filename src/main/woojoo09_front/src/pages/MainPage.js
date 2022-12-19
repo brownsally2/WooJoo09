@@ -3,18 +3,29 @@ import Header from "../components/Header";
 import Main from "../components/Main";
 import Footer from "../components/Footer"
 import { useState, useEffect } from "react";
+import { useLocation} from 'react-router-dom';
 import api from "../api/api";
+import Loader from "../components/Loader";
 
 const MainPage = () =>{
-
-  const [isLogin, setIsLogin] = useState("");
+  const location = useLocation();
+  const [isLogin, setIsLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const changeIsLogin = (value) => {
     setIsLogin(value);
   };
   const changeIsAdmin = (value) => {
     setIsAdmin(value);
   };
+
+  useEffect(() =>{
+    if(location.state){
+      console.log(location.state.isLogin);
+      setIsLogin(location.state.isLogin);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

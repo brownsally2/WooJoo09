@@ -270,6 +270,13 @@ const api = {
     }
     return await axios.post(BASE_URL+ "bannerdelete", bannerDeleteCmd, HEADER);
   },  
+  //로그아웃
+  logout: async function() {
+    const logoutCmd = {
+      cmd: "logout"
+    }
+    return await axios.post(BASE_URL + "logout", logoutCmd, HEADER);
+  },
 
   //로그인
   loginData: async function(loginId, loginPwd) {
@@ -371,6 +378,13 @@ const api = {
     return await axios.post(BASE_URL + "phoneverify", regPhoneCk, HEADER);
   },
 
+  //닉네임 변경하기
+  infoNewNickOk: async function(infoNewNickInput) {
+    const infoNewNick = {
+      infoNewNickInput: infoNewNickInput
+    }
+    return await axios.post(BASE_URL + "infoNewNick", infoNewNick, HEADER); 
+  },
 
   // 채팅 리스트 가져오기
   chatList: async function(chatListContent){

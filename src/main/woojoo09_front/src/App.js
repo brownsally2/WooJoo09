@@ -16,6 +16,7 @@ import LoginPage from "./pages/LoginPage"
 import MyTradePage from "./pages/MyTradePage"
 import SearchPage from "./pages/SearchPage"
 import UpdatePage from "./pages/UpdatePage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 
 import "./style/common.scss";
 import "./style/detail.scss";
@@ -29,8 +30,17 @@ import "./style/login.scss";
 import "./style/register.scss";
 import "./style/resetpwd.scss";
 import "./style/termagree.scss";
+import "./admin/admin.scss";
 
-import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import MemberManagement from "./admin/pages/memberManagement/MemberManagement";
+import WriteManagement from "./admin/pages/contentManagement/WriteManagement";
+import WriteManagementSearch from "./admin/pages/contentManagement/WriteManagementSearch";
+import WriteManagementDetail from "./admin/pages/contentManagement/WriteManagementDetail";
+import ChatManagement from "./admin/pages/contentManagement/ChatManagement";
+import AdManagement from "./admin/pages/adManagement/AdManagement";
+import AdManagementAdd from "./admin/pages/adManagement/AdManagementAdd";
+import AdManagementDetail from "./admin/pages/adManagement/AdManagementDetail";
+import NotiSend from "./admin/pages/notiManagement/NotiSend";
 
 function App() {
   return (
@@ -59,6 +69,18 @@ function App() {
           <Route path='/update' element={<UpdatePage/>}/>
           <Route path='/term' element={<TermPage/>}/>
           <Route path='/privacypolicy' element={<PrivacyPolicyPage/>}/>
+
+          {/* 여기서부터 어드민 */}
+          {/* {!isLogin && <Navigate to="/login" />} */}
+          <Route path="/ilovekirby/member" element={<MemberManagement/>}/>
+          <Route path="/ilovekirby/content/writeManagement" element={<WriteManagement/>}/>
+          <Route path="/ilovekirby/content/writeManagement/search/:query" element={<WriteManagementSearch/>}/>
+          <Route path="/ilovekirby/content/writeManagement/detail/:writeId" element={<WriteManagementDetail/>}/>
+          <Route path="/ilovekirby/content/chatManagement" element={<ChatManagement/>}/>
+          <Route path="/ilovekirby/adManagement" element={<AdManagement/>}/>
+          <Route path="/ilovekirby/adManagement/AdManagementDetail/:ad_num" element = {<AdManagementDetail/>}/>
+          <Route path="/ilovekirby/adManagement/AdManagementAdd" element = {<AdManagementAdd/>}/>
+          <Route path="/ilovekirby/noti/send" element={<NotiSend/>}/>
           
         </Routes>
     </Router>

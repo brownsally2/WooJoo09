@@ -5,21 +5,27 @@ import ChatShipAdr from "./ChatShipAdr";
 const ChatBuyButton = () => {
     const [visibleAccLook, setvisibleAccLook] = useState(false);
     const [visibleDelInput, setvisibleDelInput] = useState(false);
-    const [visibleDelLook, setvisibleDellook] = useState(false);
+    const [visibleDelLook, setvisibleDelLook] = useState(false);
     const [type, setType] = useState('');
 
     const visibleAccountLook = (e) => {
         // console.log("선택한 값 : " +e.target.value)
         setvisibleAccLook(!visibleAccLook);
+        setvisibleDelInput(false);
+        setvisibleDelLook(false);
         setType(e.target.value)
     }
         console.log("값이 있나요?" +type);
     const visibleDeliveryLook = (e) => {
-        setvisibleDelInput(!visibleDelInput);
+        setvisibleDelLook(!visibleDelLook);
+        setvisibleDelInput(false);
+        setvisibleAccLook(false);
 
     }
     const visibleDeliveryInput = (e) => {
-        setvisibleDellook(!visibleDelLook);
+        setvisibleDelInput(!visibleDelInput);
+        setvisibleDelLook(false);
+        setvisibleAccLook(false);
     }
 
     return(

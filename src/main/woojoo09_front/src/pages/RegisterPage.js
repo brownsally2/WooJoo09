@@ -16,6 +16,10 @@ const RegisterPage = () =>{
     navigate('/termagree', {replace: true});
   }
 
+   useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [])
+
   // useEffect(() => {
   //   if(!location.state.checkItems) {
   //     return navigate('/termagree', {replace: true});
@@ -223,11 +227,11 @@ const RegisterPage = () =>{
         if(response.data === true) {
           setIsRegNickCk(true);
           setIsRegNick(true);
-          setRegNickOkMsg("사용 가능한 아이디 입니다.");
+          setRegNickOkMsg("사용 가능한 닉네임 입니다.");
         } else if (response.data === false) {
           setIsRegNick(false);
           setIsRegNickCk(true);
-          setRegNickMsg("이미 존재하는 아이디 입니다.");
+          setRegNickMsg("이미 존재하는 닉네임 입니다.");
         } 
       } catch (e) {
         console.log(e);
@@ -285,7 +289,7 @@ const RegisterPage = () =>{
   });
 
   let years = [];
-  for(let y = now.getFullYear(); y >= 1930; y -= 1) {
+  for(let y = (now.getFullYear()-14); y >= 1930; y -= 1) {
     years.push(y.toString());
   }
   
@@ -573,6 +577,9 @@ const RegisterPage = () =>{
                 </div>
               </div>
               <div className="regFakeBox"></div>
+            </div>
+            <div className="regErrMsg">
+              <span>14세 이상부터 회원가입이 가능합니다.</span>
             </div>
 
             <div className="regSmallBox">

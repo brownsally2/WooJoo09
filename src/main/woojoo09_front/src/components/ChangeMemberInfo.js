@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import api from "../api/api";
 
 const ChangeMemberInfo = (props) =>{
+  console.log(props.memberNum);
+
   const [changeNickname, setChangeNickname] = useState(false);
   const [changeProfileImg, setChangeProfileImg] = useState(false);
   const [changePwd, setChangePwd] = useState(false);
@@ -15,6 +17,7 @@ const ChangeMemberInfo = (props) =>{
   const [error, setError] = useState("");
   
   const [memberInfo, setMemberInfo] = useState('');
+  
   const [inputPwd1, setInputPwd1] = useState('');
   const [inputPwd2, setInputPwd2] = useState('');
   const [inputPwd3, setInputPwd3] = useState('');
@@ -28,8 +31,8 @@ const ChangeMemberInfo = (props) =>{
   const [changeHost,setChangeHost] = useState(false);
 
 
-
   //오류메시지
+
   const [pwMessage, setPwMessage] = useState("");
   const [conPwMessage, setConPwMessage] = useState("");
   const [conPwMessage2, setConPwMessage2] = useState("");
@@ -44,6 +47,18 @@ const ChangeMemberInfo = (props) =>{
 
     //오류메시지
   const [emailMessage, setEmailMessage] = useState("");
+
+  //닉네임 관련
+  const nickRegEx = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{1,15}$/;
+  const [infoNewNickInput, setInfoNewNickInput] = useState('');
+  const [infoNewNickMsg, setInfoNewNickMsg] = useState("");
+  const [infoNewNickOkMsg, setInfoNewNickOkMsg] = useState("");
+  const [isInfoNewNick, setIsInfoNewNick] = useState(false);
+  const [isInfoNewNickCk, setIsInfoNewNickCk] = useState(false);
+
+
+
+
 
   const handleImage = (event) => {
     const image = event.target.files[0];
@@ -90,6 +105,67 @@ const ChangeMemberInfo = (props) =>{
       }
     );
   };
+
+  //닉네임 input
+  const onChangeMemberInfoNewNickInput = (e) => {
+    const infoNewNickInput = e.target.value;
+    setInfoNewNickInput(infoNewNickInput);
+    if(!nickRegEx.test(infoNewNickInput) && !(infoNewNickInput.length === 0)) {
+      setIsInfoNewNick(false);
+      setInfoNewNickMsg("15자리 이하 한글,영문자,숫자를 입력해주세요.");
+    } else if (!isInfoNewNickCk && !(infoNewNickInput.length === 0)) {
+      setIsInfoNewNick(false);
+      setInfoNewNickMsg("닉네임 중복 확인이 필요합니다.")
+    };
+  }
+
+  //닉네임 중복확인
+  const onClickInfoNewNickDupBtn = () => {
+    console.log("닉네임 중복체크 할 때 들어온 값" + infoNewNickInput);
+    if(nickRegEx.test(infoNewNickInput)) {
+      const newNickFetchData = async () => {
+        try {
+          const response = await api.memberNickDup(infoNewNickInput);
+          if(response.data === true) {
+            setIsInfoNewNick(true)
+            setIsInfoNewNickCk(true)
+            setInfoNewNickOkMsg("사용 가능한 닉네임 입니다.")
+          } else if(response.data === false) {
+            setIsInfoNewNick(false)
+            setIsInfoNewNickCk(true)
+            setInfoNewNickMsg("이미 존재하는 닉네임 입니다.")
+          }
+        } catch (e) {
+          console.log(e)
+        }
+      };
+      newNickFetchData();
+    }else{
+      setIsInfoNewNick(false)
+      setIsInfoNewNickCk(false)
+      setInfoNewNickMsg("닉네임 형식을 확인 후 중복 체크를 해주세요.")
+    }
+  }
+
+  //닉네임 변경 버튼
+  const onClickInfoNewNickChangeBtn = () => {
+    const newNickOkFetchData = async () => {
+      try {
+        const response = await api.infoNewNickOk(infoNewNickInput);
+        console.log(response.data);
+        if(response.data === true) {
+          setIsInfoNewNick(true)
+          setInfoNewNickOkMsg("닉네임이 변경되었습니다.")
+        } else {
+          setIsInfoNewNick(false)
+          setInfoNewNickMsg("닉네임 형식을 확인 후 중복 체크를 해주세요.")
+        }
+      }catch (e) {
+        console.log(e)
+      }
+    }
+    newNickOkFetchData(); 
+  }
 
   //현재 비밀번호 맞는지 ck
   const onClickPwdUpdate1 = async() => {
@@ -256,15 +332,17 @@ const ChangeMemberInfo = (props) =>{
                 <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage}</span>)}
             </div>
             <p className="pwd_change_ck">새 닉네임
-            <input type="text" value={inputPwd2} className="pwd_change_input" onChange={onChangepwd2}></input>
+            <input type="text" value={infoNewNickInput} className="pwd_change_input" onChange={onChangeMemberInfoNewNickInput}></input>
+            <button className="infoNewNickDupBtn" onClick={onClickInfoNewNickDupBtn}>중복확인</button>
             </p>
-            <div className="pwd_hint">
-                {/* {inputPwd2.length > 0 && (
-                <span className={`message ${isPw ? 'success' : 'error'}`}>{pwMessage}</span>)} */}
+            <div className="infoNewNickMsg">
+              {!isInfoNewNick && <span className="infoNewNickMsg">{infoNewNickMsg}</span>}
+              {isInfoNewNick && <span className="infoNewNickMsg">{infoNewNickOkMsg}</span>}
             </div>
-            <span className="pwd_change_yes" onClick={onClickPwdUpdate1}>변경</span>
-            {/* <Link to='/member' className="pwd_cancle">취소</Link> */}
-         </div>
+            <div>
+              <button className="infoNewNickChangeBtn" onClick={onClickInfoNewNickChangeBtn}>변경</button>
+            </div>
+          </div>
         </div>
       }
 

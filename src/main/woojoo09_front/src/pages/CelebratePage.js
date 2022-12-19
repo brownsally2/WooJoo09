@@ -2,6 +2,7 @@ import Footer from '../components/Footer';
 import Header from "../components/Header";
 import Celebrate from "../components/Celebrate";
 import { useNavigate  } from "react-router-dom";
+import { useEffect } from 'react';
 
 const CelebratePage = () =>{
   const navigate = useNavigate();
@@ -13,6 +14,10 @@ const CelebratePage = () =>{
   const onClickCelMainBtn = () => {
     navigate('/');
   }
+
+  useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [])
 
   return(
     <div className="wrapper">

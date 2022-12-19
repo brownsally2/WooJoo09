@@ -310,11 +310,11 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "(select count(*) from star s where s.trade_num = t.trade_num) as countStar " +
                     "from category c, trade t where t.category = c.category_num " +
                     "and host not in (select member_num from member where is_active = 'INACTIVE') " +
-                    "and done_trade != 'DELETE' " +
                     "and trade_num = :tradeNum",
             nativeQuery = true
     )
     Map<?,?> tradeDetailSelect(@Param("tradeNum") int tradeNum);
+    // "and done_trade != 'DELETE' " 를 주석처리함 -> 어드민에서 삭제한 게시글 볼 수 있도록
 
     @Query(
             value = "select trade_num tradeNum, category_name categoryName, product, price, " +
@@ -326,7 +326,6 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "case host when :memberNum then 'Y' else 'N' end as isMyWRite " +
                     "from category c, trade t where t.category = c.category_num " +
                     "and host not in (select member_num from member where is_active = 'INACTIVE') " +
-                    "and done_trade != 'DELETE' " +
                     "and trade_num = :tradeNum",
             nativeQuery = true
     )
