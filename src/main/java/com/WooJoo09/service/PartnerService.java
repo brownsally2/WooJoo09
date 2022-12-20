@@ -48,6 +48,7 @@ public class PartnerService {
                 Chat savedChat = chatRepository.save(chat);
                 log.info(savedChat.toString());
                 map.put("completePartner", "OK");
+                map.put("partnerNum", savedPartner.getPartnerNum().toString());
             } else map.put("completePartner", "duplicateChat");
         } else map.put("completePartner", "duplicate");
         return map;
@@ -105,4 +106,38 @@ public class PartnerService {
 //        }
 //        return map;
 //    }
+
+    public boolean accountsendService(Long partnerNum, String bank, String account, String accountholder) {
+//        Partner partner = partnerRepository.findByPartnerNum(partnerNum);
+//        Member member = memberRepository.findByMemberNum(memberNum);
+//        Chat chat = new Chat();
+        Partner partner= partnerRepository.findByPartnerNum(partnerNum);
+        partner.setBank(bank);
+        partner.setAccountNum(account);
+        partner.setAccountHolder(accountholder);
+
+        Partner savedAcoount = partnerRepository.save(partner);
+        log.info(savedAcoount.toString());
+        return true;
+    }
+    public boolean deliverysendService(Long partnerNum, String deliveryCompany, String deliveryNum) {
+        // 전송 받은 값만 저장하기 위해서 findBypartnerNum으로 찾고 해당 값만 저장
+        Partner partner= partnerRepository.findByPartnerNum(partnerNum);
+        partner.setDeliveryCompany(deliveryCompany);
+        partner.setDeliveryNum(deliveryNum);
+
+        Partner savedDeliveryNum = partnerRepository.save(partner);
+        log.info(savedDeliveryNum.toString());
+        return true;
+    }
+    public boolean deliveryaddrsendService(Long partnerNum, String deliveryAddress, String deliveryName, String deliveryPhone) {
+        // 전송 받은 값만 저장하기 위해서 findByPartnerNum으로 찾고 해당 값만 저장
+        Partner partner= partnerRepository.findByPartnerNum(partnerNum);
+        partner.setDeliveryAddress(deliveryAddress);
+        partner.setDeliveryName(deliveryName);
+        partner.setDeliveryPhone(deliveryPhone);
+        Partner savedDeliveryAddr = partnerRepository.save(partner);
+        log.info(savedDeliveryAddr.toString());
+        return true;
+    }
 }

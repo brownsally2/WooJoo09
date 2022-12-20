@@ -404,6 +404,52 @@ const api = {
     return await axios.post(BASE_URL + "infoNewNick", infoNewNick, HEADER); 
   },
 
+  //회원정보수정 - 비밀번호 변경
+  infoResetPwd: async function(memberNum, inputPwd2) {
+    const infoResetPwd = {
+      memberNum: memberNum,
+      inputPwd2: inputPwd2
+    }
+    return await axios.post(BASE_URL + "infoResetPwd", infoResetPwd, HEADER); 
+  },
+
+  //회원정보수정 - 이메일 변경
+  infoResetEmail: async function(memberNum, inputEmail) {
+    const infoResetEmail = {
+      memberNum: memberNum,
+      inputEmail: inputEmail
+    }
+    return await axios.post(BASE_URL + "infoResetEmail", infoResetEmail, HEADER); 
+  },
+  
+  //회원정보수정 - 광고수신여부 변경
+  infoIsAd: async function(memberNum, infoAd) {
+    const infoResetAd = {
+      memberNum: memberNum,
+      infoAd: infoAd
+    }
+    return await axios.post(BASE_URL + "infoResetAd", infoResetAd, HEADER); 
+  },
+
+  //회원정보수정 - 프로필사진 변경
+  pfImgChange: async function(memberNum, pfImg) {
+    const infoImgChange = {
+      memberNum: memberNum,
+      pfImg: pfImg
+    }
+    return await axios.post(BASE_URL + "infoImgChange", infoImgChange, HEADER); 
+  },
+
+  //회원정보수정 - 주최자소개내용 변경
+  infoIntroduce: async function(memberNum, inputIntroduce) {
+    const newIntroduce = {
+      memberNum: memberNum,
+      inputIntroduce: inputIntroduce
+    }
+    return await axios.post(BASE_URL + "newIntroduce", newIntroduce, HEADER); 
+  },
+
+
   // 채팅 리스트 가져오기
   chatList: async function(chatListContent){
     const chatList = {
@@ -444,6 +490,35 @@ const api = {
 
     }
     return await axios.post(BASE_URL + "chatInsert", chatObject, HEADER);
+  }, 
+  accountsend : async function(partner_num, bank, account, accountholder) {
+    const chatObject = {
+      partner_num : partner_num,
+      bank :bank,
+      account : account,
+      accountholder : accountholder
+
+    }
+    return await axios.post(BASE_URL + "accountsend", chatObject, HEADER);
+  }, 
+  deliverysend : async function(partner_num, deliveryCompany, deliveryNum) {
+    const chatObject = {
+      partner_num : partner_num,
+      deliveryCompany :deliveryCompany,
+      deliveryNum : deliveryNum
+
+    }
+    return await axios.post(BASE_URL + "deliverysend", chatObject, HEADER);
+  }, 
+    deliveryaddrsend : async function(partner_num, deliveryAddress, deliveryName, deliveryPhone) {
+    const chatObject = {
+      partner_num : partner_num,
+      deliveryAddress :deliveryAddress,
+      deliveryName : deliveryName,
+      deliveryPhone : deliveryPhone
+
+    }
+    return await axios.post(BASE_URL + "deliveryaddrsend", chatObject, HEADER);
   }, 
 
 }

@@ -7,14 +7,7 @@ import api from "../api/api";
 import MemberInfoList from "./MemeberInfoList";
 
 
-const MemberInfo = ({memberNum, memberInfo}) =>{
-
-
-    const getNickname = window.localStorage.getItem("userNickname");
-    const [isChange, setIsChange] = useState('');
-    const changeIsChange = (value) => {
-      setIsChange(value);
-    };
+const MemberInfo = ({memberNum, memberInfo, changeIsChange}) =>{
 
   
     return(

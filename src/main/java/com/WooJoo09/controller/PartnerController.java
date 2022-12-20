@@ -1,5 +1,10 @@
 package com.WooJoo09.controller;
 
+import com.WooJoo09.constant.IsRead;
+import com.WooJoo09.constant.MsgType;
+import com.WooJoo09.entity.Chat;
+import com.WooJoo09.entity.Partner;
+import com.WooJoo09.repository.PartnerRepository;
 import com.WooJoo09.service.PartnerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -94,6 +100,68 @@ public class PartnerController {
             map.put("deletePartnerHost", "loginError");
             return ResponseEntity.ok().body(map);
         }
+    }
+
+    @PostMapping("/accountsend")
+    @ResponseBody
+    public ResponseEntity<Boolean> accountsend(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> sendAccount) throws Exception {
+        if (token != null) {
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            Map partnerNumMap = (LinkedHashMap)sendAccount.get("partner_num");
+            String partnerNumStr = (String) partnerNumMap.get("partner_num");
+            Long partnerNum = Long.parseLong(partnerNumStr);
+            log.warn("partner_num : " + partnerNum);
+            String bank = (String)sendAccount.get("bank");
+            String account = (String)sendAccount.get("account");
+            String accountholder = (String)sendAccount.get("accountholder");
+
+            return ResponseEntity.ok(partnerService.accountsendService(partnerNum, bank, account, accountholder));
+        }
+        else return ResponseEntity.ok(false);
+    }
+
+    @PostMapping("/deliverysend")
+    @ResponseBody
+    public ResponseEntity<Boolean> deliverysend(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> sendDelivery) throws Exception {
+        if (token != null) {
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            Map partnerNumMap = (LinkedHashMap)sendDelivery.get("partner_num");
+            String partnerNumStr = (String) partnerNumMap.get("partner_num");
+            Long partnerNum = Long.parseLong(partnerNumStr);
+            log.warn("partner_num : " + partnerNum);
+            String deliveryCompany = (String)sendDelivery.get("deliveryCompany");
+            String deliveryNum = (String)sendDelivery.get("deliveryNum");
+
+            return ResponseEntity.ok(partnerService.deliverysendService(partnerNum, deliveryCompany, deliveryNum));
+        }
+        else return ResponseEntity.ok(false);
+    }
+
+    @PostMapping("/deliveryaddrsend")
+    @ResponseBody
+    public ResponseEntity<Boolean> deliveryaddrsend(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> sendDeliveryaddr) throws Exception {
+        if (token != null) {
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            Map partnerNumMap = (LinkedHashMap)sendDeliveryaddr.get("partner_num");
+            String partnerNumStr = (String) partnerNumMap.get("partner_num");
+            Long partnerNum = Long.parseLong(partnerNumStr);
+            log.warn("partner_num : " + partnerNum);
+            String deliveryAddress = (String)sendDeliveryaddr.get("deliveryAddress");
+            String deliveryName = (String)sendDeliveryaddr.get("deliveryName");
+            String deliveryPhone = (String)sendDeliveryaddr.get("deliveryPhone");
+
+            return ResponseEntity.ok(partnerService.deliveryaddrsendService(partnerNum, deliveryAddress, deliveryName, deliveryPhone));
+        }
+        else return ResponseEntity.ok(false);
     }
 
 }

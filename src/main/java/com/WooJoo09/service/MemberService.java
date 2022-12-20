@@ -132,19 +132,10 @@ public class MemberService {
         Optional<Member> memberId = memberRepository.findById(id);
         if(memberId.isEmpty()) return false;
         Member member = memberId.get();
-        member.setPwd(newPwd);
+        member.setPwd(passwordEncoder.encode(newPwd));
         Member savedMember = memberRepository.save(member);
         log.info(savedMember.toString());
         return true;
-    }
-
-    //현재 비밀번호 맞는지 체크
-    public boolean currentPwdService(Long memberNum, String pwd) {
-//        return !memberRepository.findByMemberNumAndPwd(memberNum, pwd).isEmpty();
-        Member member = memberRepository.findByMemberNum(memberNum);
-        if(passwordEncoder.matches(pwd, member.getPwd())){
-            return true;
-        } else return false;
     }
 
     //전화번호 중복체크
@@ -180,5 +171,64 @@ public class MemberService {
         Member savedMember = memberRepository.save(memberInfo);
         log.info(savedMember.toString());
         return  true;
+    }
+
+    //현재 비밀번호 맞는지 체크
+    public boolean currentPwdService(Long memberNum, String pwd) {
+//        return !memberRepository.findByMemberNumAndPwd(memberNum, pwd).isEmpty();
+        Member member = memberRepository.findByMemberNum(memberNum);
+        if(passwordEncoder.matches(pwd, member.getPwd())){
+            return true;
+        } else return false;
+    }
+
+    //회원정보수정 - 비밀번호 변경
+    public boolean infoNewPwdService(Long memberNum, String pwd) {
+        Member member = memberRepository.findByMemberNum(memberNum);
+        if(member == null) return false;
+        member.setPwd(passwordEncoder.encode(pwd));
+        Member savedMember = memberRepository.save(member);
+        log.info(savedMember.toString());
+        return true;
+    }
+
+    //회원정보수정 - 이메일 변경
+    public boolean infoNewEmailService(Long memberNum, String email) {
+        Member member = memberRepository.findByMemberNum(memberNum);
+        if(member == null) return false;
+        member.setEmail(email);
+        Member savedMember = memberRepository.save(member);
+        log.info(savedMember.toString());
+        return true;
+    }
+
+    //회원정보수정 - 광고수신여부 변경
+    public boolean infoResetAdService(Long memberNum, String receiveAd) {
+        Member member = memberRepository.findByMemberNum(memberNum);
+        if(member == null) return false;
+        member.setReceiveAd(ReceiveAd.valueOf(receiveAd));
+        Member savedMember = memberRepository.save(member);
+        log.info(savedMember.toString());
+        return true;
+    }
+
+    //회원정보수정 - 프로필이미지 변경
+    public boolean infoImgChangeService(Long memberNum, String pfImg) {
+        Member member = memberRepository.findByMemberNum(memberNum);
+        if(member == null) return false;
+        member.setPfImg(pfImg);
+        Member savedMember = memberRepository.save(member);
+        log.info(savedMember.toString());
+        return true;
+    }
+
+    //회원정보수정 - 주최자 소개 변경
+    public boolean newIntroduceService(Long memberNum, String introduce) {
+        Member member = memberRepository.findByMemberNum(memberNum);
+        if(member == null) return false;
+        member.setIntroduce(introduce);
+        Member savedMember = memberRepository.save(member);
+        log.info(savedMember.toString());
+        return true;
     }
 }

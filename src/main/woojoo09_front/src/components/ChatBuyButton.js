@@ -1,8 +1,9 @@
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import ChatShipAdr from "./ChatShipAdr";
 
-const ChatBuyButton = () => {
+const ChatBuyButton = ({partner_num}) => {
     const [visibleAccLook, setvisibleAccLook] = useState(false);
     const [visibleDelInput, setvisibleDelInput] = useState(false);
     const [visibleDelLook, setvisibleDelLook] = useState(false);
@@ -15,7 +16,7 @@ const ChatBuyButton = () => {
         setvisibleDelLook(false);
         setType(e.target.value)
     }
-        console.log("값이 있나요?" +type);
+        // console.log("값이 있나요?" +type);
     const visibleDeliveryLook = (e) => {
         setvisibleDelLook(!visibleDelLook);
         setvisibleDelInput(false);
@@ -32,7 +33,7 @@ const ChatBuyButton = () => {
         <>
         <div className="sendPrivacy">
             {/* { visibleAccLook && <ChatShipAdr /> }  */}
-             {visibleDelInput && <ChatShipAdr /> }
+             {visibleDelInput && <ChatShipAdr partner_num={partner_num}/> }
             {/* { visibleDelLook && <SendPhoto />}  */}
         </div>
 
@@ -41,7 +42,9 @@ const ChatBuyButton = () => {
             <button onClick={visibleDeliveryInput}>{visibleDelInput ? "숨기기" : "배송정보입력"}</button>
             <button onClick={visibleDeliveryLook}>{visibleDelLook ? "숨기기" : "운송장조회"}</button>
             <button>배송조회</button>
-            <button>사기피해조회</button>
+            
+            <button onClick={() => window.open('https://cyberbureau.police.go.kr/mobile/tm/sub/sub_02.jsp', '_blank')}>사기피해조회</button>
+            
         </div>
      </>
     );

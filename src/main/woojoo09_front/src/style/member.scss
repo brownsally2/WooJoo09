@@ -342,6 +342,16 @@
     }
   }
 }
+.infoCurrentNick {
+  font-weight: 600;
+}
+.infoNewNick {
+  margin-top: 30px;
+  font-weight: 600;
+}
+.infoNewNickInput {
+
+}
 .unReg {
   background-color: $lightGray2;
   border-radius: 10px;
@@ -358,6 +368,193 @@
 .pfImgPreview{
   margin-left: 10%;
   max-width: 80%;
+}
+.infoResetNick_container {
+  white-space:nowrap;
+  padding: 10px 10px 10px 10px;
+  border-radius: 0px 0px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  input {
+    margin-right: 10px;
+    border-radius: 8px;
+    // border: none;
+    background-color: rgba(177, 177, 177, 0.3);
+    width: 60%;
+    height: 34px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+
+  button {
+    width: 20%;
+    height: 34px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(162, 154, 216, 0.4);
+    border-radius: 8px;
+    cursor: pointer;
+    color: #222;
+    font-weight: 600;
+
+    &:hover {
+      background-color: rgba(134, 121, 217, 0.4);
+    }
+  }
+}
+.infoNewNickMsg {
+  font-size: 12px;
+  padding-left: 6px;
+  color: gray;
+}
+.infoNewNickChangeBtnOut {
+  text-align: right;
+  margin-top: 30px;
+}
+.infoResetPwd_container {
+  white-space:nowrap;
+  padding: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  div {
+    padding-left: 10px;
+  }
+
+  .pwd_current {
+    margin: 20px 0 10px 0;
+    font-weight: 600;
+  }
+  .pwd_change_ck {
+    margin: 40px 0 10px 0;
+    font-weight: 600;
+  }
+  .pwd_change_ck2 {
+    margin: 20px 0 10px 0;
+    font-weight: 600;
+  }
+
+  input {
+    // margin-right: 10px;
+    border-radius: 8px;
+    background-color: rgba(177, 177, 177, 0.3);
+    width: 70%;
+    height: 34px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+
+  button {
+    width: 20%;
+    height: 34px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(162, 154, 216, 0.4);
+    border-radius: 8px;
+    cursor: pointer;
+    color: #222;
+    font-weight: 600;
+
+    &:hover {
+      background-color: rgba(134, 121, 217, 0.4);
+    }
+  }
+  .pwd_change_yes {
+    margin-top: 30px;
+    text-align: right;
+  }
+}
+.pwd_hint, .pwd_hint2 {
+  color: gray;
+  font-size: 12px;
+}
+.infoResetEmail_container {
+  white-space:nowrap;
+  padding: 40px 10px 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .currentEmail, .email_new {
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .email_new {
+    margin-top: 50px;
+  }
+  input {
+    border-radius: 8px;
+    background-color: rgba(177, 177, 177, 0.3);
+    width: 70%;
+    height: 34px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+  button {
+    width: 20%;
+    height: 34px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(162, 154, 216, 0.4);
+    border-radius: 8px;
+    cursor: pointer;
+    color: #222;
+    font-weight: 600;
+
+    &:hover {
+      background-color: rgba(134, 121, 217, 0.4);
+    }
+  }
+  .email_hint {
+    color: gray;
+    font-size: 12px;
+  }
+  .email_change_yes {
+    text-align: right;
+    margin: 40px 0 10px 0; 
+  }
+}
+.infoResetAd_container {
+  white-space:nowrap;
+  padding: 40px 10px 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  .current_Ad {
+    text-align: center;
+  }
+  .infoReceiveAd {
+    font-weight: 600;
+  }
+  .infoResetAd {
+    margin: 50px 0 40px 0;
+    text-align: center;
+
+    label {
+      margin: 0 20px 0 20px;
+    }
+  }
+  .infoResetAdMsg {
+    text-align: center;
+    font-size: 12px;
+  }
+  .ad_change_yes {
+    text-align: right;
+    margin: 20px 0 10px 0;
+  }
+
+  button {
+    width: 20%;
+    height: 34px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(162, 154, 216, 0.4);
+    border-radius: 8px;
+    cursor: pointer;
+    color: #222;
+    font-weight: 600;
+
+    &:hover {
+      background-color: rgba(134, 121, 217, 0.4);
+    }
+  }
 }
 
 .pfImgChange{
@@ -384,8 +581,8 @@
     padding-right: 10px;
     padding-left: 10px;
     max-width: 300px;
-
   }
+
   input[type=file]::file-selector-button{
     font-family: 'Jua', sans-serif;
     border-radius: 10px;

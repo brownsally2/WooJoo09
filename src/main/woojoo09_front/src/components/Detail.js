@@ -217,6 +217,32 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
     });
   }
 
+  const partnerInsert = () =>{
+    const fetchData = async () => {
+      try {
+        const response = await api.partnerInsert(tradeNum);
+        console.log(response.data);
+        if(response.data.completePartner === "loginError") {
+          setTradeCloseMsg("로그인 상태를 확인해주세요");
+        } else if(response.data.completePartner === "duplicate"){
+          setTradeCloseMsg("이미 참여중인 공동구매 입니다");
+        }
+        else {
+          // try {
+          //   const res = await api.chatRoomOpen(response.data.partnerNum);
+          //   console.log(res.data);
+          // } catch (e) {
+          //   console.log(e);
+          // }
+          navigate('/chatlist');
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }
+
   if(loading) {
     return (
       <div className={ (window.scrollY || document.documentElement.scrollTop) < 150 ? "category" : "category  changed"}
@@ -306,7 +332,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
           <img className="cardStar" onClick={starDelete} src={yellowStar} alt="스크랩취소"/>}
         </div>
       </div>
-      {!isAdmin && <>{isLogin && data.detail.isMyWRite === "N" ? <button>참여하기</button> : (
+      {!isAdmin && <>{isLogin && data.detail.isMyWRite === "N" ? <button onClick={partnerInsert}>참여하기</button> : (
       data.detail.doneTrade === 'ONGOING'? <button onClick={tradeClose}>마감하기</button> : 
       <button onClick={tradeFinish}>종료하기</button>)}</>}
       {tradeCloseMsg && <p className="detailErrMsg">{tradeCloseMsg}</p>}

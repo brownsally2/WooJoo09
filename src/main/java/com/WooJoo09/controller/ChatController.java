@@ -1,6 +1,7 @@
 package com.WooJoo09.controller;
 
 import com.WooJoo09.service.ChatService;
+import com.WooJoo09.service.PartnerService;
 import com.WooJoo09.webSocket.ChatRoom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -136,4 +137,7 @@ public class ChatController {
         }
         else return ResponseEntity.ok(false);
     }
+
+
+
 }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import SendAccount from "./ChatSendAccount";
 import SendDelivery from "./ChatSendDelivery"
 import SendPhoto from "./ChatSendPhoto";
-const ChatSellButton = () => {
+const ChatSellButton = ({partner_num}) => {
     const [visible, setVisible] = useState(false);
     const [visibleDel, setVisibleDel] = useState(false);
     const [visiblePho, setVisiblePho] = useState(false);
@@ -29,11 +29,12 @@ const ChatSellButton = () => {
         setVisibleDel(false);
     }
 
+
     return(
         <>
         <div className="sendPrivacy">
-            { visible && <SendAccount /> }
-            { visibleDel && <SendDelivery /> }
+            { visible && <SendAccount partner_num={partner_num} /> }
+            { visibleDel && <SendDelivery  partner_num={partner_num} /> }
             { visiblePho && <SendPhoto />}
         </div>
 

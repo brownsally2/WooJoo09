@@ -13,7 +13,8 @@
 
 body{
   font-family: 'S-CoreDream-3Light';
-  font-size: 1rem;
+  // font-size: 1rem;
+  font-size: 16px;
   box-sizing: border-box;
 
   /* FONT SMOOTHING */
@@ -462,8 +463,9 @@ input:focus{
     margin-bottom: 10px;
     select{
       background-color: #FFF;
-      border-radius: 10px;
+      border-radius: 20px;
       border: 1px solid $purple1Alpha4;
+      padding: 2.5px 0px;
     }
     select:focus{
       outline: none;
@@ -471,6 +473,7 @@ input:focus{
     select:nth-child(1){
       margin-right: 5px;
     }
+    font-size: 18px;
   }
 
   .mainCardList{
@@ -528,10 +531,13 @@ input:focus{
           }
         }
         p:nth-child(1){
-          font-size: 1.1rem;
+          // font-size: 1.1rem;
+          font-size: 17.6px;
         }
         .cardName{
-          font-size: 1.25rem;
+          // font-size: 1.25rem;
+          font-size: 20px;
+          line-height: 1.1;
         }
         p:nth-child(4){
           width: 120%;
@@ -657,7 +663,8 @@ input:focus{
   
   .cardDesc{
     .cardName{
-      font-size: 1.5rem !important;
+      // font-size: 1.5rem !important;
+      font-size: 24px !important;
     }
     p{
       span{
@@ -821,23 +828,40 @@ input:focus{
   .cardDesc{
     p{
       span{
-        font-size: 1.7vw !important;
+        font-size: 3vw !important;
       }
     }
   }
 
 }
 
-@media screen and (max-width:353px) {
+@media screen and (max-width:430px) {
   
   .maindiv .mainSelectBar select {
-    font-size: .75rem;
+    // font-size: .75rem;
+    font-size: 12px;
   }
   .maindiv button {
-    font-size: .75rem;
+    // font-size: .75rem;
+    font-size: 12px;
   }
   
   .maindiv .mainCardList .card .cardDesc .cardName {
-    font-size: 1.1rem;
+    // font-size: 1.1rem;
+    font-size: 17.6px;
   }
 }
+
+@media screen and (max-width:330px) {
+  
+  .maindiv .mainSelectBar select {
+    // font-size: .75rem;
+    font-size: 11.5px;
+  }
+  .maindiv button {
+    // font-size: .75rem;
+    font-size: 11.5px;
+  }
+  
+}
+

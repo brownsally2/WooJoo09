@@ -33,11 +33,11 @@
     "static/media/representImg_icon.png": "/static/media/representImg_icon.17f6eeb138515818406b.png",
     "static/media/images_icon.png": "/static/media/images_icon.a951e698adbd3ddcd20e.png",
     "index.html": "/index.html",
-    "main.42858c7f.css.map": "/static/css/main.42858c7f.css.map",
-    "main.5233d275.js.map": "/static/js/main.5233d275.js.map"
+    "main.ebf4df83.css.map": "/static/css/main.ebf4df83.css.map",
+    "main.496ad8dd.js.map": "/static/js/main.496ad8dd.js.map"
   },
   "entrypoints": [
-    "static/css/main.42858c7f.css",
-    "static/js/main.5233d275.js"
+    "static/css/main.ebf4df83.css",
+    "static/js/main.496ad8dd.js"
   ]
 }

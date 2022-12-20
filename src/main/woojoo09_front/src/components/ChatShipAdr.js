@@ -1,30 +1,47 @@
 import React from "react";
 import { useState } from "react";
 import "../style/chat.scss"
+import "../style/chat.scss"
+import api from "../api/api";
 
-const ChatShipAdr = () => {
-    const [receiverName, setreceiverName] = useState("");
-    const [receiveraddress, setreceiveraddress] = useState("");
-    const [receiverPhone, setreceiverPhone] = useState("");
+const ChatShipAdr = (partner_num) => {
+    const [deliveryAddress, setDeliveryAddress] = useState("");
+    const [deliveryName, setDeliveryName] = useState("");
+    const [deliveryPhone, setDeliveryPhone] = useState("");
 
 
   const onChangeReceiverName = (e) => {
-    setreceiverName(e.target.value);
+    setDeliveryName(e.target.value);
   }
   const onChangeReceiverAddress = (e) => {
-    setreceiveraddress(e.target.value);
+    setDeliveryAddress(e.target.value);
   }
   const onChangeReceiverPhone = (e) => {
-    setreceiverPhone(e.target.value);
+    setDeliveryPhone(e.target.value);
   }
+  const deliveryaddrInsert = () =>{
+    const fetchData = async () => {
+      try {
+        console.log();
+          const res = await api.deliveryaddrsend(partner_num, deliveryAddress, deliveryName, deliveryPhone);
+          console.log(res.data);
+          setDeliveryAddress("");
+          setDeliveryName("");
+          setDeliveryPhone("");
+      } catch {
+          console.log("error");
+      }
+    };
+    fetchData();
+  } 
     return(
         <>
             <div className="sendAccount">
                 <div>배송정보 입력</div>
-                <input value={receiverName} onChange= {onChangeReceiverName} placeholder={"이름"}/>
-                <input value={receiveraddress} onChange={onChangeReceiverAddress} placeholder={"주소"}/>
-                <input value={receiverPhone} onChange={onChangeReceiverPhone} placeholder={"핸드폰번호"}/>
-                <button>완료</button>
+                <input value={deliveryName} onChange= {onChangeReceiverName} placeholder={"이름"}/>
+                <input value={deliveryAddress} onChange={onChangeReceiverAddress} placeholder={"주소"}/>
+                <input value={deliveryPhone} onChange={onChangeReceiverPhone} placeholder={"핸드폰번호"}/>
+                <button onClick={deliveryaddrInsert}>완료</button>
             </div>
         </>
     );

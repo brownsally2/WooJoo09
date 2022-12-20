@@ -149,9 +149,9 @@ public class MemberController {
     @PostMapping("/resetpwd")
     @ResponseBody
     public ResponseEntity<Boolean> resetPwd(@RequestBody Map<String, String> resetPwdData) {
+//        Long memberNum = Long.parseLong(resetPwdData.get("memberNum"));
         String id = resetPwdData.get("findPwdId");
         String newPwd = resetPwdData.get("resetPwd");
-//        boolean getId = memberService.memberIdService(id, newPwd);
         return ResponseEntity.ok(memberService.memberIdService(id, newPwd));
     }
 
@@ -226,5 +226,53 @@ public class MemberController {
         String nickname = infoNewNickData.get("infoNewNickInput");
         return ResponseEntity.ok(memberService.newNick(memberNum, nickname));
     }
+
+    //회원정보수정 - 비밀번호 변경
+    @PostMapping("/infoResetPwd")
+    @ResponseBody
+    public ResponseEntity<Boolean> infoNewPwd(@RequestBody Map<String, String> infoNewPwdData) {
+        Long memberNum = Long.parseLong(infoNewPwdData.get("memberNum"));
+        String pwd = infoNewPwdData.get("inputPwd2");
+        return ResponseEntity.ok(memberService.infoNewPwdService(memberNum, pwd));
+    }
+
+    //회원정보수정 - 이메일 변경
+    @PostMapping("/infoResetEmail")
+    @ResponseBody
+    public ResponseEntity<Boolean> infoNewEmail(@RequestBody Map<String, String> infoNewEmailData) {
+        Long memberNum = Long.parseLong(infoNewEmailData.get("memberNum"));
+        String email = infoNewEmailData.get("inputEmail");
+        return ResponseEntity.ok(memberService.infoNewEmailService(memberNum, email));
+    }
+
+    //회원정보수정 - 광고수신여부 변경
+    @PostMapping("/infoResetAd")
+    @ResponseBody
+    public ResponseEntity<Boolean> infoResetAd(@RequestBody Map<String, String> infoResetAdData) {
+        Long memberNum = Long.parseLong(infoResetAdData.get("memberNum"));
+        String receiveAd = infoResetAdData.get("infoAd");
+        return ResponseEntity.ok(memberService.infoResetAdService(memberNum, receiveAd));
+    }
+
+    //회원정보수정 - 프로필이미지 변경
+    @PostMapping("/infoImgChange")
+    @ResponseBody
+    public ResponseEntity<Boolean> infoImgChange(@RequestBody Map<String, String> infoImgChangeData) {
+        Long memberNum = Long.parseLong(infoImgChangeData.get("memberNum"));
+        String pfImg = infoImgChangeData.get("pfImg");
+        return ResponseEntity.ok(memberService.infoImgChangeService(memberNum, pfImg));
+
+    }
+
+    //회원정보수정 - 주최자소개 변경
+    @PostMapping("/newIntroduce")
+    @ResponseBody
+    public ResponseEntity<Boolean> newIntroduce(@RequestBody Map<String, String> newIntroduceData) {
+        Long memberNum = Long.parseLong(newIntroduceData.get("memberNum"));
+        String introduce = newIntroduceData.get("inputIntroduce");
+        return ResponseEntity.ok(memberService.newIntroduceService(memberNum, introduce));
+    }
+
+
 
 }

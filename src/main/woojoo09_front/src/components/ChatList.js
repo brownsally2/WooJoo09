@@ -14,11 +14,11 @@ const ChatList = () =>{
   const [prepared, setPrepared] = useState(false);
   const [partnerNum, setPartnerNum] = useState('');
   const [memberNum, setMemberNum] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [aceeptTrade, setAceeptTrade] = useState('');
-  const [doneTrade, setDoneTrade] = useState('');
-  const [product, setProduct] = useState('');
-  const [price, setPrice] = useState('');
+  // const [nickname, setNickname] = useState('');
+  // const [aceeptTrade, setAceeptTrade] = useState('');
+  // const [doneTrade, setDoneTrade] = useState('');
+  // const [product, setProduct] = useState('');
+  // const [price, setPrice] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {

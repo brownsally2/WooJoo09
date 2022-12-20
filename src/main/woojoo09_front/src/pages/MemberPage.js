@@ -14,9 +14,16 @@ const MemberPage = () =>{
   const [isAdmin, setIsAdmin] = useState(false);
   const [memberNum, setMemberNum] = useState();
   const [memberInfo, setMemberInfo] = useState('');
+  const [isChange, setIsChange] = useState('');
+
+  const changeIsChange = (value) => {
+    setIsChange(value);
+  }
+
   const changeIsLogin = (value) => {
     setIsLogin(value);
   };
+
   const changeIsAdmin = (value) => {
     setIsAdmin(value);
   };
@@ -43,7 +50,7 @@ const MemberPage = () =>{
       }
     };
     fetchData();
-  }, []);
+    }, [isChange]);
 
 
   if (!isLogin){
@@ -60,7 +67,8 @@ const MemberPage = () =>{
       changeIsAdmin={changeIsAdmin}/>
       <MemberInfo
       memberNum = {memberNum}
-      memberInfo ={memberInfo} />
+      memberInfo = {memberInfo} 
+      changeIsChange = {changeIsChange}/>
       <Footer/>
     </div>
   );
