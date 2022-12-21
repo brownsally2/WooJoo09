@@ -20,19 +20,13 @@
 }
 .registerMain {
     padding-top: 20px;
-    // border-top: 4px solid #222;
 }
 .regSmallBox {
-    // display: inline-flex;
-    // width: 100%;
     padding: 20px 20px 0 20px;
     display: grid;
     grid-template-columns: 1fr 2.2fr 0.8fr;
-    // gap: 10px;
 }
 .regSmallTitle {
-    // width: 138px;
-    
     padding-top: 12px;
 }
 .regInputOut {
@@ -68,6 +62,7 @@
     background-color: rgb(255, 255, 255);
     border: 1px solid #8679D9;
     cursor: pointer; 
+    font-weight: 600;
 }
 .notRegGetPhoneCodeBut, .notRegVerifyCodeOkBut {
     width: 100%;
@@ -78,8 +73,6 @@
     border: 1px solid rgb(184, 184, 184);
 }
 .regBirthOut {
-    // display: inline-flex;
-    // flex: 1 1; 
     display: grid;
     grid-template-columns: 1.4fr 1.05fr 0.95fr; 
 
@@ -95,16 +88,10 @@
 }
 
 .regBirthYear {
-    // width: 140px;
     margin: 0 10px 0 0;
 }
 .regBirthMonth {
-    // width: 86px;
     margin: 0 10px 0 0;
-}
-.regBirthDay {
-    // width: 86px;
-    
 }
 .regErrMsg {
     text-align: right;
@@ -164,5 +151,11 @@
             display: grid;
             grid-template-columns: 2.2fr 0.8fr;
         }
+    }
+    .regErrMsg {
+        padding-right: 30%;
+    }
+    .regPhoneReWriteBtn {
+        padding-left: 6%;
     }
 }

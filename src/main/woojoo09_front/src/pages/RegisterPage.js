@@ -9,12 +9,14 @@ import { Navigate } from "react-router-dom";
 const RegisterPage = () =>{
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state.checkItems);
-  console.log(location.state.isAdOk);
+  // console.log(location.state.checkItems);
+  // console.log(location.state.isAdOk);
 
-  if(!location.state.checkItems) {    
-    navigate('/termagree', {replace: true});
-  }
+  // if(!location.state.checkItems) {    
+  //   navigate('/termagree');
+  // }
+
+
 
    useEffect(()=>{
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -22,7 +24,6 @@ const RegisterPage = () =>{
 
   const isAdOk = location.state.isAdOk;
   const isActive = location.state.isActive;
-
   
   const [regId, setRegId] = useState('');
   const [regPwd, setRegPwd] = useState('');

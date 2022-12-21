@@ -259,7 +259,7 @@ public class MemberController {
     @ResponseBody
     public ResponseEntity<Boolean> infoImgChange(@RequestBody Map<String, String> infoImgChangeData) {
         Long memberNum = Long.parseLong(infoImgChangeData.get("memberNum"));
-        String pfImg = infoImgChangeData.get("pfImg");
+        String pfImg = infoImgChangeData.get("infoPfImgUrl");
         return ResponseEntity.ok(memberService.infoImgChangeService(memberNum, pfImg));
 
     }
