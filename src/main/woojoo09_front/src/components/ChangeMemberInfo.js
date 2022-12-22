@@ -87,9 +87,9 @@ const ChangeMemberInfo = (props) =>{
     // 업로드 처리
     console.log("업로드 처리");
     const storageRef = storage.ref("woojoo09/profileImg/"); //어떤 폴더 아래에 넣을지 설정
-    // const imgName = (memberNum + "host" + numOfTrade + "thTradeRepresentImg");
+    const imgName = (memberNum + "pfImg" + uuidv4());
     // const imagesRef = storageRef.child(imgName);
-    const imagesRef = storageRef.child(uuidv4());
+    const imagesRef = storageRef.child(imgName);
     // const imagesRef = storageRef.child(image.name); //파일명
 
     console.log("파일을 업로드하는 행위");
@@ -503,7 +503,7 @@ const ChangeMemberInfo = (props) =>{
               {infoProfileImg && <button className="infoNewPfImgPreBtn" onClick={onSubmitInfoPfImg}>이미지 미리보기</button>}
               </div>
             </form>
-            <div>
+            <div className="infoProfileImgPreviewOut">
             {infoPfImgUrl && (   
               <img className="infoProfileImgPreview" src={infoPfImgUrl} alt="uploaded" />                     
             )}

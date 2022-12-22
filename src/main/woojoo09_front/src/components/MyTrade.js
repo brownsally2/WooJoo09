@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-const MyTrade = () =>{
+const MyTrade = ({memberInfo}) =>{
+  
   const navigate = useNavigate();
 
   // 버튼 클릭시 호출
@@ -10,7 +11,8 @@ const MyTrade = () =>{
    {navigate('/myTrade', {
       state: {
         name : "주최한 공구",
-        value : "myHostTrade"
+        value : "myHostTrade",
+        memberInfo : memberInfo
       }
     });
   }
@@ -19,7 +21,8 @@ const MyTrade = () =>{
    navigate('/myTrade', {
     state: {
       name : "참여 대기 중인 공구",
-      value : "myWaitTrade"
+      value : "myWaitTrade",
+      memberInfo : memberInfo
     }
   });
 }
@@ -28,7 +31,8 @@ const MyTrade = () =>{
      state: 
       {
         name : "참여 중인 공구",
-        value : "myJoinTrade"
+        value : "myJoinTrade",
+        memberInfo : memberInfo
       },
    });
   }
@@ -36,7 +40,8 @@ const MyTrade = () =>{
     navigate('/myTrade', {
      state: {
         name : "참여 완료인 공구",
-        value : "myDoneTrade"
+        value : "myDoneTrade",
+        memberInfo : memberInfo
      }
    });
    }
@@ -44,7 +49,8 @@ const MyTrade = () =>{
     navigate('/myTrade', {
      state: {
       name : "찜한 공구",
-      value : "myStarTrade"
+      value : "myStarTrade",
+      memberInfo : memberInfo
      }
    });
    }

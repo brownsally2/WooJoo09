@@ -8,6 +8,7 @@ import imgIcon from "../resources/images_icon.png"
 import api from '../api/api'
 
 const Write = () =>{
+
   const navigate = useNavigate();
 
   const [category, setCategory] = useState("패션");

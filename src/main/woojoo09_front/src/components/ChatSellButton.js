@@ -3,10 +3,12 @@ import { useState } from "react";
 import SendAccount from "./ChatSendAccount";
 import SendDelivery from "./ChatSendDelivery"
 import SendPhoto from "./ChatSendPhoto";
+import DelAddrLook from "./ChatDelAddrLook";
 const ChatSellButton = ({partner_num}) => {
     const [visible, setVisible] = useState(false);
     const [visibleDel, setVisibleDel] = useState(false);
     const [visiblePho, setVisiblePho] = useState(false);
+    const [visibleDelAddr, setVisibleDelAddr] = useState(false);
     const [type, setType] = useState('');
 
     const visibleAccount = (e) => {
@@ -14,6 +16,7 @@ const ChatSellButton = ({partner_num}) => {
         setVisible(!visible);
         setVisibleDel(false);
         setVisiblePho(false);
+        setVisibleDelAddr(false);
         setType(e.target.value)
     }
         // console.log("값이 있나요?" +type);
@@ -21,28 +24,39 @@ const ChatSellButton = ({partner_num}) => {
         setVisibleDel(!visibleDel);
         setVisible(false);
         setVisiblePho(false);
+        setVisibleDelAddr(false);
 
     }
     const visiblePhoto = (e) => {
         setVisiblePho(!visiblePho);
         setVisible(false);
         setVisibleDel(false);
+        setVisibleDelAddr(false);
+    }
+    const visibleDelAddress = (e) => {
+        setVisibleDelAddr(!visibleDelAddr);
+        setVisible(false);
+        setVisibleDel(false);
+        console.log(partner_num);
     }
 
 
     return(
         <>
-        <div className="sendPrivacy">
+        <div className="sendPrivacy">  
+            { visiblePho && <SendPhoto />}
             { visible && <SendAccount partner_num={partner_num} /> }
             { visibleDel && <SendDelivery  partner_num={partner_num} /> }
-            { visiblePho && <SendPhoto />}
+            { visibleDelAddr && <DelAddrLook partner_num={partner_num}/> }
+        
         </div>
 
         <div className="chatSell">
             <button onClick={visiblePhoto}>{visiblePho ? "숨기기" : "사진전송"}</button>
             <button onClick={visibleAccount} value="bank">{visible ? "숨기기" : "계좌전달"}</button>
-            <button>배송조회</button>
+            <button onClick={() => window.open('http://st.sweettracker.co.kr/#/', '_blank')}>운송장 조회</button>
             <button onClick={visibleDelivery}>{visibleDel ? "숨기기" : "운송장 전송"}</button>
+            <button onClick={visibleDelAddress}>{visibleDelAddr ? "숨기기" : "배송지 조회"}</button>
         </div>
      </>
     );

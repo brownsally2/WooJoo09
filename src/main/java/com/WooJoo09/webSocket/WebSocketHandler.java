@@ -6,9 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -26,9 +29,18 @@ public class WebSocketHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         log.warn("{}", payload);
         ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
-        ChatRoom chatRoom = chatService.findRoomById(chatMessage.getRoomId());
+        ChatRoom chatRoom = chatService.findRoomById(chatMessage.getRoomId()).get();
         log.info("session : " + session.toString());
         log.info("chatMessage : " + chatMessage.toString());
         chatRoom.handlerActions(session, chatMessage, chatService);
+    }
+
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        log.warn("커넥션 끊겨서 세션 삭제함~ 삭제하는 세션 : " + session.toString() );
+        List<ChatRoom> chatRooms = chatService.findAllRoom();
+        for(ChatRoom e : chatRooms){
+            e.getSessions().remove(session);
+        }
     }
 }

@@ -28,7 +28,7 @@ const MemberPage = () =>{
     setIsAdmin(value);
   };
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.tokencheck();

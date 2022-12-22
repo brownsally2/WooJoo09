@@ -200,33 +200,38 @@ const api = {
     }
     return await axios.post(BASE_URL+ "donetradeupdatedone", doneTradeUpdateDoneCmd, HEADER);
   },
-  hostTradeSelect: async function() {
+  hostTradeSelect: async function(page, size) {
     const hostTradeSelectCmd = {
-      cmd : "hostTradeSelect"
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "hosttradeselect", hostTradeSelectCmd, HEADER);
   },
-  partnertTradeSelectReject: async function(target) {
-    const partnertTradeSelectRejectCmd = {
-      target: target
+  partnerTradeSelectReject: async function(page, size) {
+    const partnerTradeSelectRejectCmd = {
+      page: page,
+      size: size
     }
-    return await axios.post(BASE_URL+ "partnertradeselectreject", partnertTradeSelectRejectCmd, HEADER);
+    return await axios.post(BASE_URL+ "partnertradeselectreject", partnerTradeSelectRejectCmd, HEADER);
   },
-  partnerTradeSelectOngoing: async function(target) {
+  partnerTradeSelectOngoing: async function(page, size) {
     const partnerTradeSelectOngoingCmd = {
-      target: target
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "partnertradeselectongoing", partnerTradeSelectOngoingCmd, HEADER);
   },
-  partnerTradeSelectDone: async function(target) {
+  partnerTradeSelectDone: async function(page, size) {
     const partnerTradeSelectDonetCmd = {
-      target: target
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "partnertradeselectdone", partnerTradeSelectDonetCmd, HEADER);
   },
-  starTradeSelect: async function(target) {
+  starTradeSelect: async function(page, size) {
     const starTradeSelectCmd = {
-      target: target
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "startradeselect", starTradeSelectCmd, HEADER);
   },
@@ -509,7 +514,7 @@ const api = {
     }
     return await axios.post(BASE_URL + "deliverysend", chatObject, HEADER);
   }, 
-    deliveryaddrsend : async function(partner_num, deliveryAddress, deliveryName, deliveryPhone) {
+  deliveryaddrsend : async function(partner_num, deliveryAddress, deliveryName, deliveryPhone) {
     const chatObject = {
       partner_num : partner_num,
       deliveryAddress :deliveryAddress,
@@ -519,6 +524,53 @@ const api = {
     }
     return await axios.post(BASE_URL + "deliveryaddrsend", chatObject, HEADER);
   }, 
+  chatDeliAddr : async function(partner_num) {
+    const chatObject = {
+      partner_num : partner_num
+
+    }
+    return await axios.post(BASE_URL + "chatDeliSelect", chatObject, HEADER);
+  }, 
+  chatAccount : async function(partner_num) {
+    const chatObject = {
+      partner_num : partner_num
+
+    }
+    return await axios.post(BASE_URL + "chatAccountSelect", chatObject, HEADER);
+  }, 
+  chatDeliveryNum : async function(partner_num) {
+    const chatObject = {
+      partner_num : partner_num
+
+    }
+    return await axios.post(BASE_URL + "chatDeliNumSelect", chatObject, HEADER);
+  }, 
+  chatPartnerAccept : async function(target, partner) {
+    const chatObject = {
+      target : target,
+      partner : partner
+
+    }
+    return await axios.post(BASE_URL + "partneraccept", chatObject, HEADER);
+  }, 
+  chatPartnerRejecthost : async function(target, partner) {
+    const chatObject = {
+      target : target,
+      partner : partner
+
+    }
+    return await axios.post(BASE_URL + "partnerdeletehost", chatObject, HEADER);
+  }, 
+  chatPartnerReject : async function(target) {
+    const chatObject = {
+      target : target
+      // partner : partner
+
+    }
+    return await axios.post(BASE_URL + "partnerdelete", chatObject, HEADER);
+  }, 
+
+
 
 }
 

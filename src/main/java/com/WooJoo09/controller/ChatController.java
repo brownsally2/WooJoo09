@@ -5,6 +5,8 @@ import com.WooJoo09.service.PartnerService;
 import com.WooJoo09.webSocket.ChatRoom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +29,16 @@ public class ChatController {
     @PostMapping("/chat")
     public ResponseEntity<String> createRoom(@RequestBody Map<String, String> Data) {
         String partnerNum = Data.get("partnerNum");
-        ChatRoom room = chatService.createRoom(partnerNum);
-        log.warn("room.getRoomId()" + room.getRoomId());
-        return new ResponseEntity(room.getRoomId(), HttpStatus.OK);
+        if(chatService.findRoomById(partnerNum).isEmpty()){
+            ChatRoom room = chatService.createRoom(partnerNum);
+            log.warn("room.getRoomId()" + room.getRoomId());
+            return new ResponseEntity(room.getRoomId(), HttpStatus.OK);
+        }
+        else {
+            ChatRoom room = chatService.findRoomById(partnerNum).get();
+            log.warn("room.getRoomId()" + room.getRoomId());
+            return new ResponseEntity(room.getRoomId(), HttpStatus.OK);
+        }
     }
     @GetMapping
     public List<ChatRoom> findAllRoom() {
@@ -116,7 +125,7 @@ public class ChatController {
            log.info("들어온값 " + partnerNumStr + " 변환된값 " + partnerNum);
            Map<?, ?> map = new HashMap<>();
            List<?> list = new ArrayList<>();
-           list =  chatService.chatContent(partnerNum);
+           list =  chatService.chatContentService(partnerNum);
            return new ResponseEntity(list, HttpStatus.OK);
     }
 

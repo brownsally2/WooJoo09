@@ -75,7 +75,6 @@ const Card = ({lists, isLogin, isAdmin, changeLists}) =>{
         (list.categoryName === "생활" ? defaultImgs.생활.imgUrl : 
         (list.categoryName === "식품" ? defaultImgs.식품.imgUrl :
         (list.categoryName === "취미" ? defaultImgs.취미.imgUrl : defaultImgs.반려동물.imgUrl))))
-          
         } alt="상품 대표 이미지"/>}
       </div>
       <div className="cardDesc">
@@ -83,9 +82,16 @@ const Card = ({lists, isLogin, isAdmin, changeLists}) =>{
         <p className="cardName">{list.product.length > 16 ? list.product.substring(0,16)+"..." : list.product}</p>
         <p>{list.price}원</p>
         <p>{list.city && <span>{list.city}</span>}{list.town && <span>{list.town}</span>}</p>
-        {list.doneTrade === 'ONGOING' && <p><span>{list.acceptPartner} / {list.limitPartner}</span><span>D - {
+        {list.doneTrade === 'ONGOING' && <p><span>{list.acceptPartner} / {list.limitPartner}</span>
+        {/* <span>D - {
          Math.floor((new Date(list.dueDate).getTime() - new Date(thisDate).getTime()) / (1000 * 60 * 60 * 24))
-        }</span></p>}
+        }</span> */}
+        <span>D {Math.floor((new Date(list.dueDate).getTime() - new Date(thisDate).getTime()) / (1000 * 60 * 60 * 24)) > 0?
+          ` - ${Math.floor((new Date(list.dueDate).getTime() - new Date(thisDate).getTime()) / (1000 * 60 * 60 * 24))}` :
+          (Math.floor((new Date(list.dueDate).getTime() - new Date(thisDate).getTime()) / (1000 * 60 * 60 * 24)) < 0 ? 
+          ` + ${Math.abs(Math.floor((new Date(list.dueDate).getTime() - new Date(thisDate).getTime()) / (1000 * 60 * 60 * 24)))}`
+          : ` - DAY`)
+          }</span></p>}
         {list.doneTrade === 'FULL' && <p><span>모집 완료</span></p>}
         {list.doneTrade === 'DONE' && <p><span>종료</span></p>}
         <p>{list.tradeMethod === 'BOTH' ? <><span>직거래</span><span>택배</span></> :

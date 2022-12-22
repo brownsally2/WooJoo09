@@ -44,9 +44,15 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
       }
     };
     fetchData();
-    setTimeout(() => { 
+    let chatFetch = setInterval(() => { 
       fetchData();
     }, 30000); // 30초마다 한번
+    return () => clearInterval(chatFetch);
+    // 이게 좀더 나으려나? 재귀 setTimeOut
+    // let timerId = setTimeout(function tick() {
+    //   alert('tick');
+    //   timerId = setTimeout(tick, 2000); // (*)
+    // }, 2000);
   },[]);
 
 
@@ -61,15 +67,15 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
   
   const handleKeyPress = e => {
     if(e.key === 'Enter') {
-      console.log(e.target.value);
-      navigate(`/search/${e.target.value}`, {state : {isLogin : isLogin}});
+      console.log(e.target.value.trim());
+      navigate(`/search/${e.target.value.trim()}`, {state : {isLogin : isLogin}});
     }
   }
 
   const handleButton = () => {
-    if(searchTarget) {
-      console.log(searchTarget);
-      navigate(`/search/${searchTarget}`, {state : {isLogin : isLogin}});
+    if(searchTarget.trim()) {
+      console.log(searchTarget.trim());
+      navigate(`/search/${searchTarget.trim()}`, {state : {isLogin : isLogin}});
     }
   }
 

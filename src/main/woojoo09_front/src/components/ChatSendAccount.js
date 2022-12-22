@@ -9,7 +9,9 @@ const SendAccount = ({partner_num}) => {
     const [bank, setBank] = useState("");
     const [account, setAccount] = useState("");
     const [accountholder, setAccountholder] = useState("");
-    console.log(partner_num);
+    const [bankSelect, setbankSelect] = useState("");
+    
+    // console.log(partner_num);
 
 
   const onChangeBank = (e) => {
@@ -32,6 +34,7 @@ const SendAccount = ({partner_num}) => {
           setBank("");
           setAccount("");
           setAccountholder("");
+          setbankSelect("");
       } catch {
           console.log("error");
       }
@@ -43,7 +46,7 @@ const SendAccount = ({partner_num}) => {
         <div className="sendAccount">
           <div>계좌번호</div>
           <select onChange= {onChangeBank} >
-           <option value={""} >은행 선택</option>
+           <option value={bankSelect}>은행 선택</option>
               {BankKind.map((e) => (
               <option key={e.bankValue} value={e.bankName}>
                 {e.bankName}
@@ -51,7 +54,7 @@ const SendAccount = ({partner_num}) => {
                ))}
           </select>
           {bank === "directInput" && <input onChange= {onChangeBank} placeholder={"은행"} value={bank} />}
-          <input value={account} onChange={onChangeAccount} placeholder={"계좌"}/>
+          <input value={account} onChange={onChangeAccount} placeholder={"계좌번호"}/>
           <input value={accountholder} onChange={onChangeAccountholder} placeholder={"예금주"}/>
           <button onClick={accountInsert}>전송</button>
         </div>

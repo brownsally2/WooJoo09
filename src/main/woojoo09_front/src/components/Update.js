@@ -257,6 +257,7 @@ const Update = () =>{
   const onChangeProductDetail = (e) =>{
     if(e.target.value.length < 10) {
       setDetailErr("상세 설명을 10자 이상 입력해주세요")
+      setProductDetail(e.target.value);
       setIsDetail(false);
     }
     else if(e.target.value.length <= 2000) {

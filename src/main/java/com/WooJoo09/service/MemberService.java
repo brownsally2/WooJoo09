@@ -76,9 +76,11 @@ public class MemberService {
         member.setPhone(phone);
         member.setReceiveAd(ReceiveAd.valueOf(receiveAd));
         member.setIsActive(IsActive.valueOf(isActive));
+        member.setIntroduce("안녕하세요. " + nickname + "의 상점입니다.");
 
         Member rst = memberRepository.save(member);
         log.warn(rst.toString());
+
         return true;
     }
 

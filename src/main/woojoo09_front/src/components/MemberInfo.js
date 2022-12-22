@@ -18,7 +18,7 @@ const MemberInfo = ({memberNum, memberInfo, changeIsChange}) =>{
           changeIsChange={changeIsChange}
           memberNum={memberNum} 
           memberInfo={memberInfo}/>
-          <MyTrade/>
+          <MyTrade memberInfo={memberInfo}/>
           <div className="unReg">회원 탈퇴</div>
         </div>
       </div>

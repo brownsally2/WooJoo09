@@ -5,6 +5,7 @@ import fashion from "../resources/fashion_sample.png";
 import "../style/chat.scss"
 import "../style/common.scss"
 import api from "../api/api"
+import ChatListTime from "./ChatListTime";
 
 const ChatList = () =>{
 
@@ -18,8 +19,14 @@ const ChatList = () =>{
   // const [aceeptTrade, setAceeptTrade] = useState('');
   // const [doneTrade, setDoneTrade] = useState('');
   // const [product, setProduct] = useState('');
-  // const [price, setPrice] = useState('');
+  const [chatTime, setChatTime] = useState('');
   const navigate = useNavigate();
+  // const now = new Date();	
+  // console.log(now);
+
+  const kr = 9 * 60 * 60 * 1000
+  
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,10 +35,12 @@ const ChatList = () =>{
         const response = await api.chatList();
         setLists(response.data[0]);
         setMemberNum(response.data[1])
-        console.log(response.data);
-        console.log(response.data[0].chatListContent);
+        // console.log(response.data[0]);
+        // console.log(response.data[0].chatListContent);
+        // console.log(response.data[0].chatListContent[0].chat_time);
         // console.log(response.data[0].chatListContent[0].partner_num);
-
+        // let chatContent = lists.chat_content;
+        // console.log(chatContent);
         setPrepared(true);
       } catch (e) {
         console.log(e);
@@ -48,9 +57,6 @@ const ChatList = () =>{
         console.log("partnerNum : " + partnerNum);
           const res = await api.chatRoomOpen(partnerNum);
           console.log("res.data" + res.data);
-          // window.localStorage.setItem("chatRoomId", res.data);
-          // setRoomId(res.data);
-          //  window.location.replace("/chat");
       } catch {
           console.log("error");
       }
@@ -60,22 +66,17 @@ const ChatList = () =>{
 
 
   const move = (list) => {
-    // 두번재 인자의 state 속성에 원하는 파라미터를 넣어준다. (id, job을 넣어봤다)
+    // 두번재 인자의 state 속성에 원하는 파라미터를 넣어준다. 
    // eslint-disable-next-line no-lone-blocks
    {navigate(`/chat/${list.partner_num}`, {
       state: {
-        // memberNum: memberNum,
-        // nickname : nickname,
-        // aceeptTrade : aceeptTrade,
-        // doneTrade : doneTrade,
-        // product : product,
-        // price : price
         list : list,
         memberNum : memberNum
       }
     });
   }
   };
+
 
   return(
     <div className="wrapperLeft">
@@ -88,27 +89,13 @@ const ChatList = () =>{
             <div className="chatDetail"> 
             
               <div className="chatButton">
-              {/* <Link to={{
-                    pathname: `/chat/${partner_num}`,
-                    state: {
-                      // memberNum : memberNum,
-                      nickname : nickname,
-                      aceeptTrade : aceept_trade,
-                      doneTrade : done_trade,
-                      product : product,
-                      price : price
-                    },
-                  }}
-                > */}
-                {/* <Link to={`/chat/${partner_num}`} state={ memberNum : memberNum, }> */}
                     <p onClick={()=>{chatTest(list.partner_num); move(list);}}>
                       <span><img src = {list.img_url} alt="물품이미지"/></span>
                       <p className="chatDetailNick">{list.nickname}</p>
-                      <p className="chatTime">{list.chat_time.substr(0,11)}</p>
+                      <p className="chatTime">{list.chat_time +kr}</p>
                       <div>{list.chat_content}</div>
                       {list.is_read === "UNREAD" && <p className="chatAlert"/>}
                     </p>
-                  {/* </Link>     */}
                 </div>
                </div>
               ))}

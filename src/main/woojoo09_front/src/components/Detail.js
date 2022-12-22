@@ -376,9 +376,10 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
             <span className="methodOk">가능</span> : <span className="methodNok">불가능</span>}</p>
             {(data.detail.tradeMethod === "BOTH" || data.detail.tradeMethod === "DIRECT") && 
             <>
-            <p>직거래 장소 : <span>{data.detail.tradePlace}</span></p>
+            {data.detail.tradePlace ? <><p>직거래 희망 장소 : <span>{data.detail.tradePlace}</span></p>
             <span onClick={handleDisplayMap}>{displayMap? "지도 닫기": "지도 보기"}</span>
-            {displayMap&& <Map searchPlace={data.detail.tradePlace}/>}
+            {displayMap&& <Map searchPlace={data.detail.tradePlace}/>}</> :
+            <p>직거래 희망 장소 미정</p>}
             </>}
           </div>
           <div className="delivery">

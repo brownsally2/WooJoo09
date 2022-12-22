@@ -40,9 +40,9 @@ public class ChatService {
     public List<ChatRoom> findAllRoom() {
         return new ArrayList<>(chatRooms.values());
     }
-    public ChatRoom findRoomById(String roomId) {
-        log.warn("chatRooms.get(roomId) : " + chatRooms.get(roomId).toString());
-        return chatRooms.get(roomId);
+    public Optional<ChatRoom> findRoomById(String roomId) {
+//        log.warn("chatRooms.get(roomId) : " + chatRooms.get(roomId).toString());
+        return Optional.ofNullable(chatRooms.get(roomId));
     }
 
 //    // 방을 만들기
@@ -118,10 +118,12 @@ public class ChatService {
         for(int i = 0; i < map.size(); i++){
             result.add(map);
         }
+        log.warn("result" + result);
         return result;
     }
 
-    public List<?> chatContent(int partnerNum){
+
+    public List<?> chatContentService(int partnerNum){
         List<Map<String, List<?>>> result = new ArrayList<>();
         Map<String, List<?>>map = new HashMap<>();
         map.put("chattingContent", chatRepository.chatContent(partnerNum));

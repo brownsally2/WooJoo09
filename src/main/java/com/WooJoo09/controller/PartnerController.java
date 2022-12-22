@@ -8,12 +8,11 @@ import com.WooJoo09.repository.PartnerRepository;
 import com.WooJoo09.service.PartnerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -110,8 +109,8 @@ public class PartnerController {
         if (token != null) {
             String memberNumStr = jwtController.tokenCheck(token);
             Long memberNum = Long.parseLong(memberNumStr);
-            Map partnerNumMap = (LinkedHashMap)sendAccount.get("partner_num");
-            String partnerNumStr = (String) partnerNumMap.get("partner_num");
+//            Map partnerNumMap = (LinkedHashMap)sendAccount.get("partner_num");
+            String partnerNumStr = (String) sendAccount.get("partner_num");
             Long partnerNum = Long.parseLong(partnerNumStr);
             log.warn("partner_num : " + partnerNum);
             String bank = (String)sendAccount.get("bank");
@@ -131,8 +130,8 @@ public class PartnerController {
         if (token != null) {
             String memberNumStr = jwtController.tokenCheck(token);
             Long memberNum = Long.parseLong(memberNumStr);
-            Map partnerNumMap = (LinkedHashMap)sendDelivery.get("partner_num");
-            String partnerNumStr = (String) partnerNumMap.get("partner_num");
+//            Map partnerNumMap = (LinkedHashMap)sendDelivery.get("partner_num");
+            String partnerNumStr = (String) sendDelivery.get("partner_num");
             Long partnerNum = Long.parseLong(partnerNumStr);
             log.warn("partner_num : " + partnerNum);
             String deliveryCompany = (String)sendDelivery.get("deliveryCompany");
@@ -163,5 +162,43 @@ public class PartnerController {
         }
         else return ResponseEntity.ok(false);
     }
+    @PostMapping("/chatDeliSelect")
+    public ResponseEntity<Map<?,?>> chatDeliSelect(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        String partnerNumStr = Data.get("partner_num");
+        int partnerNum = Integer.parseInt(partnerNumStr);
+        log.info("들어온값 " + partnerNumStr + " 변환된값 " + partnerNum);
+        Map<?, ?> map = new HashMap<>();
+        List<?> list = new ArrayList<>();
+        list =  partnerService.chatDeliSelectService(partnerNum);
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
 
+    @PostMapping("/chatAccountSelect")
+    public ResponseEntity<Map<?,?>> chatAccountSelect(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        String partnerNumStr = Data.get("partner_num");
+        int partnerNum = Integer.parseInt(partnerNumStr);
+        log.info("들어온값 " + partnerNumStr + " 변환된값 " + partnerNum);
+        Map<?, ?> map = new HashMap<>();
+        List<?> list = new ArrayList<>();
+        list =  partnerService.chatAccountSelectService(partnerNum);
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/chatDeliNumSelect")
+    public ResponseEntity<Map<?,?>> chatDeliNumSelect(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        String partnerNumStr = Data.get("partner_num");
+        int partnerNum = Integer.parseInt(partnerNumStr);
+        log.info("들어온값 " + partnerNumStr + " 변환된값 " + partnerNum);
+        Map<?, ?> map = new HashMap<>();
+        List<?> list = new ArrayList<>();
+        list =  partnerService.chatDeliveryNumSelectService(partnerNum);
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
 }

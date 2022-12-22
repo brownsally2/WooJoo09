@@ -28,7 +28,7 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
             value = "select m.nickname, pi2.img_url, max(c.chat_time) as chat_time, \n" +
                     "ANY_VALUE(c.chat_content) chat_content,\n" +
                     "ANY_VALUE(c.is_read) is_read, p.partner_num, p.accept_trade,\n" +
-                    "t.done_trade, t.product, t.price, t.host\n" +
+                    "t.done_trade, t.product, t.price, t.host, t.trade_num, p.part_mem_num\n" +
                     "from\n" +
                     "(select * from chat\n" +
                     "where(partner_num, chat_time) in (select partner_num, max(chat_time) as chat_time\n" +
@@ -40,8 +40,9 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
                     "else p.part_mem_num = m.member_num end\n" +
                     "and p.trade_num = pi2.trade_num\n" +
                     "and case p.part_mem_num when :memberNum then p.trade_num = t.trade_num\n" +
-                    "else t.host = :memberNum end\n" +
-                    "and pi2.is_represent = 'REPRESENT'\n" +
+                    "else (p.trade_num = t.trade_num and t.host = :memberNum) end\n" +
+                    "and pi2.is_represent = 'REPRESENT' and p.accept_trade != 'DELETE'\n" +
+                    "and m.is_active = 'ACTIVE' and t.done_trade != 'DELETE'\n" +
                     "group by p.partner_num, pi2.img_url\n" +
                     "order by c.chat_time desc",
             nativeQuery = true
@@ -49,10 +50,15 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     List<Map<?,?>> chatList(@Param("memberNum") int memberNum);
 
     @Query(
-            value = "select chat_content, chat_time, sender from chat where partner_num = :partner_num ;" ,
+            value = "select chat_content, chat_time, sender from chat where partner_num = :partner_num " ,
             nativeQuery = true
     )
     List<Map<?,?>> chatContent (@Param("partner_num") int partnerNum);
+
+
+
+
+
 
 
 

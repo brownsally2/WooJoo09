@@ -57,9 +57,12 @@ public class BannerService {
         return map;
     }
     public Map<String, String> bannerDelete(Long bannerNum){
+        // 삭제가 아닌 비활성화 상태로 만들기
         Map<String,String> map = new HashMap<>();
         Banner banner = bannerRepository.findByBannerNum(bannerNum);
-        bannerRepository.delete(banner);
+        banner.setIsActive(IsActive.INACTIVE);
+        Banner savedBanner = bannerRepository.save(banner);
+        log.info(savedBanner.toString());
         map.put("bannerDelete", "OK");
         return map;
     }

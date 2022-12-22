@@ -299,4 +299,24 @@ public class TradeService {
         return map;
     }
 
+
+    public Page<?> hostTradeSelect(Long memberNum, int page, int size) {
+        return tradeRepository.hostTradeSelect(memberNum, PageRequest.of(page, size));
+    }
+
+    public Page<?> partnerTradeSelectReject(Long memberNum, int page, int size) {
+        return tradeRepository.partnerTradeSelectReject(memberNum, PageRequest.of(page, size));
+    }
+
+    public Page<?> partnerTradeSelectOngoing(Long memberNum, int page, int size) {
+        return tradeRepository.partnerTradeSelectOngoing(memberNum, PageRequest.of(page, size));
+    }
+
+    public Page<?> partnerTradeSelectDone(Long memberNum, int page, int size) {
+        return tradeRepository.partnerTradeSelectDone(memberNum, PageRequest.of(page, size));
+    }
+
+    public Page<?> starTradeSelect(Long memberNum, int page, int size) {
+        return tradeRepository.starTradeSelect(memberNum, PageRequest.of(page, size));
+    }
 }

@@ -307,4 +307,119 @@ public class TradeController {
         map = tradeService.countNthTrade(tradeNum, memberNum);
         return ResponseEntity.ok().body(map);
     }
+
+    @PostMapping("/hosttradeselect")
+    public ResponseEntity<Map<String,Object>> hostTradeSelect(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        int page = Integer.parseInt(Data.get("page"));
+        int size = Integer.parseInt(Data.get("size"));
+        Map map = new HashMap<>();
+        if(token != null){
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            if (memberNumStr.equals("admin")) {
+                map.put("hostTradeSelect", "Admin");
+            } else{
+                Long memberNum = Long.parseLong(memberNumStr);
+                map.put("hostTradeSelect", "OK");
+                map.put("content", tradeService.hostTradeSelect(memberNum, page, size));
+            }
+        }else{
+            map.put("hostTradeSelect", "loginError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    @PostMapping("/partnertradeselectreject")
+    public ResponseEntity<Map<String,Object>> partnerTradeSelectReject(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        int page = Integer.parseInt(Data.get("page"));
+        int size = Integer.parseInt(Data.get("size"));
+        Map map = new HashMap<>();
+        if(token != null){
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            if (memberNumStr.equals("admin")) {
+                map.put("hostTradeSelect", "Admin");
+            } else{
+                Long memberNum = Long.parseLong(memberNumStr);
+                map.put("hostTradeSelect", "OK");
+                map.put("content", tradeService.partnerTradeSelectReject(memberNum, page, size));
+            }
+        }else{
+            map.put("hostTradeSelect", "loginError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    @PostMapping("/partnertradeselectongoing")
+    public ResponseEntity<Map<String,Object>> partnerTradeSelectOngoing(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        int page = Integer.parseInt(Data.get("page"));
+        int size = Integer.parseInt(Data.get("size"));
+        Map map = new HashMap<>();
+        if(token != null){
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            if (memberNumStr.equals("admin")) {
+                map.put("hostTradeSelect", "Admin");
+            } else{
+                Long memberNum = Long.parseLong(memberNumStr);
+                map.put("hostTradeSelect", "OK");
+                map.put("content", tradeService.partnerTradeSelectOngoing(memberNum, page, size));
+            }
+        }else{
+            map.put("hostTradeSelect", "loginError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    @PostMapping("/partnertradeselectdone")
+    public ResponseEntity<Map<String,Object>> partnerTradeSelectDone(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        int page = Integer.parseInt(Data.get("page"));
+        int size = Integer.parseInt(Data.get("size"));
+        Map map = new HashMap<>();
+        if(token != null){
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            if (memberNumStr.equals("admin")) {
+                map.put("hostTradeSelect", "Admin");
+            } else{
+                Long memberNum = Long.parseLong(memberNumStr);
+                map.put("hostTradeSelect", "OK");
+                map.put("content", tradeService.partnerTradeSelectDone(memberNum, page, size));
+            }
+        }else{
+            map.put("hostTradeSelect", "loginError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    @PostMapping("/startradeselect")
+    public ResponseEntity<Map<String,Object>> starTradeSelect(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        int page = Integer.parseInt(Data.get("page"));
+        int size = Integer.parseInt(Data.get("size"));
+        Map map = new HashMap<>();
+        if(token != null){
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            if (memberNumStr.equals("admin")) {
+                map.put("hostTradeSelect", "Admin");
+            } else{
+                Long memberNum = Long.parseLong(memberNumStr);
+                map.put("hostTradeSelect", "OK");
+                map.put("content", tradeService.starTradeSelect(memberNum, page, size));
+            }
+        }else{
+            map.put("hostTradeSelect", "loginError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
 }

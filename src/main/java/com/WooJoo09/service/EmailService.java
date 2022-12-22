@@ -8,6 +8,9 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import org.springframework.stereotype.Service;
+import org.thymeleaf.ITemplateEngine;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
@@ -23,6 +26,7 @@ import java.util.Random;
 public class EmailService {
 
     private final JavaMailSender javaMailSender;
+    private final SpringTemplateEngine templateEngine;
 
     //인증번호 생성
     private final String ePw = createKey();
@@ -31,18 +35,18 @@ public class EmailService {
     private String id;
 
     // 비밀번호 찾기 인증번호 이메일
-    public MimeMessage createMessage(String to)throws MessagingException, UnsupportedEncodingException {
+    public MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException {
         log.info("보내는 대상 : "+ to);
         log.info("인증 번호 : " + ePw);
         MimeMessage  message = javaMailSender.createMimeMessage();
 
         message.addRecipients(MimeMessage.RecipientType.TO, to); // to 보내는 대상
-        message.setSubject("우주공구 비밀번호 찾기 인증 코드"); //메일 제목
+        message.setSubject("우주공구 인증 코드"); //메일 제목
 
         // 메일 내용 메일의 subtype을 html로 지정하여 html문법 사용 가능
         String msg="";
-        msg += "<h1 style=\"font-size: 30px; padding-right: 30px; padding-left: 30px;\">이메일 주소 확인</h1>";
-        msg += "<p style=\"font-size: 17px; padding-right: 30px; padding-left: 30px;\">아래 확인 코드를 회원가입 화면에서 입력해주세요.</p>";
+        msg += "<h1 style=\"font-size: 30px; padding-right: 30px; padding-left: 30px;\">비밀번호 찾기 인증 코드</h1>";
+        msg += "<p style=\"font-size: 17px; padding-right: 30px; padding-left: 30px;\">아래 확인 코드를 화면에 입력해주세요.</p>";
         msg += "<div style=\"padding-right: 30px; padding-left: 30px; margin: 32px 0 40px;\"><table style=\"border-collapse: collapse; border: 0; background-color: #F4F4F4; height: 70px; table-layout: fixed; word-wrap: break-word; border-radius: 6px;\"><tbody><tr><td style=\"text-align: center; vertical-align: middle; font-size: 30px;\">";
         msg += ePw;
         msg += "</td></tr></tbody></table></div>";
@@ -53,26 +57,24 @@ public class EmailService {
         return message;
     }
 
-    // 가입 축하 메시지
-    public MimeMessage createRegMessage(String to)throws MessagingException, UnsupportedEncodingException {
+    // 가입 축하 이메일
+    public MimeMessage createRegMessage(String to) throws MessagingException, UnsupportedEncodingException {
         log.info("보내는 대상 : "+ to);
         MimeMessage  message = javaMailSender.createMimeMessage();
 
         message.addRecipients(MimeMessage.RecipientType.TO, to); // to 보내는 대상
         message.setSubject("우주공구 회원이 되신 것을 환영합니다!"); //메일 제목
 
-        // 메일 내용 메일의 subtype을 html로 지정하여 html문법 사용 가능
-        String msg="";
-        msg += "<h1 style=\"font-size: 30px; padding-right: 30px; padding-left: 30px;\">이메일 주소 확인</h1>";
-        msg += "<p style=\"font-size: 17px; padding-right: 30px; padding-left: 30px;\">우주공구 회원이 되신 것을 환영합니다!</p>";
-        msg += "<div style=\"padding-right: 30px; padding-left: 30px; margin: 32px 0 40px;\"><table style=\"border-collapse: collapse; border: 0; background-color: #F4F4F4; height: 70px; table-layout: fixed; word-wrap: break-word; border-radius: 6px;\"><tbody><tr><td style=\"text-align: center; vertical-align: middle; font-size: 30px;\">";
-
-        msg += "</td></tr></tbody></table></div>";
-
-        message.setText(msg, "utf-8", "html"); //내용, charset타입, subtype
+        message.setText(setContext(), "utf-8", "html"); //내용, charset타입, subtype
         message.setFrom(new InternetAddress(id,"WooJoo09")); //보내는 사람의 메일 주소, 보내는 사람 이름
 
         return message;
+    }
+
+    // 타임리프 설정
+    private String setContext() {
+        Context context = new Context();
+        return templateEngine.process("regCelebrate", context);
     }
 
     // 인증코드 만들기

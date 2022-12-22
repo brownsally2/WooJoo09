@@ -651,6 +651,9 @@
   .infoImgName {
     font-size: 14px;
   }
+  .infoProfileImgPreviewOut {
+
+  }
   .infoProfileImgPreview {
     width: 150px;
     margin: 20px 0 0 80px;
@@ -681,18 +684,18 @@
       }
     }
   }
+}
 
-  @media screen and (max-width:456px) {
-    .infoResetPfImg {
-  
+@media screen and (max-width:456px) {
+  .infoResetPfImg {
+    .infoProfileImg{
+      margin: 0px 40px;
     }
     .infoProfileImgPreview {
-      // margin: 40px 0 0 80px;
+      margin: 60px 0px 0px 0px;
     }
   }
 }
-
-
 
 
 .pfImgChange{
@@ -759,5 +762,6 @@
   align-items: center;
   justify-content: center;
 }
+
 
 

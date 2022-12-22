@@ -30,7 +30,7 @@ public class EmailConfig {
         javaMailSender.setUsername(id); // 설정(발신) 메일 아이디
         javaMailSender.setPassword(password); // 설정(발신) 메일 패스워드
         javaMailSender.setPort(port); //smtp port
-        javaMailSender.setJavaMailProperties(getMailProperties()); // 메일 인증서버 정보 가져온다.
+        javaMailSender.setJavaMailProperties(getMailProperties()); // 메일 인증서버 정보를 가져온다.
         javaMailSender.setDefaultEncoding("UTF-8");
         return javaMailSender;
     }

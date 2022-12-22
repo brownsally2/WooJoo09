@@ -26,6 +26,7 @@ const SendDelivery = ( {partner_num} ) => {
           console.log(res.data);
           setDeliveryCompany("");
           setdeliveryNum("");
+          // setSelected("");
       } catch {
           console.log("error");
       }

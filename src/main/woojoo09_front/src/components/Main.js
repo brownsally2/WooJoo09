@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import api from "../api/api"
 import { getCookie, setCookie } from "../util/cookie";
 import Loader from "./Loader";
+import disappointed from "../resources/disappointed.png"
 
 const Main = ({categoryName, target, isLogin, isAdmin})=>{
 
@@ -175,7 +176,8 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
     <div className={(categoryName || target) ? (scrollPosition < 150 ? "category" : "category  changed")
     : (scrollPosition < 150 ? "main" : "main changed")}>
       {!target && <p className="mainTitle">{categoryName? getCategory(categoryName) : "오늘의 공구"}</p>}
-      {target && <p>'{target}'에 대한 검색 결과</p>}
+      {target && <p className="searchTitle">'
+      <span style={{color : "#8679d9"}}>{target}</span>'에 대한 검색 결과</p>}
       <div className="maindiv">
         {!target && <div className="mainSelectBar">
           <div>
@@ -228,12 +230,17 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
         <div className="mainCardList">
           <Card lists={lists} isLogin={isLogin} isAdmin={isAdmin} changeLists={changeLists}/>
         </div>
+        {lists.length === 0 && <div className="mainSorry">
+            {/* <p>죄송합니다</p> */}
+            <p>일치하는 항목이 없습니다</p>
+            <img src={disappointed} alt="죄송합니다"></img>
+          </div>}
         <div className="mainbuttons">
         {!isLastPage && <button onClick={
           appendList
         } className="mainbutton1"
           >더보기</button>}
-        <button onClick={goToTop}>맨위로</button>
+        {lists.length !== 0 && <button onClick={goToTop}>맨위로</button>}
         </div>
       </div>
     </div>

@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ChatShipAdr from "./ChatShipAdr";
+import ChatAccLook from "./ChatAccLook";
+import ChatDeliveryLook from "./ChatDeliveryLook";
 
 const ChatBuyButton = ({partner_num}) => {
     const [visibleAccLook, setvisibleAccLook] = useState(false);
@@ -15,6 +17,7 @@ const ChatBuyButton = ({partner_num}) => {
         setvisibleDelInput(false);
         setvisibleDelLook(false);
         setType(e.target.value)
+      
     }
         // console.log("값이 있나요?" +type);
     const visibleDeliveryLook = (e) => {
@@ -32,17 +35,16 @@ const ChatBuyButton = ({partner_num}) => {
     return(
         <>
         <div className="sendPrivacy">
-            {/* { visibleAccLook && <ChatShipAdr /> }  */}
+             {visibleAccLook && <ChatAccLook partner_num={partner_num}/> } 
              {visibleDelInput && <ChatShipAdr partner_num={partner_num}/> }
-            {/* { visibleDelLook && <SendPhoto />}  */}
+             {visibleDelLook && <ChatDeliveryLook partner_num={partner_num}/>} 
         </div>
 
         <div className="chatSell">
             <button onClick={visibleAccountLook} >{visibleAccLook ? "숨기기" : "계좌조회"}</button>
             <button onClick={visibleDeliveryInput}>{visibleDelInput ? "숨기기" : "배송정보입력"}</button>
             <button onClick={visibleDeliveryLook}>{visibleDelLook ? "숨기기" : "운송장조회"}</button>
-            <button>배송조회</button>
-            
+            <button onClick={() => window.open('http://st.sweettracker.co.kr/#/', '_blank')}>배송조회</button>
             <button onClick={() => window.open('https://cyberbureau.police.go.kr/mobile/tm/sub/sub_02.jsp', '_blank')}>사기피해조회</button>
             
         </div>

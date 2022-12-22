@@ -35,10 +35,11 @@
     border-radius: 5px;
     // background-color: $lightGray1Alpha6;
     position: relative;
+    padding: 2%;
     div{
         position: absolute;
-        left: 110px; 
-        top: 45px;
+        left: 135px; 
+        top: 60px;
 
     }
     div{
@@ -102,7 +103,7 @@
 .chatTime{
     // height: 10vh;
     position: absolute;
-    left: 60%;
+    left: 70%;
     top: 2vh;
 }
 
@@ -113,16 +114,33 @@
     height: 100vh;
     float: right;
     background-color:$bluePurple3Alpha35;
+
     //vertical-align: middle; // 세로정렬
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    position: relative;
+    // display: grid;
+
+        img{
+            width: 25%;
+
+          }
+          .chatListRight{
+            position:absolute;
+            top:40%;
+            left:50%;
+            // margin-top:-20px;
+            margin-left:-40%;
+          
+          }
 }
-.chatting, .chattingProduct{
+ .chattingProduct{
     img{
         width: 100px;
       }
 }
+
 
 .chatAlert{
     width: 150px;
@@ -138,10 +156,10 @@
 
 }
 .chatRight{
-
     overflow-y: auto;
     width: 70%;
     float: right;
+
 }
 .chatStart{
     color: white; 
@@ -212,9 +230,9 @@
         border-radius: 5px;
         font-size: 0.9rem;
         font-weight: 530;
-        width: 6vw;
-        height: 4.5vh;
-        left: 40vw;
+        width: 100px;
+        height: 40px;
+        left: 45vw;
         top : 2vh;
         position: relative;
        }
@@ -234,8 +252,8 @@
 }
 .chatPrice{
     position: absolute;
-    left: 0.7vw;
-    top : 60px;
+    left: 0.6vw;
+    top : 50px;
 }
 }
 .chatContent{
@@ -246,14 +264,16 @@
     -ms-overflow-style: none;
     scrollbar-width: none; /* Firefox */
     // width:70%;
-    height: 500px;
+    height: 800px;
+   
     // display:flex;
-    // flex-direction: column;
+    // flex-direction: column-reverse;
+    
 
     // padding-top: 3%;
     // overflow: hidden;
     margin : 140px 0px 0px 0px ;
-    padding : 0px 0px 150px 0px ;
+    padding : 0px 0px 210px 0px ;
 }
 .chatContent::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
@@ -303,8 +323,8 @@
         background-color: $bluePurple3Alpha35;
         border-radius: 5px;
         margin: 10px;
-        width: 7vw;
-        height: 4vh;
+        width: 100px;
+        height: 35px;
      
     }
     button:active{
@@ -406,7 +426,7 @@
     display: flex;
     border-radius: 5px;
     margin-left: 7%;
-    margin-top: 4%;
+    margin-top: 40px;
     background-color: $lightGray1Alpha5;
     border: 1px solid $lightPurple4Alpha5 ;
 
@@ -422,20 +442,21 @@
     display: flex;
     border-radius: 5px;
     margin-left: 70%;
-    margin-top:  20px;
+    margin-top:  30px;
     background-color: $lightPurple4Alpha5;
 
 }
 .chatTalkTime{
-    position:relative ;
+    position: relative ;
     left: 17.5vw;
     top: -20px;
 
 }
 .chatTalkTime-My{
     position:relative ;
-    left: 42vw;
-    top: 80px;
+    // left: 40vw;
+    right : -43vw;
+    top: -15px;
 }
 
 .chatContainer{
@@ -446,6 +467,22 @@
     padding-top:130px;
 }
 
+.PartAcceptBtn{
+    button:hover{
+        background-color: $purple1Alpha4;
+    }
+}
+
+.PartAcceptBtn2:hover{
+        background-color: $purple1Alpha4;
+    
+}
+.chatWriteImgInput{
+    img{
+        width: 100px;
+        height: 100px;
+    }
+}
 
 
 @media screen and (min-width: 1024px) and (max-width: 1500px) {
@@ -490,14 +527,27 @@
            button{
             width: 7vw;
             height: 4.7vh;
-            left: 32vw;
-            top : 3vh;
+            left: 37vw;
+            top : 0.5vh;
             position: relative;
            }
             }
     }
     .chatSend{
         width: 63%;
+    }
+    .chatStateWait, .chatStatejoin, .chatStatedone{
+        width: 5vw;
+        height: 30px;
+    }
+    .chatBottom {
+        img{
+            margin : 25px 10px 25px 0px;
+        }
+    }
+    .chatContent{
+        margin : 150px 0px 0px 0px ;
+        padding : 0px 0px 70px 0px ;
     }
 }
 
@@ -529,8 +579,8 @@
             font-weight: 530;
             width: 7.8vw;
             height: 4.5vh;
-            left: 27vw;
-            top : 3vh;
+            left: 32.5vw;
+            top : 2.3vh;
             position: relative;
            }
         }
@@ -544,13 +594,13 @@
         height:15vh;
         width:70%;
         position:fixed;
-        bottom:20px;
+        bottom:30px;
         // position :fixed;
         // bottom:10vh;
       
         button{
             margin: 10px;
-            width: 9.5vw;
+            width: 9.3vw;
             height: 4.5vh;
          
         }
@@ -562,6 +612,18 @@
 
         }
     }
+    
+.chatStateWait, .chatStatejoin, .chatStatedone{
+    width: 5.4vw;
+
+}
+.chatContent{
+    margin : 130px 0px 0px 0px ;
+    padding : 0px 0px 200px 0px ;
+}
+
+
+    
 
 }
 // @media screen and (max-width:767px) {
