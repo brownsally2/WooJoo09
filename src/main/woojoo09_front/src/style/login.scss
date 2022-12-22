@@ -90,13 +90,15 @@
     font-weight: 600;
     cursor: pointer;
 }
+.kakaoLogin {
+    margin-top: 50px;
+}
 .kakaoLoginBut {
     background: url("../resources/kakao_login_medium_wide.png");
     background-size: cover;
     // background-repeat: no-repeat;
     width: 100%;
     height: 60px;
-    margin: 50px 0 0;
     border: none;
     cursor: pointer;
 }
