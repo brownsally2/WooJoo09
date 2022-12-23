@@ -48,11 +48,16 @@ const ChatSellButton = ({partner_num, changeChatSendImg, onClickImgMsgSend}) => 
         console.log(partner_num);
     }
 
+    const sendImgbutton = (e) => {
+        setVisiblePho(false);
+    }
+
     return(
         <>
         <div className="sendPrivacy">  
             { visiblePho && <SendPhoto partner_num={partner_num}
-             changeChatSendImg={changeChatSendImg} onClickImgMsgSend={onClickImgMsgSend}/>}
+             changeChatSendImg={changeChatSendImg} onClickImgMsgSend={onClickImgMsgSend}
+             sendImgbutton={sendImgbutton}/>}
             { visible && <SendAccount partner_num={partner_num} /> }
             { visibleDel && <SendDelivery  partner_num={partner_num} /> }
             { visibleDelAddr && <DelAddrLook partner_num={partner_num}/> }

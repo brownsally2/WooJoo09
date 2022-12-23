@@ -28,7 +28,7 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
             value = "select m.nickname, pi2.img_url, max(c.chat_time) as chat_time, \n" +
                     "ANY_VALUE(c.chat_content) chat_content,\n" +
                     "ANY_VALUE(c.is_read) is_read, p.partner_num, p.accept_trade,\n" +
-                    "t.done_trade, t.product, t.price, t.host, t.trade_num, p.part_mem_num, c.sender,\n" +
+                    "t.done_trade, t.product, t.price, t.host, t.trade_num, p.part_mem_num, ANY_VALUE(c.sender) sender,\n" +
                     "(select count(case when is_read = 'UNREAD' then 1 end) from chat\n" +
                     "where (partner_num in (select partner_num from partner p, trade t \n" +
                     "where (p.trade_num = t.trade_num and host = :memberNum) or part_mem_num = :memberNum)) \n" +

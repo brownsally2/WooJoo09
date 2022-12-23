@@ -34,7 +34,7 @@ const ChatAccLook = ({partner_num}) =>{
         {prepared ?
         lists.chatAccount.map(({account_holder, account_num, bank}) => (
            
-        <div>
+        <div className="sendDelivery">
             계좌 정보는
             <br/>
             예금주 : {account_holder},
@@ -45,7 +45,7 @@ const ChatAccLook = ({partner_num}) =>{
         </div>
 
         )):
-        <div>아직 입력된 계좌 정보가 없습니다.</div>
+        <div className="sendDelivery">아직 입력된 계좌 정보가 없습니다.</div>
       } 
         </>
     );

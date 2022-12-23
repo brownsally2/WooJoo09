@@ -39,7 +39,7 @@ const DelAddrLook = ({partner_num}) => {
         {prepared ?
         lists.chatDeliaddress.map(({delivery_name, delivery_address, delivery_phone}) => (
            
-        <div>
+        <div className="sendDelivery">
             원하시는 배송 정보는
             <br/>
             이름 : {delivery_name},
@@ -50,7 +50,7 @@ const DelAddrLook = ({partner_num}) => {
         </div> 
 
         )) :
-        <div>아직 입력된 배송 정보가 없습니다.</div>
+        <div className="sendDelivery">아직 입력된 배송 정보가 없습니다.</div>
         } 
         </>
     );
