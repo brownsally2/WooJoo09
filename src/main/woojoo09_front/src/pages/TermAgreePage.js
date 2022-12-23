@@ -94,21 +94,6 @@ const TermAgreePage = () =>{
             </div>
             <div>
               <div className="termAgree1">
-              
-              </div>
-            </div>
-            <div className="termAgree2Title">
-              <span className="allAgreeInner">
-                <label>
-                  <input type="checkbox" onChange={(e) => handleSingleCheck(e.target.checked, "chk2")}
-                  // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
-                    checked={checkItems.includes("chk2") ? true : false} />
-                  개인정보 수집 및 이용 동의(필수)
-                </label>
-              </span>
-            </div>
-            <div>
-              <div className="termAgree2">
               <p>제1조    (목적)</p>
                 이 우주공구 공동구매 시범 서비스 이용약관(이하 “이 약관”)은, 주식회사 우주공구(이하 “우주공구” 또는 “회사”라 함)과 회사가 제공하는 우주공구 상품 판매 시범 서비스(이하 “상품 판매 시범 서비스" 또는 “이 서비스”)를 이용하고자 하는 사업자(이하 “판매자"라 함)간의 권리와 의무 및 기타 제반사항을 명확히 하는 것을 목적으로 합니다.<br/>
                 <p>제2조    (용어의 정의)</p>
@@ -172,7 +157,22 @@ const TermAgreePage = () =>{
                 이 약관으로 인하여 또는 이 약관과 관련하여 분쟁이 발생하는 경우 당사자들은 일차적으로 협의를 통한 원만한 해결을 도모합니다.<br/>
                 제1항에 의한 협의가 이루어지지 않는 경우 이 약관으로 인하여 또는 이 약관과 관련하여 발생하는 모든 분쟁의 해결은 서울중앙지방법원을 제1심의 합의관할로 하는 소송에 의합니다.<br/>
                 적용 일자<br/>
-                2022년 12월 26일<br/>                          
+                2022년 12월 26일<br/>   
+              </div>
+            </div>
+            <div className="termAgree2Title">
+              <span className="allAgreeInner">
+                <label>
+                  <input type="checkbox" onChange={(e) => handleSingleCheck(e.target.checked, "chk2")}
+                  // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
+                    checked={checkItems.includes("chk2") ? true : false} />
+                  개인정보 수집 및 이용 동의(필수)
+                </label>
+              </span>
+            </div>
+            <div>
+              <div className="termAgree2">
+                                     
               </div>
             </div>        
             <div>
