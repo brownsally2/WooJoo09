@@ -214,7 +214,7 @@ const ChangeMemberInfo = (props) =>{
   const onClickPwdUpdate2 = async() => {
       try {
           const memberResetPwd = await api.infoResetPwd(memberNum, inputPwd2);
-          console.log(memberResetPwd.data.result);
+          console.log(memberResetPwd.data);
           
           if(memberResetPwd.data === true) {
             setIsConPw(true);
@@ -500,7 +500,7 @@ const ChangeMemberInfo = (props) =>{
               {infoProfileImg && <p className='infoImgName'>{infoProfileImg.name}</p>}
               </div>
               <div>
-              {infoProfileImg && <button className="infoNewPfImgPreBtn" onClick={onSubmitInfoPfImg}>이미지 미리보기</button>}
+              {infoProfileImg && <button className="infoNewPfImgPreBtn" onClick={onSubmitInfoPfImg}>이미지 확인하기</button>}
               </div>
             </form>
             <div className="infoProfileImgPreviewOut">

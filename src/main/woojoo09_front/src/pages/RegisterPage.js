@@ -198,7 +198,7 @@ const RegisterPage = () =>{
     if(!nickRegEx.test(inputNick) && !(inputNick.length === 0)) {
       setIsRegNick(false);
       setRegNickMsg("15자리 이하 한글,영문자,숫자를 입력해주세요.");
-    } else if (!isRegNickCk && !(inputNick.length === 0)) {
+    } else if (!(inputNick.length === 0)) {
       setIsRegNick(false); 
       setRegNickMsg("닉네임 중복 확인이 필요합니다.")
     } else if(inputNick.length === 0) {
