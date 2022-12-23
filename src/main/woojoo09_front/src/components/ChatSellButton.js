@@ -1,15 +1,22 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SendAccount from "./ChatSendAccount";
 import SendDelivery from "./ChatSendDelivery"
 import SendPhoto from "./ChatSendPhoto";
 import DelAddrLook from "./ChatDelAddrLook";
-const ChatSellButton = ({partner_num}) => {
+
+const ChatSellButton = ({partner_num, changeChatSendImg, onClickImgMsgSend}) => {
     const [visible, setVisible] = useState(false);
     const [visibleDel, setVisibleDel] = useState(false);
     const [visiblePho, setVisiblePho] = useState(false);
     const [visibleDelAddr, setVisibleDelAddr] = useState(false);
     const [type, setType] = useState('');
+
+    useEffect(() => {
+        setVisible(false);
+        setVisibleDel(false);
+        setVisibleDelAddr(false);
+        setVisiblePho(false);
+    }, [partner_num]);
 
     const visibleAccount = (e) => {
         // console.log("선택한 값 : " +e.target.value)
@@ -33,6 +40,7 @@ const ChatSellButton = ({partner_num}) => {
         setVisibleDel(false);
         setVisibleDelAddr(false);
     }
+
     const visibleDelAddress = (e) => {
         setVisibleDelAddr(!visibleDelAddr);
         setVisible(false);
@@ -40,11 +48,11 @@ const ChatSellButton = ({partner_num}) => {
         console.log(partner_num);
     }
 
-
     return(
         <>
         <div className="sendPrivacy">  
-            { visiblePho && <SendPhoto />}
+            { visiblePho && <SendPhoto partner_num={partner_num}
+             changeChatSendImg={changeChatSendImg} onClickImgMsgSend={onClickImgMsgSend}/>}
             { visible && <SendAccount partner_num={partner_num} /> }
             { visibleDel && <SendDelivery  partner_num={partner_num} /> }
             { visibleDelAddr && <DelAddrLook partner_num={partner_num}/> }

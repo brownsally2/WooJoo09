@@ -43,8 +43,8 @@ const RegisterPage = () =>{
   const [isRegNickCk, setIsRegNickCk] = useState(false);
   const [isRegName, setIsRegName] = useState(false);
   const [isRegEmail, setIsRegEmail] = useState(false);
-  const [isRegPhone, setIsRegPhone] = useState(true); //false로 바꾸기
-  const [isRegPhoneVer, setIsRegPhoneVer] = useState(true); //false로 바꾸기
+  const [isRegPhone, setIsRegPhone] = useState(false); //false로 바꾸기
+  const [isRegPhoneVer, setIsRegPhoneVer] = useState(false); //false로 바꾸기
   const [isRegOnPhone, setIsRegOnPhone] = useState(false);
   const [isRegVerifyCode, setIsRegVerifyCode] = useState(false);
   
@@ -354,27 +354,27 @@ const RegisterPage = () =>{
     regPhoneInput.style.boxShadow = '0 0 0px 1000px rgb(220, 220, 220) inset';
 
 
-    // const fetchSearchData = async () => {
-    //   console.log("인증번호 요청하는 전화번호 " + regPhone);
-    //   try {
-    //     const response = await api.memberPhoneReg(regPhone);
-    //     console.log(response.data.result);
-    //     setRegVerifyCode(response.data.code);
-    //     // console.log(response.data.code);
-    //     if(response.data.result === "OK") {
-    //       setRegPhoneOkMsg("인증번호가 발송되었습니다.");
-    //     }else if(response.data.result === "DUP") {
-    //       setIsRegPhone(false);
-    //       setRegPhoneMsg("이미 가입 된 전화번호 입니다.");
-    //     } else {
-    //       setIsRegPhone(false);
-    //       setRegPhoneMsg("인증번호 발송에 실패했습니다.");
-    //     }
-    //   }catch (e) {
-    //     console.log(e);
-    //   }
-    // };
-    // fetchSearchData();
+    const fetchSearchData = async () => {
+      console.log("인증번호 요청하는 전화번호 " + regPhone);
+      try {
+        const response = await api.memberPhoneReg(regPhone);
+        console.log(response.data.result);
+        setRegVerifyCode(response.data.code);
+        // console.log(response.data.code);
+        if(response.data.result === "OK") {
+          setRegPhoneOkMsg("인증번호가 발송되었습니다.");
+        }else if(response.data.result === "DUP") {
+          setIsRegPhone(false);
+          setRegPhoneMsg("이미 가입 된 전화번호 입니다.");
+        } else {
+          setIsRegPhone(false);
+          setRegPhoneMsg("인증번호 발송에 실패했습니다.");
+        }
+      }catch (e) {
+        console.log(e);
+      }
+    };
+    fetchSearchData();
   }
 
   //전화번호 다시 입력 버튼

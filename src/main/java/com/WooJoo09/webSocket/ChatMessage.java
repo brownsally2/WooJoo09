@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 public class ChatMessage {
     public enum MessageType {
-        ENTER, TALK
+        ENTER, TALK, IMG
     }
     private MessageType type;
     private String roomId;

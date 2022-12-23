@@ -53,6 +53,12 @@ const ChatPage = () =>{
   const [sender, setSender] = useState();
   const [chatContent, setChatContent] = useState();
 
+  const [chatSendImg, setChatSendImg] = useState();
+
+  const changeChatSendImg = (e)=>{
+    setChatSendImg(e);
+  }
+
   const date = new Date();
 
   var options = {
@@ -150,6 +156,7 @@ const ChatPage = () =>{
     };
     fetchData();
   } 
+
   const onClickMsgClose = () => {
       ws.current.send(
           JSON.stringify({
@@ -246,6 +253,28 @@ const partnerReject = () => {
   useEffect(() => {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   });
+
+  const onClickImgMsgSend = () => {
+    const fetchData = async () => {
+      try {
+        console.log(items);
+          const res = await api.chatContentInsert(partner_num, chatSendImg, "img", memberNum);
+          console.log("메시지 db에 보내짐" + res.data);
+        } catch {
+          console.log("error");
+        }
+      };  
+    ws.current.send(
+        JSON.stringify({
+        "type":"IMG",
+        "roomId": roomId,
+        "sender": memberNum,
+        "message":chatSendImg,
+        "time" : new Date()
+    }));
+    setInputMsg("");
+    fetchData();
+  }
   
 
   return(
@@ -282,11 +311,13 @@ const partnerReject = () => {
           <div className="chatContent" ref={scrollRef} >
             {prepared &&
             lists.chattingContent
-            .map(({chat_content, chat_time, sender}) => (
+            .map(({chat_content, chat_time, sender, msg_type}) => (
             <>
-                {memberNum != sender && <div className="chatMessage">{chat_content}</div>}
+                {memberNum != sender && <div className="chatMessage">
+                  {msg_type === 'IMG'? <img src={chat_content}/> : chat_content}</div>}
                 {memberNum != sender && <div className="chatTalkTime">{new Date(chat_time).toLocaleDateString("ko-KR", options)}</div>}
-                {memberNum == sender && <div className="chatMessage-My"><div>{chat_content}</div></div>}
+                {memberNum == sender && <div className="chatMessage-My">
+                  {msg_type === 'IMG'? <img src={chat_content}/> : chat_content}</div>}
                 {memberNum == sender && <div className="chatTalkTime-My">{new Date(chat_time).toLocaleDateString("ko-KR", options)}</div>}  
                 
             </>
@@ -298,7 +329,9 @@ const partnerReject = () => {
                         .map((item) => (
                     <>
                     {/* new Intl.DateTimeFormat('kr').format(new Date()) */}
-                    <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>{item.message}</div>
+                    <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>
+                      {item.type == 'IMG'? <img src={item.message} alt="채팅이미지"/>: item.message}
+                    </div>
                     <div className={ memberNum != item.sender ? "chatTalkTime" : "chatTalkTime-My"}>{new Date(item.time).toLocaleDateString("ko-KR", options)}</div>
                     </>
                       // <div className="chatMessage-My">{`${item.message}`}</div>
@@ -306,7 +339,8 @@ const partnerReject = () => {
                   </div>  
           </div>
 
-            {host == memberNum?  <ChatSellButton partner_num={partner_num}/> : <ChatBuyButton partner_num={partner_num}/>    }
+            {host == memberNum?  <ChatSellButton partner_num={partner_num}
+             changeChatSendImg={changeChatSendImg} onClickImgMsgSend={onClickImgMsgSend}/> : <ChatBuyButton partner_num={partner_num}/>    }
             <div className="chatBottom">
               <input className="chatSend" value ={inputMsg} onChange={onChangMsg} onKeyUp={onEnterKey}/>
               <button onClick={ (e) => {onClickMsgSend(e);}}><img src={send1} alt="send"/></button>

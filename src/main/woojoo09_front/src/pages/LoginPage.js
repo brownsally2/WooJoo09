@@ -4,7 +4,17 @@ import Header from "../components/Header";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../api/api";
 
+
+
 const LoginPage = () =>{
+  const CLIENT_ID = "b7f5080559952359d857cfa831204487";
+  const REDIRECT_URI =  "http://localhost:3000/kakaoLogin";
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+  const handleLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
+
   const { state } = useLocation();
   const navigate = useNavigate();
 
@@ -113,8 +123,13 @@ const LoginPage = () =>{
               <button className="RegButton" onClick={onClickGoToTermAgree}>회원가입</button>
             </div>
             <div className="kakaoLogin">         
-              {/* <button className="kakaoLogin"><img src="../resources/kakao_login_medium_wide.png" /></button> */}
-              <input type="button" className="kakaoLoginBut"></input>
+              {/* <input type="button" className="kakaoLoginBut"></input> */}
+              {/* <KaKaoBtn href={KAKAO_AUTH_URL}>
+                <img src={kakaologo}></img>
+              </KaKaoBtn> */}
+
+              <input type="button" className="kakaoLoginBut" onClick={handleLogin}></input>
+
             </div> 
           </div>
         </div>

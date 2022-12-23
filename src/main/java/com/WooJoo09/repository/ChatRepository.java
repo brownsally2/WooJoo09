@@ -53,7 +53,7 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     List<Map<?,?>> chatList(@Param("memberNum") int memberNum);
 
     @Query(
-            value = "select chat_content, chat_time, sender from chat where partner_num = :partner_num " ,
+            value = "select chat_content, chat_time, sender, msg_type from chat where partner_num = :partner_num " ,
             nativeQuery = true
     )
     List<Map<?,?>> chatContent (@Param("partner_num") int partnerNum);

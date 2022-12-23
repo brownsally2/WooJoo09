@@ -394,8 +394,9 @@ input:focus{
   flex-direction: column;
   justify-content: space-around;
 
-  a{
+  a, span{
     padding-right: 20px;
+    cursor: pointer;
   }
   p{
     font-size: .7rem;
@@ -815,7 +816,7 @@ input:focus{
   .footer{
     // 하단 네비게이션 바텀 탭과 같은 사이즈로 추후 지정
     height: 40px;
-    a{
+    a, span{
       display: none;
     }
     p{

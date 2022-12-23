@@ -28,6 +28,31 @@
     display: none; /* Chrome, Safari, Opera*/
 }   
 
+.chatSendFile{
+    background-color: #FAef91;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    >div{
+        display: flex;
+        flex-direction: row;
+        >form{
+            display: flex;
+            align-items: flex-end;
+            p{
+                margin-bottom: 10px;
+            }
+            button{
+                margin-bottom: 5px;
+            }
+        }
+    }
+    img{
+        height: 100px;
+    }
+}
+
 
 .chatButton{
     width: 100%;
@@ -270,6 +295,7 @@
     scrollbar-width: none; /* Firefox */
     height: calc(100vh - 350px);
     margin : 133px 0px 0px 0px ;
+    width: 100%;
 }
 .chatContent::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
@@ -297,7 +323,7 @@
     // right:40;
     bottom:180px;
     background-color: $lightGray2;
-    width: auto;
+    width: 70%;
     height: auto;
     
 }
@@ -709,6 +735,9 @@
         font-size: .8rem;
         // overflow:hidden;
     
+    }
+    .sendPrivacy{
+        width: 100%;
     }
 }
 

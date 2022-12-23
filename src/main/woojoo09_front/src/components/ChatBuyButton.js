@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ChatShipAdr from "./ChatShipAdr";
 import ChatAccLook from "./ChatAccLook";
@@ -10,6 +9,12 @@ const ChatBuyButton = ({partner_num}) => {
     const [visibleDelInput, setvisibleDelInput] = useState(false);
     const [visibleDelLook, setvisibleDelLook] = useState(false);
     const [type, setType] = useState('');
+
+    useEffect(() => {
+        setvisibleAccLook(false);
+        setvisibleDelInput(false);
+        setvisibleDelLook(false);
+    }, [partner_num]);
 
     const visibleAccountLook = (e) => {
         // console.log("선택한 값 : " +e.target.value)
