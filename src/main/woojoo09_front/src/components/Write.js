@@ -62,23 +62,23 @@ const Write = () =>{
 
   const [tradePlaceErr, setTradePlaceErr] = useState("");
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await api.tradeCount();
-  //       console.log(response.data);
-  //       if(response.data.countTrade === "loginError"){
-  //         navigate('/main');
-  //       } else{
-  //         setNumOfTrade(response.data.countTrade);
-  //         setMemberNum(response.data.memberNum);
-  //       }
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.tradeCount();
+        console.log(response.data);
+        if(response.data.countTrade === "loginError"){
+          navigate('/main');
+        } else{
+          setNumOfTrade(response.data.countTrade);
+          setMemberNum(response.data.memberNum);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
 
   const tradeInsert = () =>{
     //imgUrl,representUrl, category, product, price, limitPartner, 
@@ -310,9 +310,9 @@ const Write = () =>{
        // 업로드 처리
       console.log("업로드 처리");
       const storageRef = storage.ref("woojoo09/tradeImg/"); //어떤 폴더 아래에 넣을지 설정
-      // const imgName = (memberNum + "host"+ numOfTrade + "thTrade" + imgNum + "thImg");
+      const imgName = (memberNum + "host"+ numOfTrade + "thTrade" + imgNum + "thImg" + uuidv4());
       // const imagesRef = storageRef.child(imgName);
-      const imagesRef = storageRef.child(uuidv4());
+      const imagesRef = storageRef.child(imgName);
       // const imagesRef = storageRef.child(image.name); //파일명
 
       console.log("파일을 업로드하는 행위");
@@ -368,9 +368,9 @@ const Write = () =>{
     // 업로드 처리
     console.log("업로드 처리");
     const storageRef = storage.ref("woojoo09/tradeImg/"); //어떤 폴더 아래에 넣을지 설정
-    // const imgName = (memberNum + "host" + numOfTrade + "thTradeRepresentImg");
+    const imgName = (memberNum + "host" + numOfTrade + "thTradeRepresentImg" + uuidv4());
     // const imagesRef = storageRef.child(imgName);
-    const imagesRef = storageRef.child(uuidv4());
+    const imagesRef = storageRef.child(imgName);
     // const imagesRef = storageRef.child(image.name); //파일명
 
     console.log("파일을 업로드하는 행위");

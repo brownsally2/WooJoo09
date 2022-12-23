@@ -123,9 +123,17 @@ public class ChatService {
     }
 
 
-    public List<?> chatContentService(int partnerNum){
+    public List<?> chatContentService(int partnerNum, long memberNum){
         List<Map<String, List<?>>> result = new ArrayList<>();
         Map<String, List<?>>map = new HashMap<>();
+        Partner partner = partnerRepository.findByPartnerNum((long) partnerNum);
+        Member member = memberRepository.findByMemberNum(memberNum);
+        // 내가 아닌 상대방 채팅만 읽음처리 하기
+        List<Chat> chats = chatRepository.findBySenderNotAndPartnerNum(member, partner);
+        for(Chat e : chats){
+            e.setIsRead(IsRead.READ);
+            chatRepository.save(e);
+        }
         map.put("chattingContent", chatRepository.chatContent(partnerNum));
         System.out.print(map);
         for(int i = 0; i < map.size(); i++){
@@ -148,6 +156,23 @@ public class ChatService {
         log.info(savedChat.toString());
         return true;
     }
+//    public Map<String, String> isreadUpdate(Long partnerNum, Long memberNum) {
+//        Map<String, String> map = new HashMap<>();
+//        Partner partner = partnerRepository.findByPartnerNum(partnerNum);
+//        Member member = memberRepository.findByMemberNum(memberNum);
+//        List<Chat> chat = chatRepository.findByPartnerNumAndSender(partner, member);
+//        if(chat.isEmpty()){
+//            map.put("isreadUpdate", "null");
+//        }else{
+//            for(Chat e : chat) {
+//                e.setIsRead(IsRead.READ);
+//                Chat savedIsReadUpdate = chatRepository.save(e);
+//                log.info(savedIsReadUpdate.toString());
+//            }
+//            map.put("isreadUpdate", "OK");
+//        }
+//          return map;
+//    }
 
 
 }

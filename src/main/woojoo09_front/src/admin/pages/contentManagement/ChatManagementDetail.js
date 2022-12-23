@@ -36,7 +36,7 @@ const ChatManagementDetail = () =>{
         <Header/>
         <Sidebar/>
       <div className="center">
-        <TopBar name="게시글 상세" high1="게시글 관리" high2="콘텐츠 관리"/>
+        <TopBar name="채팅 상세" high1="거래 참여 관리" high2="콘텐츠 관리"/>
         <div>
           {lists &&
             lists

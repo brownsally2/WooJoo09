@@ -35,7 +35,6 @@ import "./admin/admin.scss";
 import MemberManagement from "./admin/pages/memberManagement/MemberManagement";
 import WriteManagement from "./admin/pages/contentManagement/WriteManagement";
 import WriteManagementSearch from "./admin/pages/contentManagement/WriteManagementSearch";
-import WriteManagementDetail from "./admin/pages/contentManagement/WriteManagementDetail";
 import ChatManagement from "./admin/pages/contentManagement/ChatManagement";
 import AdManagement from "./admin/pages/adManagement/AdManagement";
 import AdManagementAdd from "./admin/pages/adManagement/AdManagementAdd";
@@ -75,7 +74,6 @@ function App() {
           <Route path="/ilovekirby/member" element={<MemberManagement/>}/>
           <Route path="/ilovekirby/content/writeManagement" element={<WriteManagement/>}/>
           <Route path="/ilovekirby/content/writeManagement/search/:query" element={<WriteManagementSearch/>}/>
-          <Route path="/ilovekirby/content/writeManagement/detail/:writeId" element={<WriteManagementDetail/>}/>
           <Route path="/ilovekirby/content/chatManagement" element={<ChatManagement/>}/>
           <Route path="/ilovekirby/adManagement" element={<AdManagement/>}/>
           <Route path="/ilovekirby/adManagement/AdManagementDetail/:ad_num" element = {<AdManagementDetail/>}/>

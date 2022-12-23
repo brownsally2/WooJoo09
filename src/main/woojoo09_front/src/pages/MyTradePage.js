@@ -92,6 +92,7 @@ const MyTradePage =() =>{
           setLists(prev => ([...prev, ...response.data.content.content]));
           setPage(page + 1);
           if(response.data.content.last === true) setIsLastPage(true)
+          console.log(response.data.content);
         }
         fetchData();
       } catch(e) {
@@ -134,6 +135,73 @@ const MyTradePage =() =>{
     fetchData();
   }
 
+  const goodInsert = (tradeNum) =>{
+    const fetchData = async () => {
+      try {
+        const response = await api.goodInsert(tradeNum);
+        console.log(response.data);
+        if(response.data.completeGood === "OK") {
+          let arr = lists.map(val => {
+            if(val.tradeNum === tradeNum){
+              val.mygood = 1;
+            }
+            return val
+          })
+          setLists(arr);
+        } else if(response.data.completeGood === "duplicate"){
+          setTradeCloseMsg("이미 좋아요한 공동구매 입니다");
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }
+
+  const dislikeInsert = (tradeNum) =>{
+    const fetchData = async () => {
+      try {
+        const response = await api.dislikeInsert(tradeNum);
+        console.log(response.data);
+        if(response.data.completeDislike === "OK") {
+          let arr = lists.map(val => {
+            if(val.tradeNum === tradeNum){
+              val.mydislike = 1;
+            }
+            return val
+          })
+          setLists(arr);
+        } else if(response.data.completeDislike === "duplicate"){
+          setTradeCloseMsg("이미 싫어요한 공동구매 입니다");
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }
+
+  const tradeClose = (tradeNum) =>{
+    const fetchData = async () => {
+      try {
+        const response = await api.tradeClose(tradeNum);
+        console.log(response.data);
+        if(response.data.closeTrade === "loginError") {
+          setTradeCloseMsg("로그인 상태를 확인해주세요");
+        } else if(response.data.closeTrade === "duplicate"){
+          setTradeCloseMsg("이미 마감한 공동구매 입니다");
+        }
+        else {
+          setTradeCloseMsg("마감 처리 되었습니다");
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }
+
+
   return(
     <div>
       <Header
@@ -167,17 +235,29 @@ const MyTradePage =() =>{
               }</p>
             {value === "myDoneTrade" &&
             <>
-              <div className="MyTradeGood" onClick={()=> {setChangeGood(true)}}>
+              {list.mygood == 0 && list.mydislike == 0 && 
+              <div className="MyTradeGood" onClick={()=>{goodInsert(list.tradeNum)}}>
                 <img src={angel} alt="기본 좋아요" className="MyTradeImg"/>
                 <img src={angel_lemon} alt="hover시 좋아요" className="MyTradeImg2"/>
-                {!changeDislike && changeGood && <img src={angel_yellow} alt="좋아요 누름" className="MyTradeImg3"/>}
-              </div>
-              <div className="MyTradeDislike" onClick={()=> {setChangeDislike(true)}}>
+              </div>}
+              {list.mygood == 1 && <div className="MyTradeGood">
+               <img src={angel_yellow} alt="좋아요 누름" className="MyTradeImg3"/>
+               </div>}
+               {list.mygood == 0 && list.mydislike == 0 && 
+               <div className="MyTradeDislike" onClick={()=> {dislikeInsert(list.tradeNum)}}>
                 <img src={devil} alt="기본 싫어요" className="MyTradeImg"/>
                 <img src={devil_pink} alt="hover시 싫어요" className="MyTradeImg2"/>
-                {!changeGood&& changeDislike &&<img src={devil_red} alt="싫어요 누름" className="MyTradeImg3"/>}
-              </div>
+              </div>}
+              {list.mydislike == 1 && <div className="MyTradeDislike">
+              <img src={devil_red} alt="싫어요 누름" className="MyTradeImg3"/>
+              </div>}
             </>
+            }
+            {value === "myHostTrade" && list.doneTrade === "ONGOING" &&
+            <div className="MyTradeGood">
+              <button style = {{zIndex : 100}} onClick={()=>{tradeClose(list.tradeNum)}}>거래 마감하기</button>
+              {tradeCloseMsg && <p>{tradeCloseMsg}</p>}
+            </div>
             }
             {value === "myHostTrade" && list.doneTrade === "FULL" &&
             <div className="MyTradeGood">

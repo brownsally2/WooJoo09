@@ -252,29 +252,7 @@ const api = {
       cmd: "bannerSelect"
     }
     return await axios.post(BASE_URL+ "bannerselect", bannerSelectCmd, HEADER);
-  },  
-  bannerInsert: async function(name, url) {
-    const bannerInsertCmd = {
-      name: name,
-      url : url
-    }
-    return await axios.post(BASE_URL+ "bannerinsert", bannerInsertCmd, HEADER);
-  },  
-  bannerUpdate: async function(bannerNum, name, url, isActive) {
-    const bannerUpdateCmd = {
-      bannerNum : bannerNum,
-      name: name,
-      url : url,
-      isActive : isActive
-    }
-    return await axios.post(BASE_URL+ "bannerupdate", bannerUpdateCmd, HEADER);
-  },  
-  bannerDelete: async function(bannerNum) {
-    const bannerDeleteCmd = {
-      bannerNum: bannerNum
-    }
-    return await axios.post(BASE_URL+ "bannerdelete", bannerDeleteCmd, HEADER);
-  },  
+  }, 
   //로그아웃
   logout: async function() {
     const logoutCmd = {
@@ -463,9 +441,10 @@ const api = {
   },
   
   // 채팅 내용 가져오기
-  chatContent: async function(partner_num){
+  chatContent: async function(partner_num, memberNum){
     const chatContent = {
-      partner_num: partner_num
+      partner_num: partner_num,
+      memberNum : memberNum
     }
     return await axios.post(BASE_URL + "chatContentSelect", chatContent, HEADER);
   },
@@ -564,11 +543,12 @@ const api = {
   chatPartnerReject : async function(target) {
     const chatObject = {
       target : target
-      // partner : partner
+  
 
     }
     return await axios.post(BASE_URL + "partnerdelete", chatObject, HEADER);
   }, 
+
 
 
 

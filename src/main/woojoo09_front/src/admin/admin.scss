@@ -175,7 +175,7 @@ img {
 }
 
 button, input, select{
-  font-family: 'SUIT-Medium';
+  font-family: 'S-CoreDream-3Light';
 }
 
 input, select{
@@ -189,15 +189,14 @@ select{
   margin-left: 10px;
 }
 
-body{
-  background-image: linear-gradient(rgba(221, 126, 255, 0.5), rgba(106, 203, 255, 0.5));
-  background-attachment: fixed;
-  background-size: cover;
-}
+background-image: linear-gradient(rgba(203, 126, 255, 0.5), rgba(106, 203, 255, 0.5));
+background-attachment: fixed;
+background-size: cover;
+
 
 .adminheader {
   height: 60px;
-  background-color: #FE83B1;
+  background-color: rgba(163, 106, 255, 0.3);
   display: flex;
 
   .headerMenu{
@@ -217,10 +216,11 @@ body{
   }
 
   .logo{
+    padding-left: 10px;
     display: flex;
     align-items: center;
     img{
-      height: 60px;
+      height: 50px;
     }
   }
 }
@@ -232,7 +232,7 @@ body{
   height: calc(100% - 60px);
   position: absolute;
   top: 60px;
-  background-color: rgba(254, 131, 177, .3);
+  background-color: rgba(255,255,255,.2)
 }
 .sidebar > ul {
   // background: rgba(228, 206, 242, 0.5);
@@ -258,7 +258,7 @@ body{
   position: relative;
 }
 .sidebar > ul > li.show button {
-  background:#FC4B88;
+  background:rgba(163, 106, 255, 0.3);
   border-radius: 0 20px 20px 0px;
   color: #fff;
   font-weight: 600;
@@ -330,6 +330,7 @@ body{
 .center{
   margin-left: 250px;
   height: 100%;
+  min-height: 100vh;
   padding-top: 10px;
   padding-left: 20px;
   padding-right: 20px;
@@ -402,12 +403,12 @@ body{
   }
 
   button{
-    background-color:#FE83B1;
+    background-color:rgba(163, 106, 255, 0.3);
     border-radius: 5px;
     font-size: 16px;
   }
   button:hover{
-    background-color:#FC4B88;
+    background-color:rgba(255, 239, 150, 0.6);
   }
 }
 
@@ -422,11 +423,14 @@ body{
 
 hr{
   height: 1px;
-  background-color: #FC4B88;
+  background-color: rgba(120, 21, 248, 0.7);
   border : 0;
 }
 
 .searchBar{
+  input{
+    width: 220px;
+  }
   margin-top: 10px;
   margin-left: 10px;
   input{
@@ -434,11 +438,11 @@ hr{
   }
   button{
     padding: 2px 5px 2px 5px;
-    background-color:#FE83B1;
+    background-color:rgba(163, 106, 255, 0.3);
     border-radius: 5px;
   }
   button:hover{
-    background-color:#FC4B88;
+    background-color:rgba(255, 239, 150, 0.6);
   }
   margin-bottom: 10px;
 }
@@ -475,19 +479,19 @@ table{
     background: rgba(255, 255, 255, 0.2);
 
     &:hover {
-      background: #FE83B1;
+      background: rgba(163, 106, 255, 0.3);
       cursor: pointer;
       transform: translateY(-2px);
     }
   
     &[disabled] {
-      background: rgba(128, 128, 128, .5);
+      background: rgba(128, 128, 128, .2);
       cursor: revert;
       transform: revert;
     }
   
     &[aria-current] {
-      background: #FC4B88;
+      background: rgba(255, 239, 150, 0.6);
       font-weight: bold;
       cursor: revert;
       transform: revert;
@@ -503,8 +507,11 @@ table{
     margin-left: 5px;
     margin-right: 5px;
     border-radius: 5px;
-    background-color: #FE83B1;
+    background-color: rgba(163, 106, 255, 0.3);
     padding: 2px 5px 2px 5px;
+  }
+  button:hover{
+    background-color:rgba(255, 239, 150, 0.6);
   }
 }
 
@@ -528,6 +535,7 @@ table{
       margin-left: 0px;
       margin-top: 180px;
       width: 100vw;
+      min-height: calc(100vh - 565px);
     }
   }
 }

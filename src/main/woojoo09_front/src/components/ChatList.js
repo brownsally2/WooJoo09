@@ -1,11 +1,10 @@
 
 import { useState,  useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import fashion from "../resources/fashion_sample.png";
+import house from "../resources/house.png"
 import "../style/chat.scss"
 import "../style/common.scss"
 import api from "../api/api"
-import ChatListTime from "./ChatListTime";
 
 const ChatList = () =>{
 
@@ -21,12 +20,21 @@ const ChatList = () =>{
   // const [product, setProduct] = useState('');
   const [chatTime, setChatTime] = useState('');
   const navigate = useNavigate();
-  // const now = new Date();	
-  // console.log(now);
 
-  const kr = 9 * 60 * 60 * 1000
+
+
+  const date = new Date();
+
+  var options = {
+    // year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    // hour: '2-digit',
+    minute : 'numeric',
+  }
   
-  
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +50,15 @@ const ChatList = () =>{
         // let chatContent = lists.chat_content;
         // console.log(chatContent);
         setPrepared(true);
+        console.log(response.data);
+        // 통신하지 않고 렌더링 치기 위함
+        // let chatAlert = lists.map(e => { 
+        //   if(e.partnerNum === partnerNum && e.sender !== memberNum){
+            
+        //   }
+        //   return chatAlert
+        // })
+        // lists(alert);
       } catch (e) {
         console.log(e);
       }
@@ -76,29 +93,44 @@ const ChatList = () =>{
     });
   }
   };
+  // const isRead = (partnerNum, memberNum) => { 
+  //   const fetchData = async () => {
+  //     try {
+  //         const res = await api.chatIsReadInsert(partnerNum, memberNum);
+  //         console.log("res.data" + res.data);
+  //     } catch {
+  //         console.log("error");
+  //     }
+  //   };
+  //   fetchData();
+  // }
 
 
   return(
     <div className="wrapperLeft">
+            {/* <div className="chatLogo">
+             
+            </div> */}
             <div className="chatList">
-                채팅목록
+              <div className="chatLogo"><Link to= {'/main'}><img src = {house} alt="로고"/></Link></div>
+              <div>채팅목록</div>
             </div>
             { prepared && 
             lists.chatListContent.map((list) => (
-
             <div className="chatDetail"> 
-            
               <div className="chatButton">
                     <p onClick={()=>{chatTest(list.partner_num); move(list);}}>
                       <span><img src = {list.img_url} alt="물품이미지"/></span>
                       <p className="chatDetailNick">{list.nickname}</p>
-                      <p className="chatTime">{list.chat_time +kr}</p>
-                      <div>{list.chat_content}</div>
-                      {list.is_read === "UNREAD" && <p className="chatAlert"/>}
+                      <p className="chatTime">{new Date(list.chat_time).toLocaleDateString("ko-KR", options)}</p>
+                      <div>{list.chat_content.length > 10 ? list.chat_content.substring(0,10)+"...": list.chat_content}</div>
+                      {list.countUnreadChat > 0 && <p className="chatAlert"/>}
                     </p>
                 </div>
                </div>
               ))}
+              
+              
     </div>
   );
 }

@@ -15,7 +15,7 @@
     box-sizing: border-box;
  
   }
-   .chatLeft{
+   .chatLeft, .chatPageLeft{
         width: 30%;
         height: 100vh;
         float: left;
@@ -24,7 +24,7 @@
         -ms-overflow-style: none;
         scrollbar-width: none; /* Firefox */
    }
-   .chatLeft::-webkit-scrollbar {
+   .chatLeft::-webkit-scrollbar, .chatPageLeft::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
 }   
 
@@ -63,8 +63,20 @@
     align-items: center;
     font-size: 1.5rem;
     font-weight: 500;
-    // flex-wrap: wrap;
+    img{
+        width: 50px;
+        height: 50px;
+        margin-right: 5px;
+        // justify-content: center;
+        // align-items: center;
+        // position:fixed;
+        // bottom:0; 
+        // left: 15%;
+        // transform:  translateX( -50% );
+    }
+    // position: relative;
 }
+
 .chatDetail{
     height: 13vh;
     // padding-top: 3%;
@@ -105,6 +117,7 @@
     position: absolute;
     left: 70%;
     top: 2vh;
+    font-size: .8rem;
 }
 
 .chatting{
@@ -135,11 +148,6 @@
           
           }
 }
- .chattingProduct{
-    img{
-        width: 100px;
-      }
-}
 
 
 .chatAlert{
@@ -156,7 +164,7 @@
 
 }
 .chatRight{
-    overflow-y: auto;
+    // overflow-y: auto;
     width: 70%;
     float: right;
 
@@ -257,23 +265,11 @@
 }
 }
 .chatContent{
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none; /* Firefox */
-    // width:70%;
-    height: 800px;
-   
-    // display:flex;
-    // flex-direction: column-reverse;
-    
-
-    // padding-top: 3%;
-    // overflow: hidden;
-    margin : 140px 0px 0px 0px ;
-    padding : 0px 0px 210px 0px ;
+    height: calc(100vh - 350px);
+    margin : 133px 0px 0px 0px ;
 }
 .chatContent::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
@@ -419,8 +415,10 @@
 
 .chatMessage{
     padding : 15px;
-    width: 12vw;
+    min-width: 7vw;
+    max-width: 12vw;
     height: auto;
+    
     justify-content: center;
     align-items: center;
     display: flex;
@@ -434,8 +432,10 @@
 
 
 .chatMessage-My{
+    
     padding : 15px;
-    width: 12vw;
+    min-width: 7vw;
+    max-width: 12vw;
     height: auto;
     justify-content: center;
     align-items: center;
@@ -450,6 +450,7 @@
     position: relative ;
     left: 17.5vw;
     top: -20px;
+    font-size: .8rem;
 
 }
 .chatTalkTime-My{
@@ -457,6 +458,7 @@
     // left: 40vw;
     right : -43vw;
     top: -15px;
+    font-size: .8rem;
 }
 
 .chatContainer{
@@ -483,6 +485,8 @@
         height: 100px;
     }
 }
+
+
 
 
 @media screen and (min-width: 1024px) and (max-width: 1500px) {
@@ -546,8 +550,8 @@
         }
     }
     .chatContent{
-        margin : 150px 0px 0px 0px ;
-        padding : 0px 0px 70px 0px ;
+        margin : 133px 0px 0px 0px ;
+
     }
 }
 
@@ -617,18 +621,96 @@
     width: 5.4vw;
 
 }
-.chatContent{
-    margin : 130px 0px 0px 0px ;
-    padding : 0px 0px 200px 0px ;
+.chatLogo{
+    display: none;
 }
 
 
+}
+@media screen and (max-width:767px) {
+    .chatting{
+        display: none;
+    }
+    .chatLeft{
+        width: 100%;
+    }
+    .chatAlert{
+        width: 50px;
+        height: 10px;
+        border-radius: 50%;
+    }
+    .chatLogo{
+        display: none;
+    }
+    .chatPageLeft{
+        display: none;
+    }
+    .chatRight,.chatNickname,.chattingProduct, 
+    .chatContent, .chatBottom,.chatSell{
+        width: 100%;
+    }
+    .chatSend{
+        width: 80%;
+    }
+    .chatStateWait, .chatStatejoin, .chatStatedone{
+        width: 9vw;
+        height: 30px;
+        border-radius: 5px;
+        margin-top: 7px;
+        margin-left : 2vw;
+    }
+    .chattingProduct{
+        img{
+            width: 55px;
+            height: 55px;
+            // 시계방향 : 위 오 아 왼
+            margin: 15px 8px 10px 8px ;
+        }
+        div{
+           button{
+            font-size: 0.7rem;
+            font-weight: 530;
+            width: 50px;
+            height: 35px;
+            left: 45vw;
+            top : 2vh;
+           }
+            display: flex;
+        }
+    }
+    .chatProductName{
+        position: absolute;
+        left: 0.5vw;
+        top : 20px;
+        font-size: .85rem;
+    }
+    .chatPrice{
+        font-size: .85rem;
+    }
+    .chatBottom {
+        img{
+            width: 38px;
+            height: 38px;
+            margin: 15px 10px 22px 10px ;
+        }
+    }
+    .chatTalkTime-My{
+        position:relative ;
+        // left: 40vw;
+        right : -43vw;
+        top: -15px;
+        font-size: .8rem;
+    }
+    .chatMessage-My{
+        padding : 10px;
+        min-width: 200px;
+        height: auto;
+        max-height: 25vw;
+        font-size: .8rem;
+        // overflow:hidden;
     
-
+    }
 }
-// @media screen and (max-width:767px) {
-
-// }
 
 
    

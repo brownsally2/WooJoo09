@@ -89,7 +89,7 @@ const WriteManagement = () =>{
         <Header/>
         <Sidebar/>
       <div className="center">
-        <TopBar name="게시글 관리" high1="콘텐츠 관리"/>
+        <TopBar name="공동구매 검색" high1="콘텐츠 관리"/>
         <div className="searchBar">
           <input type="text" placeholder="제목, 작성자" value ={inputSearch} onChange={onChangeSearch}/>
           <button>
@@ -98,7 +98,7 @@ const WriteManagement = () =>{
         </div>
         <div>
         <label className="pageselect">
-            페이지 당 표시할 게시물 수:&nbsp;
+            페이지 당 표시할 공동구매 수:&nbsp;
             <select
               type="number"
               value={limit}
@@ -127,28 +127,36 @@ const WriteManagement = () =>{
                     limit :lists.length % limit)? true : false} 
                   />
                   <th>게시글 번호</th>
-                  <th>게시글 제목</th>
+                  <th>카테고리</th>
+                  <th>공동구매 제목</th>
+                  <th>진행 상태</th>
                   <th>작성자</th>
+                  <th>지역</th>
+                  <th>지역 상세</th>
                   <th>작성일</th>
                 </tr>
               </thead>
               <tbody>
                 {lists &&
                   lists.slice(offset, offset + limit)
-                  .map(({ writeNum, writeName, writeDate, nickname}) => (
-                    <tr key={writeNum}>
+                  .map(({ tradeNum, product, writeDate, nickname, categoryName, doneTrade, city, town }) => (
+                    <tr key={tradeNum}>
                       <td>
                       <input type='checkbox' 
-                        name={`select-${writeNum}`}
-                        onChange={(e) => handleSingleCheck(e.target.checked, writeNum)}
+                        name={`select-${tradeNum}`}
+                        onChange={(e) => handleSingleCheck(e.target.checked, tradeNum)}
                         // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
-                        checked={checkItems.includes(writeNum) ? true : false} 
+                        checked={checkItems.includes(tradeNum) ? true : false} 
                         />
                       </td>
-                      <td>{writeNum}</td>
-                      <td><Link to={`/content/writeManagement/detail/${writeNum}`}>{writeName}</Link></td>
-                      <td>{writeDate}</td>
+                      <td>{tradeNum}</td>
+                      <td>{categoryName}</td>
+                      <td><Link to={`/detail/${tradeNum}`}>{product}</Link></td>
+                      <td>{doneTrade}</td>
                       <td>{nickname}</td>
+                      <td>{city}</td>
+                      <td>{town}</td>
+                      <td>{writeDate}</td>
                     </tr>
                   ))
                 }

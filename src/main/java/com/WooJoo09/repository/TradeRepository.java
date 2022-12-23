@@ -379,14 +379,14 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "and host = m.member_num " +
                     "and done_trade = 'ONGOING' " +
                     "and host not in (select member_num from member where is_active = 'INACTIVE') " +
-                    "and trade_num in (select trade_num from partner where part_mem_num = 2 and accept_trade = 'REJECT') " +
+                    "and trade_num in (select trade_num from partner where part_mem_num = :memberNum and accept_trade = 'REJECT') " +
                     "order by write_date desc",
             countQuery = "select count(*) " +
                     "from trade t, member m where " +
                     "host = m.member_num " +
                     "and done_trade = 'ONGOING' " +
                     "and host not in (select member_num from member where is_active = 'INACTIVE') " +
-                    "and trade_num in (select trade_num from partner where part_mem_num = 2 and accept_trade = 'REJECT')",
+                    "and trade_num in (select trade_num from partner where part_mem_num = :memberNum and accept_trade = 'REJECT')",
             nativeQuery = true
     )
     Page<Map<?,?>> partnerTradeSelectReject(@Param("memberNum") Long memberNum, Pageable pageable);
@@ -398,14 +398,14 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "and host = m.member_num " +
                     "and done_trade = 'ONGOING' " +
                     "and host not in (select member_num from member where is_active = 'INACTIVE') " +
-                    "and trade_num in (select trade_num from partner where part_mem_num = 2 and accept_trade = 'ACCEPT') " +
+                    "and trade_num in (select trade_num from partner where part_mem_num = :memberNum and accept_trade = 'ACCEPT') " +
                     "order by write_date desc",
             countQuery = "select count(*) " +
                     "from trade t, member m where " +
                     "host = m.member_num " +
                     "and done_trade = 'ONGOING' " +
                     "and host not in (select member_num from member where is_active = 'INACTIVE') " +
-                    "and trade_num in (select trade_num from partner where part_mem_num = 2 and accept_trade = 'ACCEPT')",
+                    "and trade_num in (select trade_num from partner where part_mem_num = :memberNum and accept_trade = 'ACCEPT')",
             nativeQuery = true
     )
     Page<Map<?,?>> partnerTradeSelectOngoing(@Param("memberNum") Long memberNum, Pageable pageable);
@@ -413,19 +413,19 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
     @Query(
             value = "select trade_num tradeNum, product, price, due_date dueDate, done_trade doneTrade, nickname, " +
                     "(select img_url from product_img pi where pi.trade_num = t.trade_num and is_represent = 'REPRESENT') representImg, " +
-                    "(select count(*) from good where good_trade_num = trade_num and good_mem_num = 21) mygood, " +
-                    "(select count(*) from dislike where dis_trade_num = trade_num and dis_mem_num = 21) mydislike " +
+                    "(select count(*) from good where good_trade_num = trade_num and good_mem_num = :memberNum) mygood, " +
+                    "(select count(*) from dislike where dis_trade_num = trade_num and dis_mem_num = :memberNum) mydislike " +
                     "from category c, trade t, member m where t.category = c.category_num " +
                     "and host = m.member_num " +
                     "and done_trade = 'DONE' " +
                     "and host not in (select member_num from member where is_active = 'INACTIVE') " +
-                    "and trade_num in (select trade_num from partner where part_mem_num = 8 and accept_trade = 'ACCEPT') " +
+                    "and trade_num in (select trade_num from partner where part_mem_num = :memberNum and accept_trade = 'ACCEPT') " +
                     "order by write_date desc",
             countQuery = "select count(*) " +
                     "from trade t, member m where host = m.member_num " +
                     "and done_trade = 'DONE' " +
                     "and host not in (select member_num from member where is_active = 'INACTIVE') " +
-                    "and trade_num in (select trade_num from partner where part_mem_num = 8 and accept_trade = 'ACCEPT')",
+                    "and trade_num in (select trade_num from partner where part_mem_num = :memberNum and accept_trade = 'ACCEPT')",
             nativeQuery = true
     )
     Page<Map<?,?>> partnerTradeSelectDone(@Param("memberNum") Long memberNum, Pageable pageable);

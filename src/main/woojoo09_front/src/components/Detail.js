@@ -29,6 +29,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
   const [deleteMsg, setDeleteMsg] = useState();
   const [tradeCloseMsg, setTradeCloseMsg] = useState();
   const [memberNum, setMeberNum] = useState("");
+  const [doneTrade, setDoneTrade] = useState("");
 
   const [thisDate, setThisDate] =  useState(new Intl.DateTimeFormat('kr').format(new Date()));
 
@@ -72,7 +73,9 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
           console.log(response.data);
           setData(response.data);
           setMyStar(response.data.detail.myStar);
-          setMeberNum(response.data.member.memberNum)
+          setMeberNum(response.data.member.memberNum);
+          setDoneTrade(response.data.detail.doneTrade);
+          
         } catch (e) {
           console.log(e);
         }
@@ -181,7 +184,10 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
         } else if(response.data.closeTrade === "duplicate"){
           setTradeCloseMsg("이미 마감한 공동구매 입니다");
         }
-        else setTradeCloseMsg("마감 처리 되었습니다");
+        else {
+          setTradeCloseMsg("마감 처리 되었습니다");
+          setDoneTrade('FULL');
+        }
       } catch (e) {
         console.log(e);
       }
@@ -199,7 +205,10 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
         } else if(response.data.finishTrade === "duplicate"){
           setTradeCloseMsg("이미 종료한 공동구매 입니다");
         }
-        else setTradeCloseMsg("종료 처리 되었습니다");
+        else {
+          setTradeCloseMsg("종료 처리 되었습니다");
+          setDoneTrade('DONE');
+        }
       } catch (e) {
         console.log(e);
       }
@@ -323,8 +332,8 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
           ` + ${Math.abs(Math.floor((new Date(data.detail.dueDate).getTime() - new Date(thisDate).getTime()) / (1000 * 60 * 60 * 24)))}`
           : ` - DAY`)
           }</span></p>}
-          {data.detail.doneTrade === 'FULL' && <p><span>모집 완료</span></p>}
-          {data.detail.doneTrade === 'DONE' && <p><span>종료</span></p>}
+          {doneTrade === 'FULL' && <p><span>모집 완료</span></p>}
+          {doneTrade === 'DONE' && <p><span>종료</span></p>}
           <p>{data.detail.tradeMethod === 'BOTH' ? <><span>직거래</span><span>택배</span></> :
           (data.detail.tradeMethod === 'DIRECT' ? <span>직거래</span> : <span>택배</span>)}</p>
           {(!isLogin || isAdmin) ? <img className="cardStar" src={star} alt="스크랩"/> :
@@ -332,11 +341,12 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
           <img className="cardStar" onClick={starDelete} src={yellowStar} alt="스크랩취소"/>}
         </div>
       </div>
-      {!isAdmin && <>{isLogin && data.detail.isMyWRite === "N" ? <button onClick={partnerInsert}>참여하기</button> : (
-      data.detail.doneTrade === 'ONGOING'? <button onClick={tradeClose}>마감하기</button> : 
-      <button onClick={tradeFinish}>종료하기</button>)}</>}
+      {!isAdmin && isLogin && <>{data.detail.isMyWRite === "N" ? 
+      (doneTrade === 'ONGOING' && <button onClick={partnerInsert}>참여하기</button>) : (
+      doneTrade === 'ONGOING'? <button onClick={tradeClose}>마감하기</button> : 
+      doneTrade === 'DONE' ?  <></> : <button onClick={tradeFinish}>종료하기</button>)}</>}
       {tradeCloseMsg && <p className="detailErrMsg">{tradeCloseMsg}</p>}
-      {!isLogin && <p className="detailErrMsg">공동구매에 참여하려면 <Link to="/main" style={{textDecoration: "underline"}}>로그인</Link>하세요!</p>}
+      {!isLogin && doneTrade === 'ONGOING' && <> <button>참여하기</button><p className="detailErrMsg">공동구매에 참여하려면 <Link to="/login" style={{textDecoration: "underline"}}>로그인</Link>하세요!</p></>}
       <div className="detailProfile">
         <div>
           {data.member.pfImg ? <img src={data.member.pfImg} alt="주최자프로필"/> : <img src={profile} alt="기본프로필"/>}

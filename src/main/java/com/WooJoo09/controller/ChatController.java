@@ -120,13 +120,17 @@ public class ChatController {
     public ResponseEntity<Map<?,?>> chatSelectContent(
             @CookieValue(value = "token", required = false) String token,
             @RequestBody Map<String, String> Data) throws Exception {
-           String partnerNumStr = Data.get("partner_num");
-           int partnerNum = Integer.parseInt(partnerNumStr);
-           log.info("들어온값 " + partnerNumStr + " 변환된값 " + partnerNum);
-           Map<?, ?> map = new HashMap<>();
-           List<?> list = new ArrayList<>();
-           list =  chatService.chatContentService(partnerNum);
-           return new ResponseEntity(list, HttpStatus.OK);
+        List<?> list = new ArrayList<>();
+        if (token != null) {
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            String partnerNumStr = Data.get("partner_num");
+            int partnerNum = Integer.parseInt(partnerNumStr);
+            log.info("들어온값 " + partnerNumStr + " 변환된값 " + partnerNum);
+            list =  chatService.chatContentService(partnerNum, memberNum);
+        }
+       return new ResponseEntity(list, HttpStatus.OK);
     }
 
     @PostMapping("/chatInsert")
@@ -146,6 +150,44 @@ public class ChatController {
         }
         else return ResponseEntity.ok(false);
     }
+
+    @PostMapping("/chatIsReadInsert")
+    @ResponseBody
+    public ResponseEntity<Boolean> chatIsReadInsert(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> InsertChat) throws Exception {
+        if (token != null) {
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            String partnerNumStr = InsertChat.get("partner_num");
+            Long partnerNum = Long.parseLong(partnerNumStr);
+            String inputMsg = InsertChat.get("inputMsg");
+            String msgType = InsertChat.get("msgType");
+
+            return ResponseEntity.ok(chatService.ChatInsertService(partnerNum, inputMsg, memberNum, msgType));
+        }
+        else return ResponseEntity.ok(false);
+    }
+//    @PostMapping("/chatISReadUpdate")
+//    @ResponseBody
+//    public ResponseEntity<Map<?,?>> chatISReadUpdate(
+//            @CookieValue(value = "token" , required = false) String token,
+//            @RequestBody Map<String, String> Data) throws Exception{
+//        Map<String, String> map = new HashMap<>();
+//        String partner = Data.get("partnerNum");
+//        Long partnerNum = Long.parseLong(partner);
+//        String member= Data.get("memberNum");
+//        Long memberNum = Long.parseLong(member);
+//        if(token != null){
+//            String memberNumStr = jwtController.tokenCheck(token);
+//            map = chatService.isreadUpdate(partnerNum, memberNum);
+//            return ResponseEntity.ok().body(map);
+//        }else{
+//            map.put("chatISReadUpdate", "isReadError");
+//            return ResponseEntity.ok().body(map);
+//        }
+//    }
+
 
 
 

@@ -457,6 +457,7 @@ input:focus{
     padding: 5px 10px 5px 10px;
     box-shadow: 1px 1px 10px 0 rgb(72 75 108 / 8%);
     border: solid 1px #e3e9ed;
+    cursor: pointer;
   }
   button:hover{
     background-color: $purple2;
@@ -503,7 +504,7 @@ input:focus{
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
     gap: 10px;
-
+    
     .card{
       width: 100%;
       background-color: #FFF;
@@ -579,6 +580,7 @@ input:focus{
         bottom: 7%;
         width: 5%;
         z-index: 20;
+        cursor: pointer;
 
         &:hover{
           width: 5.2%;

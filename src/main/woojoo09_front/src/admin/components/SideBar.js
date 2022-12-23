@@ -44,7 +44,7 @@ const data = [
   },
   {
     depth1: '콘텐츠관리',
-    depth2: ['공동구매관리','채팅관리'],
+    depth2: ['공동구매관리','거래참여관리'],
     link: ['/ilovekirby/content/writeManagement','/ilovekirby/content/chatmanagement']
   },
   {

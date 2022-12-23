@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {categories, citys, towns, uuidv4} from "../util/util"
 import { storage } from "../api/firebase"
-import representIcon from "../resources/representImg_icon.png"
+import representIcon from "../resources/representImg_icon_yellow.png"
 import imgIcon from "../resources/images_icon.png"
 import { Link } from "react-router-dom";
 import api from "../api/api";

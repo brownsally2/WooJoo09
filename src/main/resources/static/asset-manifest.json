@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.f3dafd82.css",
-    "main.js": "/static/js/main.83e7be25.js",
+    "main.css": "/static/css/main.0ee67827.css",
+    "main.js": "/static/js/main.b394a2dd.js",
     "static/media/chatMoving.gif": "/static/media/chatMoving.30958733a50ad66a43d8.gif",
     "static/media/chatMoving_black.gif": "/static/media/chatMoving_black.128078e265e156eccca6.gif",
     "static/media/grade_icon4_nebula.png": "/static/media/grade_icon4_nebula.d1bbcff95a85c99b7167.png",
@@ -25,19 +25,22 @@
     "static/media/profile_sample.png": "/static/media/profile_sample.162814d216d710ffb361.png",
     "static/media/chat_white2.png": "/static/media/chat_white2.9465a220adac79c3a5eb.png",
     "static/media/buluepurple_rocket.png": "/static/media/buluepurple_rocket.be87fc60c459456fa0c8.png",
+    "static/media/disappointed.png": "/static/media/disappointed.18f6881702883a3859c5.png",
     "static/media/regcel.png": "/static/media/regcel.1d8d9a9460383c46bd14.png",
     "static/media/chat_black.png": "/static/media/chat_black.9c93594313ec58c983de.png",
     "static/media/starFill.png": "/static/media/starFill.01619380ebee465215bf.png",
     "static/media/chat.png": "/static/media/chat.4fa403dac9444d99f00b.png",
     "static/media/fashion_sample.png": "/static/media/fashion_sample.c844d8feaf3235e10186.png",
+    "static/media/house.png": "/static/media/house.fea3d83db1a02dc6c9bd.png",
     "static/media/representImg_icon.png": "/static/media/representImg_icon.17f6eeb138515818406b.png",
     "static/media/images_icon.png": "/static/media/images_icon.a951e698adbd3ddcd20e.png",
+    "static/media/representImg_icon_yellow.png": "/static/media/representImg_icon_yellow.cd6743d3d791e0368fcb.png",
     "index.html": "/index.html",
     "main.f3dafd82.css.map": "/static/css/main.f3dafd82.css.map",
-    "main.83e7be25.js.map": "/static/js/main.83e7be25.js.map"
+    "main.4a280dfc.js.map": "/static/js/main.4a280dfc.js.map"
   },
   "entrypoints": [
     "static/css/main.f3dafd82.css",
-    "static/js/main.83e7be25.js"
+    "static/js/main.4a280dfc.js"
   ]
 }

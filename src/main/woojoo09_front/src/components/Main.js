@@ -45,6 +45,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
            console.log(response.data.content);
            setLists(response.data.content);
            setPage(1);
+           setIsLastPage(false);
            if(response.data.last === true) setIsLastPage(true)
          } catch (e) {
            console.log(e);
@@ -61,6 +62,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
            console.log(response.data.content);
            setLists(response.data.content);
            setPage(1);
+           setIsLastPage(false);
            if(response.data.last === true) setIsLastPage(true)
          } catch (e) {
            console.log(e);
@@ -78,6 +80,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
            console.log(response.data.content);
            setLists(response.data.content);
            setPage(1);
+           setIsLastPage(false);
            if(response.data.last === true) setIsLastPage(true)
          } catch (e) {
            console.log(e);
@@ -236,7 +239,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
             <img src={disappointed} alt="죄송합니다"></img>
           </div>}
         <div className="mainbuttons">
-        {!isLastPage && <button onClick={
+        {lists.length !== 0 && !isLastPage && <button onClick={
           appendList
         } className="mainbutton1"
           >더보기</button>}
