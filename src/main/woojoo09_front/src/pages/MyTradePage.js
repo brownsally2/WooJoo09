@@ -227,7 +227,7 @@ const MyTradePage =() =>{
               (list.categoryName === "취미" ? defaultImgs.취미.imgUrl : defaultImgs.반려동물.imgUrl))))
               } alt="상품 대표 이미지"/>}
             </Link>
-            <Link to = {`/detail/${list.tradeNum}`}>{list.product}</Link>
+            <Link to = {`/detail/${list.tradeNum}`} className="MyTradeName">{list.product}</Link>
             <p>D {Math.floor((new Date(list.dueDate).getTime() - new Date(thisDate).getTime()) / (1000 * 60 * 60 * 24)) > 0?
               ` - ${Math.floor((new Date(list.dueDate).getTime() - new Date(thisDate).getTime()) / (1000 * 60 * 60 * 24))}` :
               (Math.floor((new Date(list.dueDate).getTime() - new Date(thisDate).getTime()) / (1000 * 60 * 60 * 24)) < 0 ? 
@@ -255,20 +255,20 @@ const MyTradePage =() =>{
             </>
             }
             {value === "myHostTrade" && list.doneTrade === "ONGOING" &&
-            <div className="MyTradeGood">
+            <div className="MyTradeDone">
               <button style = {{zIndex : 100}} onClick={()=>{tradeClose(list.tradeNum)}}>거래 마감하기</button>
               {tradeCloseMsg && <p>{tradeCloseMsg}</p>}
             </div>
             }
             {value === "myHostTrade" && list.doneTrade === "FULL" &&
-            <div className="MyTradeGood">
+            <div className="MyTradeDone">
               <button style = {{zIndex : 100}} onClick={()=>{tradeFinish(list.tradeNum)}}>거래 종료하기</button>
               {tradeCloseMsg && <p>{tradeCloseMsg}</p>}
             </div>
             }
           </p>        
           ))}
-          {!isLastPage && <button onClick={TradeSelect}>더보기</button>}
+          {!isLastPage && <button onClick={TradeSelect} className="myTradeBtn">더보기</button>}
         </div>
         </div>
       </div>

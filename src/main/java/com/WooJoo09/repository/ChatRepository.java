@@ -29,7 +29,7 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
                     "ANY_VALUE(c.chat_content) chat_content,\n" +
                     "ANY_VALUE(c.is_read) is_read, ANY_VALUE(p.partner_num) partner_num,ANY_VALUE(p.accept_trade) accept_trade,\n" +
                     "ANY_VALUE(t.done_trade) done_trade,ANY_VALUE(t.product) product, ANY_VALUE(t.price) price, ANY_VALUE(t.host) host, \n" +
-                    "ANY_VALUE(t.trade_num) trade_num, ANY_VALUE(p.part_mem_num) part_mem_num, ANY_VALUE(c.sender) sender,\n" +
+                    "ANY_VALUE(t.trade_num) trade_num, ANY_VALUE(p.part_mem_num) part_mem_num, ANY_VALUE(c.sender) sender, ANY_VALUE(c.msg_type) msgType,\n" +
                     "(select count(case when is_read = 'UNREAD' then 1 end) from chat\n" +
                     "where (partner_num in (select partner_num from partner p, trade t \n" +
                     "where (p.trade_num = t.trade_num and host = :memberNum) or part_mem_num = :memberNum)) \n" +

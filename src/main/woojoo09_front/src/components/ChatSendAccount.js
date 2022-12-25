@@ -4,7 +4,7 @@ import "../style/chat.scss"
 import {BankKind} from "../util/util"
 import api from "../api/api";
 
-const SendAccount = ({partner_num}) => {
+const SendAccount = ({partner_num, sendAccountButton}) => {
         
     const [bank, setBank] = useState("");
     const [directBank, setDirectBank] = useState("");
@@ -75,7 +75,7 @@ const SendAccount = ({partner_num}) => {
           {bank === "직접입력" && <input onChange= {onChangeDirectBank} placeholder={"은행"} value={directBank} />}
           <input value={account} onChange={onChangeAccount} placeholder={"계좌번호"}/>
           <input value={accountholder} onChange={onChangeAccountholder} placeholder={"예금주"}/>
-          <button onClick={accountInsert}>전송</button>
+          <button onClick={ (e) => {accountInsert(e);sendAccountButton(e);}}>전송</button>
         </div>
     );
 };

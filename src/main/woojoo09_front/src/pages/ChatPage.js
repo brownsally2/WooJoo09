@@ -246,12 +246,7 @@ const partnerReject = () => {
   fetchData();
 } 
 
-// 스크롤 고정
-// useEffect(()=>{
-//   window.scrollTo({ bottom: 0, behavior: "auto" });
-// }, [])
-
-  // 스크롤 하단 고정!!!
+  // 스크롤 하단 고정
   const scrollRef = useRef();
   useEffect(() => {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -313,7 +308,7 @@ const partnerReject = () => {
                     <p>공구를 거절하면 채팅 내용과 입력한 정보가 모두 사라집니다</p>
                   </div>
                     : <></>
-                    :<div> <button className="PartAcceptBtn2" onClick={partnerReject}>공구나가기</button>
+                    :<div className="PartAcceptBtn2"> <button onClick={partnerReject}>공구나가기</button>
                       <p>공구를 나가면 채팅 내용과 입력한 정보가 모두 사라집니다</p></div>
                     }
                   </div>
@@ -323,7 +318,7 @@ const partnerReject = () => {
             {prepared &&
             lists.chattingContent
             .map(({chat_content, chat_time, sender, msg_type}) => (
-            <>
+            <div className="chatTalkWrap">
                 {memberNum != sender && <div className="chatMessage">
                   {msg_type === 'IMG'? <img className="chatImg" src={chat_content} alt="상대방이 보낸 이미지"/> 
                 : chat_content}</div>}
@@ -332,14 +327,14 @@ const partnerReject = () => {
                   {msg_type === 'IMG'? <img className="chatImg" src={chat_content} alt="내가 보낸 이미지"/> : chat_content}</div>}
                 {memberNum == sender && <div className="chatTalkTime-My">{new Date(chat_time).toLocaleDateString("ko-KR", options)}</div>}  
                 
-            </>
+            </div>
             ))} 
-                <div>
+                <div className="chatTalkWrap">
                   {/* .filter((item) => item.type !== "ENTER") */}
                   {items
                         .filter((item) => item.type !== "ENTER")
                         .map((item) => (
-                    <>
+                    <div className="chatTalkWrap">
                     {/* new Intl.DateTimeFormat('kr').format(new Date()) */}
                     <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>
                       {item.type == 'IMG'? <img className="chatImg" src={item.message} alt="채팅이미지"/>
@@ -347,7 +342,7 @@ const partnerReject = () => {
                     </div>
                     <div className={ memberNum != item.sender ? "chatTalkTime" : "chatTalkTime-My"}>
                       {new Date(Date.parse(item.time)+ 1*1000*60*60*9).toLocaleDateString("ko-KR", options)}</div>
-                    </>
+                    </div>
                       // <div className="chatMessage-My">{`${item.message}`}</div>
                       ))}
                   </div>  

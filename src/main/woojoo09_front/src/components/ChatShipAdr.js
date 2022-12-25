@@ -4,7 +4,7 @@ import "../style/chat.scss"
 import "../style/chat.scss"
 import api from "../api/api";
 
-const ChatShipAdr = (partner_num) => {
+const ChatShipAdr = ({partner_num, onChangeDelInput}) => {
     const [deliveryAddress, setDeliveryAddress] = useState("");
     const [deliveryName, setDeliveryName] = useState("");
     const [deliveryPhone, setDeliveryPhone] = useState("");
@@ -41,7 +41,7 @@ const ChatShipAdr = (partner_num) => {
                 <input value={deliveryName} onChange= {onChangeReceiverName} placeholder={"이름"}/>
                 <input value={deliveryAddress} onChange={onChangeReceiverAddress} placeholder={"주소"}/>
                 <input value={deliveryPhone} onChange={onChangeReceiverPhone} placeholder={"핸드폰번호"}/>
-                <button onClick={deliveryaddrInsert}>완료</button>
+                <button onClick={(e) => {deliveryaddrInsert(e);onChangeDelInput(e);}}>완료</button>
             </div>
         </>
     );

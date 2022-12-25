@@ -150,8 +150,7 @@ public class PartnerController {
         if (token != null) {
             String memberNumStr = jwtController.tokenCheck(token);
             Long memberNum = Long.parseLong(memberNumStr);
-            Map partnerNumMap = (LinkedHashMap)sendDeliveryaddr.get("partner_num");
-            String partnerNumStr = (String) partnerNumMap.get("partner_num");
+            String partnerNumStr = (String) sendDeliveryaddr.get("partner_num");
             Long partnerNum = Long.parseLong(partnerNumStr);
             log.warn("partner_num : " + partnerNum);
             String deliveryAddress = (String)sendDeliveryaddr.get("deliveryAddress");

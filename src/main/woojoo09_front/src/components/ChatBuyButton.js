@@ -36,12 +36,15 @@ const ChatBuyButton = ({partner_num}) => {
         setvisibleDelLook(false);
         setvisibleAccLook(false);
     }
+    const onChangeDelInput = (e) => {
+        setvisibleDelInput(false);
+    }
 
     return(
         <>
         <div className="sendPrivacy">
              {visibleAccLook && <ChatAccLook partner_num={partner_num}/> } 
-             {visibleDelInput && <ChatShipAdr partner_num={partner_num}/> }
+             {visibleDelInput && <ChatShipAdr partner_num={partner_num} onChangeDelInput={onChangeDelInput}/> }
              {visibleDelLook && <ChatDeliveryLook partner_num={partner_num}/>} 
         </div>
 
