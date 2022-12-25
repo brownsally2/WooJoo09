@@ -17,6 +17,7 @@ import MyTradePage from "./pages/MyTradePage"
 import SearchPage from "./pages/SearchPage"
 import UpdatePage from "./pages/UpdatePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import KakaoLogin from "./components/KakaoLogin";
 
 import "./style/common.scss";
 import "./style/detail.scss";
@@ -69,6 +70,7 @@ function App() {
           <Route path='/update' element={<UpdatePage/>}/>
           <Route path='/term' element={<TermPage/>}/>
           <Route path='/privacypolicy' element={<PrivacyPolicyPage/>}/>
+          <Route path='/kakaologin' element={<KakaoLogin/>}/>
 
           {/* 여기서부터 어드민 */}
           {/* {!isLogin && <Navigate to="/login" />} */}

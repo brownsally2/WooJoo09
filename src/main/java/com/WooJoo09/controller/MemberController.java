@@ -54,6 +54,14 @@ public class MemberController {
         }else return ResponseEntity.ok(false);
     }
 
+    //카카오로그인
+//    @GetMapping("/kakao")
+//    public String kakaoLogin(String code){
+//        // authorizedCode: 카카오 서버로부터 받은 인가 코드
+//        memberService.kakaoLogin(code);
+//        return "redirect:/";
+//    }
+
     //회원가입
     @PostMapping("/memberinsert")
     public ResponseEntity<Boolean> registerMember(@RequestBody Map<String, String> regData) throws ParseException {

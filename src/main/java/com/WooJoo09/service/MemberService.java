@@ -9,6 +9,7 @@ import com.WooJoo09.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     private final JwtController jwtController;
+
 
     public List<Member> findMember() {
         return memberRepository.findAll();
@@ -233,6 +235,7 @@ public class MemberService {
         log.info(savedMember.toString());
         return true;
     }
+
 
     public Map<String, String> memberDelete(Long memberNum, String id, String pwd){
         Map<String ,String> map = new HashMap<>();

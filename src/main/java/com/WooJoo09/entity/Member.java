@@ -2,7 +2,6 @@ package com.WooJoo09.entity;
 
 import com.WooJoo09.constant.IsActive;
 import com.WooJoo09.constant.ReceiveAd;
-import com.WooJoo09.dto.MemberDTO;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
