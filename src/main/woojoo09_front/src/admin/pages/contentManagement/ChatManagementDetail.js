@@ -8,7 +8,7 @@ import Sidebar from "../../components/SideBar";
 
 const ChatManagementDetail = () =>{
 
-  let { writeId } = useParams();
+  let { partnerNum } = useParams();
 
   const [lists, setLists] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,10 +16,10 @@ const ChatManagementDetail = () =>{
   useEffect(() => {
     const fetchData = async () => {
      setLoading(true);
-     window.localStorage.setItem("target", writeId);
       try {
-        const response = await api.writeInfoDetail();
-        setLists(response.data);
+        const response = await api.adminChatSelectDetail(partnerNum);
+        setLists(response.data.chatDetailData);
+        console.log(response.data.chatDetailData)
       } catch (e) {
         console.log(e);
       }
@@ -40,25 +40,12 @@ const ChatManagementDetail = () =>{
         <div>
           {lists &&
             lists
-            .map(({ boardName, writeNum, writeName, writeDate, nickname, countGood, countComment, writeContents, comments}) => (
+            .map(({sender, chat_content, chat_time, msg_type}) => (
               <>
-              <span>{boardName}</span>
-              <span>{writeNum}</span>
-              <span>{writeName}</span>
-              <span>{nickname}</span>
-              <span>{writeDate}</span>
-              <span>댓글수 {countComment}</span>
-              <span>좋아요수{countGood}</span>
-              <p>{writeContents}</p>
-              <hr/>
-              {comments && comments
-              .map(({nickname, writeDate, commentContent})=>(
-                <>
-                {nickname}
-                {writeDate}
-                {commentContent}
-                </>
-              ))}
+              <p>보내는 사람 : {sender}</p>
+              <p>{chat_content}</p>
+              <p>{chat_time}</p>
+              <p>{msg_type}</p>
               </>
             ))
           }

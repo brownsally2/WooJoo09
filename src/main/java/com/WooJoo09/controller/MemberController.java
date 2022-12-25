@@ -5,6 +5,7 @@ import com.WooJoo09.entity.Member;
 import com.WooJoo09.service.EmailService;
 import com.WooJoo09.service.MemberService;
 import com.WooJoo09.service.sens_sms;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -23,17 +24,14 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 @RequestMapping(value="/developerkirby")
 public class MemberController {
 
     // Service 로직 연결
-    private MemberService memberService;
+    private final MemberService memberService;
     private final EmailService emailService;
-
-    public MemberController(MemberService memberService, EmailService emailService) {
-        this.memberService = memberService;
-        this.emailService = emailService;
-    }
+    private final JwtController jwtController;
 
     public ResponseEntity<List<Member>> findMember() {
         return ResponseEntity.ok().body(memberService.findMember());
@@ -273,6 +271,97 @@ public class MemberController {
         return ResponseEntity.ok(memberService.newIntroduceService(memberNum, introduce));
     }
 
+    @PostMapping("/memberdelete")
+    public ResponseEntity<Map<?, ?>> memberDelete(
+            HttpServletResponse response,
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        String id = (String) Data.get("id");
+        String pwd = (String) Data.get("pwd");
+        Map<String ,String> map = new HashMap<>();
+        if(token != null){
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            map = memberService.memberDelete(memberNum, id, pwd);
+            if(map.get("memberDelete").equals("OK")){
+                Cookie cookie = new Cookie("token", null); // choiceCookieName(쿠키 이름)에 대한 값을 null로 지정
+                cookie.setMaxAge(0); // 유효시간을 0으로 설정
+                cookie.setHttpOnly(true);
+                cookie.setPath("/");
+                response.addCookie(cookie);
+            }
+        }else {
+            map.put("memberDelete", "loginError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
 
+    @PostMapping("/adminmemberselect")
+    public ResponseEntity<Map<?, ?>> adminMemberSelect(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+            map = memberService.adminMemberSelect();
+        }else {
+            map.put("adminMemberSelect", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    @PostMapping("/adminmembersearch")
+    public ResponseEntity<Map<?, ?>> adminMemberSearch(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        String target = (String) Data.get("target");
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+                map = memberService.adminMemberSearch(target);
+        }else {
+            map.put("adminMemberSearch", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    @PostMapping("/adminmemberdelete")
+    public ResponseEntity<Map<?, ?>> adminMemberDelete(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        List<Integer> targets = (List<Integer>) Data.get("target");
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+                map = memberService.adminMemberDelete(targets);
+        }else {
+            map.put("adminMemberDelete", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    //광고 이메일 전송
+    @PostMapping("/adminnotisend")
+    @ResponseBody
+    public ResponseEntity<Boolean> adminNotiSend(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        String type = Data.get("mail");
+        String title = Data.get("title");
+        String content = Data.get("content");
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin")){
+                if(type.equals("ad")){
+                    return ResponseEntity.ok(emailService.sendSimpleAdMessage(title,content));
+                } else return ResponseEntity.ok(emailService.sendSimpleNoticeMessage(title,content));
+            }
+        }
+        return ResponseEntity.ok(false);
+    }
 
 }

@@ -28,7 +28,9 @@ const ChatManagement = () =>{
      setLoading(true);
       try {
         const response = await api.adminChatSelect();
-        setLists(response.data);
+        if(response.data.adminChatSelect === "OK"){
+          setLists(response.data.chatData);
+        }
       } catch (e) {
         console.log(e);
       }
@@ -45,8 +47,10 @@ const ChatManagement = () =>{
     const fetchSearchData = async () => {
       setLoading(true);
        try {
-         const response = await api.commentInfoSearch();
-         setLists(response.data);
+         const response = await api.adminChatSearch(inputSearch);
+         if(response.data.adminChatSearch === "OK"){
+          setLists(response.data.chatData);
+         }
        } catch (e) {
          console.log(e);
        }
@@ -101,14 +105,15 @@ const ChatManagement = () =>{
               { lists &&
                 lists.slice(offset, offset + limit)
                 .map(({ partnerNum, product, tradeNum, acceptTrade, host, partner, countChat }) => (
-                  <tr onClick={()=>{navigate(`/chat/${partnerNum}`)}}>
+                  <tr>
                     <td>{partnerNum}</td>
                     <td><Link to={`/detail/${tradeNum}`} style={{zIndex:"100"}}>{product}</Link></td>
                     <td>{acceptTrade}</td>
                     <td>{host}</td>
                     <td>{partner}</td>
                     <td>{countChat}</td>
-                    <td>상세 보기</td>
+                    <td style={{cursor : "pointer"}}
+                    onClick={()=>{navigate(`/ilovekirby/content/chatManagementDetail/${partnerNum}`)}}>상세 보기</td>
                   </tr>
                 ))
               }

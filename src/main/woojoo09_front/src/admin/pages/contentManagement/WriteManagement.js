@@ -4,11 +4,12 @@ import SearchBar from "../../components/SearchBar";
 import TopBar from "../../components/TopBar";
 import Pagination from "../../components/Pagination";
 import Loader from "../../components/Loader";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from "../../components/Header";
 import Sidebar from "../../components/SideBar";
 
 const WriteManagement = () =>{
+  const navigate = useNavigate();
   const [lists, setLists] = useState('');
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
@@ -30,8 +31,10 @@ const WriteManagement = () =>{
     const fetchData = async () => {
      setLoading(true);
       try {
-        const response = await api.writeInfo();
-        setLists(response.data);
+        const response = await api.adminWriteSelect();
+        if(response.data.adminWriteSelect === "OK"){
+          setLists(response.data.writeData);
+        }
       } catch (e) {
         console.log(e);
       }
@@ -70,12 +73,13 @@ const WriteManagement = () =>{
   }
 
   const writeDelete = () =>{
-    window.localStorage.setItem("target", checkItems);
     const fetchDeleteData = async () => {
       setLoading(true);
        try {
-         const response = await api.writeDelete();
-         setLists(response.data);
+         const response = await api.adminWriteDelete(checkItems);
+         if(response.data.adminWriteDelete === "OK"){
+          navigate(0);
+         }
        } catch (e) {
          console.log(e);
        }
@@ -93,7 +97,7 @@ const WriteManagement = () =>{
         <div className="searchBar">
           <input type="text" placeholder="제목, 작성자" value ={inputSearch} onChange={onChangeSearch}/>
           <button>
-            <Link to={`/content/writeManagement/search/${inputSearch}`}>검색</Link>
+            <Link to={`/ilovekirby/content/writeManagement/search/${inputSearch}`}>검색</Link>
           </button>
         </div>
         <div>

@@ -9,6 +9,8 @@ import api from "../api/api";
 const ChangeMemberInfo = (props) =>{
   const memberNum = props.memberNum;
 
+  const [viewImgButton, setViewImgButton] = useState(false);
+
   const [changeNickname, setChangeNickname] = useState(false);
   const [changeProfileImg, setChangeProfileImg] = useState(false);
   const [changePwd, setChangePwd] = useState(false);
@@ -69,6 +71,7 @@ const ChangeMemberInfo = (props) =>{
       setInfoPfImgErr("파일이 선택되지 않았습니다");
       setInfoProfileImg("");
       setInfoPfImgUrl("");
+      setViewImgButton(false);
       return;
     }
     setInfoProfileImg(image);
@@ -82,6 +85,7 @@ const ChangeMemberInfo = (props) =>{
     if (infoProfileImg === "") {
       console.log("파일이 선택되지 않았습니다");
       setInfoPfImgErr("파일이 선택되지 않았습니다");
+      setViewImgButton(false);
       return;
     }
     // 업로드 처리
@@ -115,6 +119,7 @@ const ChangeMemberInfo = (props) =>{
       }
     );
     setInfoProfileImg('');
+    setViewImgButton(true);
   };
 
   const onClickPfImgChange = async() => {
@@ -123,6 +128,7 @@ const ChangeMemberInfo = (props) =>{
       console.log(res.data);
       if(res.data === true) {
         setInfoPfImgErr("프로필 사진이 변경되었습니다.")
+        props.changeIsChange(!props.isChange)
         // setInfoProfileImg(false);
         // props.changeIsChange(++cnt);
         // setInfoPfImgUrl("");
@@ -138,6 +144,8 @@ const ChangeMemberInfo = (props) =>{
   //닉네임 input
   const onChangeMemberInfoNewNickInput = (e) => {
     const infoNewNickInput = e.target.value;
+    setInfoNewNickMsg("닉네임 중복 확인이 필요합니다.")
+    setIsInfoNewNickCk(false);
     setInfoNewNickInput(infoNewNickInput);
     if(!nickRegEx.test(infoNewNickInput) && !(infoNewNickInput.length === 0)) {
       setIsInfoNewNick(false);
@@ -185,6 +193,8 @@ const ChangeMemberInfo = (props) =>{
         if(response.data === true) {
           setIsInfoNewNick(true)
           setInfoNewNickOkMsg("닉네임이 변경되었습니다.")
+          props.changeIsChange(!props.isChange)
+          
         } else {
           setIsInfoNewNick(false)
           setInfoNewNickMsg("닉네임 형식을 확인 후 중복 체크를 해주세요.")
@@ -203,8 +213,12 @@ const ChangeMemberInfo = (props) =>{
           console.log(res.data);
           if(res.data === true) {
               console.log("비밀번호 체크중");
-              onClickPwdUpdate2();
-          }           
+              if(inputPwd2 === inputPwd3){
+                onClickPwdUpdate2();
+              }
+          } else{
+            setConPwMessage("현재 비밀번호가 일치하지 않습니다.");
+          }         
       } catch (e) {
           console.log("현재 비밀번호 체크 에러..");
       }
@@ -215,7 +229,6 @@ const ChangeMemberInfo = (props) =>{
       try {
           const memberResetPwd = await api.infoResetPwd(memberNum, inputPwd2);
           console.log(memberResetPwd.data);
-          
           if(memberResetPwd.data === true) {
             setIsConPw(true);
             setConPwMessage2('비밀번호가 변경되었습니다.')           
@@ -294,7 +307,8 @@ const ChangeMemberInfo = (props) =>{
             
             if(memberResetEmail.data === true) {
               setIsEmail(true);
-              setEmailMessage('이메일이 변경되었습니다.')             
+              setEmailMessage('이메일이 변경되었습니다.') 
+              props.changeIsChange(!props.isChange)            
             } else {
             }
         } catch (e) {
@@ -391,7 +405,7 @@ const ChangeMemberInfo = (props) =>{
               {isInfoNewNick && <span className="infoNewNickMsg">{infoNewNickOkMsg}</span>}
             </div>
             <div className="infoNewNickChangeBtnOut">
-              <button className="infoNewNickChangeBtn" onClick={onClickInfoNewNickChangeBtn}>변경</button>
+              {isInfoNewNickCk && <button className="infoNewNickChangeBtn" onClick={onClickInfoNewNickChangeBtn}>변경</button>}
             </div> 
             </>          
           }
@@ -408,7 +422,7 @@ const ChangeMemberInfo = (props) =>{
             <div>
             <input type="password" value={inputPwd1} className="pwd_change_input" onChange={onChangepwd1}></input>
             </div>
-            <div className="current_pwd_hint">
+            <div className="pwd_hint">
             {inputPwd1.length > 0 && (
                 <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage}</span>)}
             </div>
@@ -429,7 +443,7 @@ const ChangeMemberInfo = (props) =>{
                 <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage2}</span>)}
             </div>
             <div className="pwd_change_yes">
-            <button onClick={onClickPwdUpdate1}>변경</button>
+            {(inputPwd2 === inputPwd3) && inputPwd1.length >= 8 && <button onClick={onClickPwdUpdate1}>변경</button>}
             </div>
         </div>
       }
@@ -456,7 +470,7 @@ const ChangeMemberInfo = (props) =>{
               <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
             </div>
             <div className="email_change_yes">
-            <button onClick={onClickEmailUpdate}>변경</button>
+            {isEmail && <button onClick={onClickEmailUpdate}>변경</button>}
             </div>
           </div>
         }
@@ -511,7 +525,7 @@ const ChangeMemberInfo = (props) =>{
           </div>
           
           <div className="infoPfImgChangeBtnOut">
-            <button className="infoPfImgChangeBtn" onClick={onClickPfImgChange}>변경</button>
+            {viewImgButton && <button className="infoPfImgChangeBtn" onClick={onClickPfImgChange}>변경</button>}
           </div>
           <div className='infoImgMsg'>
             {infoPfImgErr && <span>{infoPfImgErr}</span>}

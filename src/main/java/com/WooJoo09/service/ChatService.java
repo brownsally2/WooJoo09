@@ -1,5 +1,6 @@
 package com.WooJoo09.service;
 
+import com.WooJoo09.constant.IsActive;
 import com.WooJoo09.constant.IsRead;
 import com.WooJoo09.constant.MsgType;
 import com.WooJoo09.entity.Chat;
@@ -174,5 +175,26 @@ public class ChatService {
 //          return map;
 //    }
 
+    public Map<String, Object> adminChatSelect(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("chatData", chatRepository.adminChatSelect());
+        map.put("adminChatSelect", "OK");
+        return map;
+    }
+
+    public Map<String, Object> adminChatSearch(String target){
+        Map<String,Object> map = new HashMap<>();
+        map.put("chatData", chatRepository.adminChatSearch("%"+target+"%"));
+        map.put("adminChatSearch", "OK");
+        return map;
+    }
+
+    public Map<String, Object> adminChatSelectDetail(String target){
+        Map<String,Object> map = new HashMap<>();
+        int partnerNum = Integer.parseInt(target);
+        map.put("chatDetailData", chatRepository.chatContent(partnerNum));
+        map.put("adminChatSelectDetail", "OK");
+        return map;
+    }
 
 }

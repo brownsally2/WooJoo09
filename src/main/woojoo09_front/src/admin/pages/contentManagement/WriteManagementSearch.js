@@ -33,13 +33,12 @@ const WriteManagementSearch = () =>{
 
   const fetchSearchData = useCallback(
     async () => {
-      window.localStorage.setItem("target", query);
       setLoading(true);
       try {
-        const response = await api.writeInfoSearch();
-        setLists(response.data);
-        console.log(response);
-        console.log(response.data);
+        const response = await api.adminWriteSearch(query);
+        if(response.data.adminWriteSearch === "OK"){
+          setLists(response.data.writeData);
+        }
       } catch (e) {
         console.log(e);
       }

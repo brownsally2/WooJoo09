@@ -40,6 +40,7 @@ const FindIdPage = () =>{
       setFindIdNameMsg("이름 형식에 맞지 않습니다.")
     } else {
       setIsFindIdName(true);
+      setFindIdNameMsg("");
     }
   }
 
@@ -54,6 +55,7 @@ const FindIdPage = () =>{
       setFindIdEmailMsg("이메일 형식에 맞지 않습니다.")
     } else {
       setIsFindIdEmail(true);
+      setFindIdEmailMsg("")
     }
   }
 
@@ -65,7 +67,7 @@ const FindIdPage = () =>{
         if(response.data === true) {
           setChangeFindIdComplete(true);
         } else if(response.data === false){
-          setIsFindIdEmail(false);
+          // setIsFindIdEmail(false);
           setFindIdEmailMsg("가입하신 이름과 이메일을 찾을 수 없습니다.")
           setChangeFindIdComplete(false);         
         }
@@ -105,6 +107,7 @@ const FindIdPage = () =>{
             <div className="findIdErrMsg">
               {!isFindIdEmail && <span className="findIdEmailErr">{findIdEmailMsg}</span>}
               {isFindIdEmail && <span className="findIdEmailOk">{findIdEmailOkMsg}</span>}
+              {!changeFindIdComplete && isFindIdEmail && <span className="findIdEmailOk">{findIdEmailMsg}</span>}
             </div>              
             <div className="findIdComplete">
               {!(isFindIdName && isFindIdEmail)

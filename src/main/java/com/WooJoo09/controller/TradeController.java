@@ -422,4 +422,54 @@ public class TradeController {
         }
         return ResponseEntity.ok().body(map);
     }
+
+    @PostMapping("/adminwriteselect")
+    public ResponseEntity<Map<?, ?>> adminWriteSelect(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+                map = tradeService.adminWriteSelect();
+        }else {
+            map.put("adminWriteSelect", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    @PostMapping("/adminwritesearch")
+    public ResponseEntity<Map<?, ?>> adminWriteSearch(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        String target = (String) Data.get("target");
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+                map = tradeService.adminWriteSearch(target);
+        }else {
+            map.put("adminWriteSearch", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    @PostMapping("/adminwritedelete")
+    public ResponseEntity<Map<?, ?>> adminWriteDelete(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        List<Integer> targets = (List<Integer>) Data.get("target");
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+                map = tradeService.adminWriteDelete(targets);
+        }else {
+            map.put("adminWriteDelete", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+
+
 }

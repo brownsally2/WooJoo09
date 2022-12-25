@@ -26,8 +26,9 @@ const MyTradePage =() =>{
   const [loading, setLoading] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
 
-  const [isLogin, setIsLogin] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+
   const changeIsLogin = (value) => {
       setIsLogin(value);
   };

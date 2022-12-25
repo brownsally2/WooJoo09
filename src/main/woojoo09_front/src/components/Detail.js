@@ -261,7 +261,8 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
     )
   } 
 
-  if(!isAdmin && !loading && data && data.detail.doneTrade === "DELETE"){
+  if(!isAdmin && !loading && data && 
+    (data.detail.doneTrade === "DELETE" || data.member.isActive === "INACTIVE")){
     return(
       <div className="detail">
       <div className="errorDetail">

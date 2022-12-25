@@ -280,7 +280,7 @@ const TermAgreePage = () =>{
               </p>
             </div>
             <div className="termAgree3">
-              <p>개발하는 커비에서 제공하는 이벤트/혜택 등 다양한 정보를 이메일로 받아보실 수 있습니다.</p>
+              <p>우주공구에서 제공하는 이벤트/혜택 등 다양한 정보를 이메일로 받아보실 수 있습니다.</p>
             </div>
             <div>
               {!(checkItems.includes("chk1") && checkItems.includes("chk2"))

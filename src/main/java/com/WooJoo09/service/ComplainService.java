@@ -1,5 +1,6 @@
 package com.WooJoo09.service;
 
+import com.WooJoo09.constant.DoneTrade;
 import com.WooJoo09.entity.Complain;
 import com.WooJoo09.entity.Member;
 import com.WooJoo09.entity.Star;
@@ -35,6 +36,11 @@ public class ComplainService {
             complain.setComplainTrade(trade);
             Complain savedComplain = complainRepository.save(complain);
             log.info(savedComplain.toString());
+            if(complainRepository.countComplainByComplainTrade(trade) > 5){
+                trade.setDoneTrade(DoneTrade.DELETE);
+                Trade savedTrade = tradeRepository.save(trade);
+                log.info(savedTrade.toString());
+            }
             map.put("complainComplete", "OK");
         } else map.put("complainComplete", "duplicate");
         return map;

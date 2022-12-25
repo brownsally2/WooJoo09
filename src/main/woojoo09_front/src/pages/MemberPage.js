@@ -14,7 +14,7 @@ const MemberPage = () =>{
   const [isAdmin, setIsAdmin] = useState(false);
   const [memberNum, setMemberNum] = useState();
   const [memberInfo, setMemberInfo] = useState('');
-  const [isChange, setIsChange] = useState('');
+  const [isChange, setIsChange] = useState(false);
 
   const changeIsChange = (value) => {
     setIsChange(value);
@@ -68,6 +68,7 @@ const MemberPage = () =>{
       <MemberInfo
       memberNum = {memberNum}
       memberInfo = {memberInfo} 
+      isChange={isChange}
       changeIsChange = {changeIsChange}/>
       <Footer/>
     </div>

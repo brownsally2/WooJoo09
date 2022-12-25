@@ -35,7 +35,7 @@ const ChatDeliveryLook = ({partner_num}) =>{
         {prepared ?
         lists.chatDeliNum.map(({delivery_company, delivery_num}) => (
            
-        <div>
+        <div className="sendDelivery">
             운송장 정보는
             <br/>
             택배사 : {delivery_company},
@@ -44,7 +44,7 @@ const ChatDeliveryLook = ({partner_num}) =>{
         </div>
 
         )) :
-        <div>아직 입력된 운송장 정보가 없습니다.</div>} 
+        <div className="sendDelivery">아직 입력된 운송장 정보가 없습니다.</div>} 
         </>
     );
     }

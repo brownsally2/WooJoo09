@@ -76,6 +76,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
         setPage(0)
         setLoading(true);
          try {
+          console.log("lineUp: "+lineUp + " city: " + city + " town: " + town + " page: " + page + "size" + size)
            const response = await api.tradeSelect(lineUp, city, town, 0, size);
            console.log(response.data.content);
            setLists(response.data.content);
@@ -137,6 +138,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
       const fetchData = async () => {
         setLoading(true);
         try {
+          console.log("lineUp: "+lineUp + " city: " + city + " town: " + town + " page: " + page + "size" + size)
           const response = await api.tradeSelect(lineUp, city, town, page, size);
           console.log(response.data.content);
           setLists(prev => ([...prev, ...response.data.content]));
@@ -202,6 +204,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
             onChange={({ target: { value } }) => {
               setCity(value);
               // console.log(value)
+              setTown('');
             }}
           >
             <option value="">지역 선택</option>

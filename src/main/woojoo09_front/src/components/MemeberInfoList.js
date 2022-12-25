@@ -35,6 +35,17 @@ const MemberInfoList =(props) => {
     };
     fetchData();
   }
+
+  var options = {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    // hour: 'numeric',
+    // hour: '2-digit',
+    // minute : 'numeric',
+    timeZone : 'Asia/Seoul'
+  }
+
   
   return(
    
@@ -56,7 +67,7 @@ const MemberInfoList =(props) => {
                 </p> */}
                 <div className="profileinfo">
                 <p>닉네임 : {props.memberInfo.nickname}</p>
-                <p>가입일 : {props.memberInfo.regDate}</p>
+                <p>가입일 : {new Date(props.memberInfo.regDate).toLocaleDateString("ko-KR", options)}</p>
                 <p>전화번호 : {props.memberInfo.phone}</p>
                 <p>이메일 : {props.memberInfo.email}</p>
                 <p>회원등급 : <img style={{width : "18px"}}

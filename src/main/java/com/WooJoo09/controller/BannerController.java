@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -17,6 +18,15 @@ import java.util.Map;
 public class BannerController {
     private final BannerService bannerService;
     private final JwtController jwtController;
+
+    @PostMapping("/adminbannerselect")
+    public ResponseEntity<Map<?,?>> adminBannerSelect(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        Map<?,?> map = new HashMap<>();
+        map = bannerService.adminBannerSelect();
+        return ResponseEntity.ok().body(map);
+    }
 
     @PostMapping("/bannerselect")
     public ResponseEntity<Map<?,?>> bannerSelect(
@@ -31,8 +41,8 @@ public class BannerController {
     public ResponseEntity<Map<?,?>> bannerInsert(
             @CookieValue(value = "token", required = false) String token,
             @RequestBody Map<String, Object> Data) throws Exception {
-        String bannerName = (String) Data.get("name");
-        String imgUrl = (String) Data.get("url");
+        String bannerName = (String) Data.get("bannerName");
+        String imgUrl = (String) Data.get("imgUrl");
         String directUrl = (String) Data.get("directUrl");
         Map<String, String> map = new HashMap<>();
         if(token != null){
@@ -41,7 +51,7 @@ public class BannerController {
                 map = bannerService.bannerInsert(bannerName, imgUrl, directUrl);
             }
             else {
-                map.put("bannerInsert", "authorityError");
+                map.put("bannerInsert", "permissionError");
             }
         }
         else {
@@ -56,8 +66,8 @@ public class BannerController {
             @RequestBody Map<String, Object> Data) throws Exception {
         String bannerNumStr = (String) Data.get("bannerNum");
         Long bannerNum = Long.parseLong(bannerNumStr);
-        String bannerName = (String) Data.get("name");
-        String imgUrl = (String) Data.get("url");
+        String bannerName = (String) Data.get("bannerName");
+        String imgUrl = (String) Data.get("imgUrl");
         String directUrl = (String) Data.get("directUrl");
         String isActive = (String) Data.get("isActive");
         Map<String, String> map = new HashMap<>();
@@ -67,7 +77,7 @@ public class BannerController {
                 map = bannerService.bannerUpdate(bannerNum, bannerName, imgUrl, directUrl, isActive);
             }
             else {
-                map.put("bannerUpdate", "authorityError");
+                map.put("bannerUpdate", "permissionError");
             }
         }
         else {
@@ -80,16 +90,15 @@ public class BannerController {
     public ResponseEntity<Map<?,?>> bannerDelete(
             @CookieValue(value = "token", required = false) String token,
             @RequestBody Map<String, Object> Data) throws Exception {
-        String bannerNumStr = (String) Data.get("bannerNum");
-        Long bannerNum = Long.parseLong(bannerNumStr);
+        List<Integer> bannerNums = (List<Integer>) Data.get("bannerNum");
         Map<String, String> map = new HashMap<>();
         if(token != null){
             String memberNumStr = jwtController.tokenCheck(token);
             if (memberNumStr.equals("admin")) {
-                map = bannerService.bannerDelete(bannerNum);
+                map = bannerService.bannerDelete(bannerNums);
             }
             else {
-                map.put("bannerDelete", "authorityError");
+                map.put("bannerDelete", "permissionError");
             }
         }
         else {
@@ -97,4 +106,26 @@ public class BannerController {
         }
         return ResponseEntity.ok().body(map);
     }
+
+//    @PostMapping("/bannerdelete")
+//    public ResponseEntity<Map<?,?>> bannerDelete(
+//            @CookieValue(value = "token", required = false) String token,
+//            @RequestBody Map<String, Object> Data) throws Exception {
+//        String bannerNumStr = (String) Data.get("bannerNum");
+//        Long bannerNum = Long.parseLong(bannerNumStr);
+//        Map<String, String> map = new HashMap<>();
+//        if(token != null){
+//            String memberNumStr = jwtController.tokenCheck(token);
+//            if (memberNumStr.equals("admin")) {
+//                map = bannerService.bannerDelete(bannerNum);
+//            }
+//            else {
+//                map.put("bannerDelete", "authorityError");
+//            }
+//        }
+//        else {
+//            map.put("bannerDelete", "loginError");
+//        }
+//        return ResponseEntity.ok().body(map);
+//    }
 }

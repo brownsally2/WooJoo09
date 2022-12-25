@@ -112,6 +112,8 @@ input:focus{
         border-left: 2px solid $purple1;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
         height: 40%;
         width: 100%;
         padding-left: 10px;
@@ -157,6 +159,7 @@ input:focus{
       padding-bottom: 10px;
       color: $yellow1;
       border-bottom: 5px solid $yellow1;
+      -webkit-border-bottom: 0;
       // color: #FFF;
       // border-bottom: 5px solid #FFF;
     }

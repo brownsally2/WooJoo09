@@ -188,7 +188,50 @@ public class ChatController {
 //        }
 //    }
 
+    @PostMapping("/adminchatselect")
+    public ResponseEntity<Map<?, ?>> adminChatSelect(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+                map = chatService.adminChatSelect();
+        }else {
+            map.put("adminChatSelect", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
 
+    @PostMapping("/adminchatsearch")
+    public ResponseEntity<Map<?, ?>> adminChatSearch(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        String target = (String) Data.get("target");
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+                map = chatService.adminChatSearch(target);
+        }else {
+            map.put("adminChatSearch", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
 
-
+    @PostMapping("/adminchatselectdetail")
+    public ResponseEntity<Map<?, ?>> adminChatSelectDetail(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        String target = (String) Data.get("target");
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+                map = chatService.adminChatSelectDetail(target);
+        }else {
+            map.put("adminChatSelectDetail", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
 }

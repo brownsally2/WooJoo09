@@ -16,4 +16,5 @@ import java.util.Map;
 
 public interface ComplainRepository extends JpaRepository<Complain, Long> {
     List<Complain> findByComplainTradeAndComplainant(Trade complainTrade, Member complainant);
+    Long countComplainByComplainTrade(Trade complainTrade);
 }

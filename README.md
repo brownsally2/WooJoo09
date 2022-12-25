@@ -1,7 +1,9 @@
 # :sparkles:우주공구:sparkles:
 <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/> <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat-square&logo=Javascript&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/React Native-09D3AC?style=flat-square&logo=Create React App&logoColor=white"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white"/> <img src="https://img.shields.io/badge/Sass-CC6699?style=flat-square&logo=Sass&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white"/> 
 
-> 우리 주변의 공동 구매, 공동 구매 중개 플랫폼
+> 우리 주변의 공동 구매, 공동 구매 중개 플랫폼  
+> http://woojoo09.site/  
+> (구글 플레이스토어 링크)  
 
 
 
@@ -14,6 +16,10 @@
 - [업데이트 내역](#업데이트-내역)
 
 ### :stars: 프로젝트 소개
+우주공구는 우리 주변의 공동구매, 우주만큼 많은 공동구매라는 이름으로  
+우리 동네(지역)의 공동구매를 쉽게 가능하게 하고,   
+다른 지역간의 택배거래도 지원하여 많은 상품을 공동구매 할 수 있는   
+공동구매 중개 플랫폼입니다   
 
 ![](../header.png)
 
@@ -46,11 +52,13 @@
 - Server : Tomcat
 
 ### :stars: 업데이트 내역
-- 0.0.1 (2022.12.20)
+- 0.0.0 (2022.12.20)
   - 작업 진행 중
+- 0.0.1 (2022.12.26)
+  - 1차 완성 및 구글 플레이스토어 업로드
   
 ### :stars: 정보
-- 
+- 사용 이미지 출처(https://www.flaticon.com/)
 
 ### :stars: 빌드
 

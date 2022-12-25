@@ -18,6 +18,13 @@
   }
 }
 
+.mobileFooter{
+  display: none;
+}
+.unReg{
+  border-top: 1px solid #e3e9ed;
+}
+
 .memberrankimg{
   height: 1.5rem;
   margin-right: 5px;
@@ -223,15 +230,19 @@
 
 
 .profilecard > .logout{
-  font-family: 'Jua', sans-serif;
   font-size: 1rem;
   font-weight: bold;
   margin: 0px 0.5rem;
   margin-top: 1.1rem;
-  background-color: #fff;
   padding: .2rem .4rem;
-  border-radius: 3px;
-  border: none;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background-color: rgba(162, 154, 216, 0.4);
+  border-radius: 8px;
+  color: #222;
+  cursor: pointer;
+  &:hover{
+    background-color: rgba(134, 121, 217, 0.4);
+  }
 }
 
 .profileinfo {
@@ -686,6 +697,60 @@
   }
 }
 
+.unReg{
+  >p{
+    margin-bottom: 10px;
+  }
+  .cry{
+    background-image: url("../resources/cry3.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+.memberDelete{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  >p{
+    font-size: 14px;
+    color: rgb(255, 125, 125);
+    padding-bottom: 5px;
+  }
+  .memberDeleteErr{
+    color: gray;
+    font-size: 12px;
+    white-space: pre-line;
+    text-align: center;
+  }
+  input{
+    margin-top: 6px;
+    width: 80%;
+    max-width: 300px;
+    border-radius: 8px;
+    background-color: rgba(177, 177, 177, 0.3);
+    padding-left: 5px;
+    height: 34px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+  button{
+    width: max-content;
+    padding: 0px 5px;
+    height: 34px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(162, 154, 216, 0.4);
+    border-radius: 8px;
+    cursor: pointer;
+    color: #222;
+    font-weight: 600;
+
+    &:hover {
+      background-color: rgba(134, 121, 217, 0.4);
+    }
+  }
+}
+
 @media screen and (max-width:456px) {
   .infoResetPfImg {
     .infoProfileImg{
@@ -763,5 +828,15 @@
   justify-content: center;
 }
 
-
+@media screen and (max-width:767px) {
+  .mobileFooter{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border-top: 1px solid #e3e9ed;
+    span, a{
+      padding: 10px
+    }
+  }  
+}
 

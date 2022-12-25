@@ -89,6 +89,12 @@ const LoginPage = () =>{
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [])
 
+  const onEnterKey = (e) => {
+    if(e.key === 'Enter') {
+      onClickLogin();
+    }
+}
+
 
   return(
     <div className="wrapper">
@@ -108,7 +114,7 @@ const LoginPage = () =>{
             </div>
             <div className="loginSmallBox">
               <input type="password" value={loginPwd} className="pwdInput" placeholder="비밀번호"
-              onChange={onChangeLoginPwd}></input>
+              onChange={onChangeLoginPwd} onKeyUp={onEnterKey}></input>
             </div>
             <div className="loginErrMsg">
               {!isLoginPwd && <span className="loginIdErr">{loginPwdMsg}</span>}

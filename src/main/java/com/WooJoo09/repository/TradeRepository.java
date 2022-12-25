@@ -309,12 +309,13 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
                     "(select count(*) from partner p where p.trade_num = t.trade_num and accept_trade = 'ACCEPT') acceptPartner, " +
                     "(select count(*) from star s where s.trade_num = t.trade_num) as countStar " +
                     "from category c, trade t where t.category = c.category_num " +
-                    "and host not in (select member_num from member where is_active = 'INACTIVE') " +
                     "and trade_num = :tradeNum",
             nativeQuery = true
     )
     Map<?,?> tradeDetailSelect(@Param("tradeNum") int tradeNum);
-    // "and done_trade != 'DELETE' " 를 주석처리함 -> 어드민에서 삭제한 게시글 볼 수 있도록
+    // "and done_trade != 'DELETE' "
+    //  "and host not in (select member_num from member where is_active = 'INACTIVE') " +
+    //  를 주석처리함 -> 어드민에서 삭제한 게시글, 비활성 멤버 게시글 볼 수 있도록
 
     @Query(
             value = "select trade_num tradeNum, category_name categoryName, product, price, " +
@@ -332,7 +333,7 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
     Map<?,?> tradeDetailSelectLogin(@Param("tradeNum") int tradeNum, @Param("memberNum") int memberNum);
 
     @Query(
-            value = "select member_num memberNum, grade, introduce, pf_img pfImg, nickname, " +
+            value = "select member_num memberNum, grade, introduce, pf_img pfImg, nickname, is_active isActive, " +
                     "(select count(*) from trade t where host = member_num and done_trade = 'DONE') countDoneTrade, " +
                     "(select count(*) from partner p where part_mem_num = member_num and accept_trade = 'ACCEPT') countPartTrade " +
                     "from mem_grade mg, member m " +
@@ -448,5 +449,22 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
     )
     Page<Map<?,?>> starTradeSelect(@Param("memberNum") Long memberNum, Pageable pageable);
 
+    @Query(
+            value = "select trade_num tradeNum, category_name categoryName, product, done_trade doneTrade, nickname, city, town, write_date writeDate, " +
+                    "(select count(*) from complain where complain_trade = trade_num) countComplain " +
+                    "from trade t, member m, category c where c.category_num = t.category and " +
+                    "m.member_num = t.host order by tradeNum",
+            nativeQuery = true
+    )
+    List<Map<?,?>> adminWriteSelect();
 
+    @Query(
+            value = "select trade_num tradeNum, category_name categoryName, product, done_trade doneTrade, nickname, city, town, " +
+                    "(select count(*) from complain where complain_trade = trade_num) countComplain " +
+                    "from trade t, member m, category c where c.category_num = t.category and m.member_num = t.host " +
+                    "and (product like :target or nickname like :target) " +
+                    "order by tradeNum",
+            nativeQuery = true
+    )
+    List<Map<?,?>> adminWriteSearch(@Param("target") String target);
 }

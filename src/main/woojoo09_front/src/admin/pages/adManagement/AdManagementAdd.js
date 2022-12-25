@@ -2,45 +2,27 @@ import { useState, useEffect } from "react";
 import api from "../../adminApi";
 import Loader from "../../components/Loader";
 import TopBar from "../../components/TopBar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { storage } from "../../../api/firebase"
 import Header from "../../components/Header";
 import Sidebar from "../../components/SideBar";
 
 const AdManagementAdd = () =>{
-  const [lists, setLists] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [prepared, setPrepared] = useState(false);
+  const navigate = useNavigate();
 
-  const [ad_name, setad_name] = useState('');
-  const [ad_url, setad_url] = useState('');
-  const [ad_img, setad_img] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [bannerName, setBannerName] = useState('');
+  const [directUrl, setDirectUrl] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
+  const [active,setActive] = useState('');
 
   const [image, setImage] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
 
 
-  const onChangeAd_name = (e) => setad_name(e.target.value);
-  const onChangeAd_url = (e) => setad_url(e.target.value);
+  const onChangeAd_name = (e) => setBannerName(e.target.value);
+  const onChangeAd_url = (e) => setDirectUrl(e.target.value);
 
-  // 체크된 아이템을 담을 배열
-  const [checkItems, setCheckItems] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-     setLoading(true);
-      try {
-        const response = await api.adInfo();
-        setLists(response.data);
-        setPrepared(true);
-      } catch (e) {
-        console.log(e);
-      }
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
 
   if(loading) {
     return <div className="center"><Loader/></div>
@@ -51,9 +33,10 @@ const AdManagementAdd = () =>{
     const fetchAdUpdateData = async () => {
       setLoading(true);
        try {
-         const response = await api.adminAdAdd(ad_name, ad_url, ad_img);
-         setLists(response.data);
-         setPrepared(true);
+         const response = await api.bannerInsert(bannerName, directUrl, imgUrl, active);
+         if(response.data.bannerInsert === "OK"){
+          navigate('/ilovekirby/adManagement')
+         }
        } catch (e) {
          console.log(e);
        }
@@ -81,8 +64,8 @@ const AdManagementAdd = () =>{
     }
     // 업로드 처리
     console.log("업로드 처리");
-    const storageRef = storage.ref("images/advertisement/"); //어떤 폴더 아래에 넣을지 설정
-    const imgName = (ad_name + "Img");
+    const storageRef = storage.ref("woojoo09/advertisement/"); //어떤 폴더 아래에 넣을지 설정
+    const imgName = (bannerName + "Img");
     const imagesRef = storageRef.child(imgName);
     // const imagesRef = storageRef.child(image.name); //파일명
 
@@ -104,12 +87,15 @@ const AdManagementAdd = () =>{
       () => {
         upLoadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           console.log("File available at", downloadURL);
-          setImageUrl(downloadURL);
-          setad_img(downloadURL)
+          setImgUrl(downloadURL)
         });
       }
     );
   };
+
+  const handleClickRadioButton = (e) => {
+    setActive(e.target.value);
+  }
 
   return(
     <div className="adminWrapper">
@@ -119,29 +105,38 @@ const AdManagementAdd = () =>{
       <TopBar name="배너 추가" high1="배너 관리" high2="광고 관리"/>
       <div>
       <label>
-          <span>광고 이름</span>
-          <input type="text" value={ad_name} onChange={onChangeAd_name}/>
+          <span>배너 이름</span>
+          <input type="text" value={bannerName} onChange={onChangeAd_name}/>
         </label>
         <label>
-          <span>광고 이동 URL</span>
-          <input type="text" value={ad_url} onChange={onChangeAd_url}/>
+          <span>배너 이동 URL</span>
+          <input type="text" value={directUrl} onChange={onChangeAd_url}/>
         </label>
         <label>
-          <span>광고 이미지</span>
+          <span>배너 이미지</span>
           {error && {error}}
           <form className="adImgForm" onSubmit={onSubmit}>
             <input type="file" onChange={handleImage} />
             <button onClick={onSubmit}>업로드</button>
           </form>
-          {imageUrl && (
+          {imgUrl && (
             <div>
-              <p> 이미지 미리보기</p>
-              <img className="adImgPreview" src={imageUrl} alt="uploaded"/>
+              <p>이미지 미리보기</p>
+              <img className="adImgPreview" src={imgUrl} alt="uploaded"/>
             </div>
           )}
         </label>
         <br/>
-        <button onClick={adminAdAdd}><Link to={"/adManagement"}>등록하기</Link></button>
+        <label>
+          <span>활성화 상태</span>
+          <div>
+          <label><input type="radio" name="active" onChange={handleClickRadioButton} 
+          value="active"/>활성화</label>
+          <label><input type="radio" name="active" onChange={handleClickRadioButton} 
+          value="inactive"/>비활성화</label>
+          </div>
+        </label>
+        <button onClick={adminAdAdd}><Link to={"/ilovekirby/adManagement"}>등록하기</Link></button>
       </div>
     </div>
     </div>

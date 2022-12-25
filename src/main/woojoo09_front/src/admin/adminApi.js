@@ -53,9 +53,9 @@ const api = {
     }
     return await axios.post(BASE_URL+ "adminchatsearch", adminChatSearchCmd, HEADER);
   },  
-  adminChatSelectDetail: async function() {
+  adminChatSelectDetail: async function(target) {
     const adminChatSelectDetailCmd = {
-      cmd: "adminChatSelectDetail"
+      target: target
     }
     return await axios.post(BASE_URL+ "adminchatselectdetail", adminChatSelectDetailCmd, HEADER);
   },  
@@ -71,20 +71,23 @@ const api = {
     const bannerSelectCmd = {
       cmd: "bannerSelect"
     }
-    return await axios.post(BASE_URL+ "bannerselect", bannerSelectCmd, HEADER);
+    return await axios.post(BASE_URL+ "adminbannerselect", bannerSelectCmd, HEADER);
   },   
-  bannerInsert: async function(name, url) {
+  bannerInsert: async function(bannerName, directUrl, imgUrl, isActive) {
     const bannerInsertCmd = {
-      name: name,
-      url : url
+      bannerName: bannerName,
+      directUrl : directUrl,
+      imgUrl : imgUrl,
+      isActive : isActive
     }
     return await axios.post(BASE_URL+ "bannerinsert", bannerInsertCmd, HEADER);
   },  
-  bannerUpdate: async function(bannerNum, name, url, isActive) {
+  bannerUpdate: async function(bannerNum, bannerName, directUrl, imgUrl, isActive) {
     const bannerUpdateCmd = {
       bannerNum : bannerNum,
-      name: name,
-      url : url,
+      bannerName: bannerName,
+      directUrl : directUrl,
+      imgUrl : imgUrl,
       isActive : isActive
     }
     return await axios.post(BASE_URL+ "bannerupdate", bannerUpdateCmd, HEADER);

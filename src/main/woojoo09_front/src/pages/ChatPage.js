@@ -6,7 +6,7 @@ import ChattingProductBuy from "../components/ChattingPoductBuy";
 import ChatBuyButton from "../components/ChatBuyButton";
 import ChatSellButton from "../components/ChatSellButton";
 import api from "../api/api";
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import send1 from "../resources/buluepurple_rocket.png"
 import { Link } from "react-router-dom";
 import fashion from "../resources/fashion_sample.png";
@@ -15,6 +15,7 @@ import "../style/chat.scss"
 
 const ChatPage = () =>{
 
+  const navigate = useNavigate();
   let { partner_num } = useParams();
   // {nickname, img_url, chat_time, chat_content, is_read, partner_num}
    const location = useLocation();
@@ -37,6 +38,8 @@ const ChatPage = () =>{
   const [inputMsg, setInputMsg] = useState("");
   const [rcvMsg, setRcvMsg] = useState("");
   const webSocketUrl = `ws://localhost:9009/ws/chat`;
+
+  // const webSocketUrl = `ws://13.209.198.107/ws/chat`;
   // // roomId랑 sender은 받아와야함 -> navigate로 받아오면 될듯
   // const roomId = window.localStorage.getItem("chatRoomId");
   //  const sender = "곰돌이사육사";
@@ -59,8 +62,6 @@ const ChatPage = () =>{
     setChatSendImg(e);
   }
 
-  const date = new Date();
-
   var options = {
     // year: 'numeric',
     month: 'numeric',
@@ -68,6 +69,7 @@ const ChatPage = () =>{
     hour: 'numeric',
     // hour: '2-digit',
     minute : 'numeric',
+    timeZone : 'Asia/Seoul'
   }
 
   useEffect(() => {
@@ -117,6 +119,7 @@ const ChatPage = () =>{
 
   const onClickMsgSend = (e) => {
     const fetchData = async () => {
+      console.log(new Date());
       try {
         console.log(items);
           const res = await api.chatContentInsert(partner_num, inputMsg, "text", memberNum);
@@ -275,6 +278,10 @@ const partnerReject = () => {
     setInputMsg("");
     fetchData();
   }
+
+  if(acceptTrade == 'DELETE' || doneTrade == 'DELETE'){
+    navigate('/main')
+  }
   
 
   return(
@@ -300,10 +307,14 @@ const partnerReject = () => {
                     
 
                   {host == memberNum ? acceptTrade == 'REJECT'? 
-                  <div className="PartAcceptBtn"><button onClick={partnerAccept}>공구승인</button>
-                    <button onClick={partnerRejecthost}>공구거절</button></div>
+                  <div className="PartAcceptBtn">
+                    <button onClick={partnerAccept}>공구승인</button>
+                    <button onClick={partnerRejecthost}>공구거절</button>
+                    <p>공구를 거절하면 채팅 내용과 입력한 정보가 모두 사라집니다</p>
+                  </div>
                     : <></>
-                    : <button className="PartAcceptBtn2" onClick={partnerReject}>공구나가기</button>
+                    :<div> <button className="PartAcceptBtn2" onClick={partnerReject}>공구나가기</button>
+                      <p>공구를 나가면 채팅 내용과 입력한 정보가 모두 사라집니다</p></div>
                     }
                   </div>
             </div>
@@ -314,10 +325,11 @@ const partnerReject = () => {
             .map(({chat_content, chat_time, sender, msg_type}) => (
             <>
                 {memberNum != sender && <div className="chatMessage">
-                  {msg_type === 'IMG'? <img src={chat_content}/> : chat_content}</div>}
+                  {msg_type === 'IMG'? <img className="chatImg" src={chat_content} alt="상대방이 보낸 이미지"/> 
+                : chat_content}</div>}
                 {memberNum != sender && <div className="chatTalkTime">{new Date(chat_time).toLocaleDateString("ko-KR", options)}</div>}
                 {memberNum == sender && <div className="chatMessage-My">
-                  {msg_type === 'IMG'? <img src={chat_content}/> : chat_content}</div>}
+                  {msg_type === 'IMG'? <img className="chatImg" src={chat_content} alt="내가 보낸 이미지"/> : chat_content}</div>}
                 {memberNum == sender && <div className="chatTalkTime-My">{new Date(chat_time).toLocaleDateString("ko-KR", options)}</div>}  
                 
             </>
@@ -330,9 +342,11 @@ const partnerReject = () => {
                     <>
                     {/* new Intl.DateTimeFormat('kr').format(new Date()) */}
                     <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>
-                      {item.type == 'IMG'? <img src={item.message} alt="채팅이미지"/>: item.message}
+                      {item.type == 'IMG'? <img className="chatImg" src={item.message} alt="채팅이미지"/>
+                      : item.message}
                     </div>
-                    <div className={ memberNum != item.sender ? "chatTalkTime" : "chatTalkTime-My"}>{new Date(item.time).toLocaleDateString("ko-KR", options)}</div>
+                    <div className={ memberNum != item.sender ? "chatTalkTime" : "chatTalkTime-My"}>
+                      {new Date(Date.parse(item.time)+ 1*1000*60*60*9).toLocaleDateString("ko-KR", options)}</div>
                     </>
                       // <div className="chatMessage-My">{`${item.message}`}</div>
                       ))}
@@ -340,7 +354,8 @@ const partnerReject = () => {
           </div>
 
             {host == memberNum?  <ChatSellButton partner_num={partner_num}
-             changeChatSendImg={changeChatSendImg} onClickImgMsgSend={onClickImgMsgSend}/> : <ChatBuyButton partner_num={partner_num}/>    }
+             changeChatSendImg={changeChatSendImg} onClickImgMsgSend={onClickImgMsgSend}/> 
+             : <ChatBuyButton partner_num={partner_num}/>    }
             <div className="chatBottom">
               <input className="chatSend" value ={inputMsg} onChange={onChangMsg} onKeyUp={onEnterKey}/>
               <button onClick={ (e) => {onClickMsgSend(e);}}><img src={send1} alt="send"/></button>

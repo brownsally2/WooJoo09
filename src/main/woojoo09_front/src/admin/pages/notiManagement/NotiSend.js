@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../adminApi";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
@@ -6,9 +7,8 @@ import Sidebar from "../../components/SideBar";
 import TopBar from "../../components/TopBar";
 
 const NotiSend = () =>{
-  const [lists, setLists] = useState('');
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [prepared, setPrepared] = useState(false);
 
   const [mail,setMail] = useState('');
   const [title, setTitle] = useState('');
@@ -23,52 +23,23 @@ const NotiSend = () =>{
     setContent(e.target.value);
   } 
 
-  // 체크된 아이템을 담을 배열
-  const [checkItems, setCheckItems] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //    setLoading(true);
-  //     try {
-  //       const response = await api.memberInfo();
-  //       setLists(response.data);
-  //       setPrepared(true);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //     setLoading(false);
-  //   };
-  //   fetchData();
-  // }, []);
-
-  // if(!isLogin){
-  //   alert("잘못된 접근입니다!");
-  //   window.location.replace("/");
-  // }
-  
-  // if(loading) {
-  //   return <div className="center"><Loader/></div>
-  // }
-
 
   const adminNotiSend = () => {
-    setPrepared(false);
     const fetchDeleteData = async () => {
       setLoading(true);
        try {
          const response = await api.adminNotiSend(mail, title, content);
-         setLists(response.data);
          console.log(response.data);
-         setPrepared(true);
+         if(response.data){
+          alert("발송이 완료되었습니다!!!!!!!");
+          navigate("/ilovekirby/member");
+         }
        } catch (e) {
          console.log(e);
        }
        setLoading(false);
-       alert("발송이 완료되었습니다!!!!!!!");
-       window.location.replace("/");
      };
     fetchDeleteData();
-    setCheckItems([]);
     }
   
   if(loading) {
@@ -81,7 +52,6 @@ const NotiSend = () =>{
     setDisabled(false);
   }
   
-
 return(
   <div className="adminWrapper">
     <Header/>
@@ -106,7 +76,7 @@ return(
         <textarea value={content} onChange={onChangeContent}/>
       </label>
       <br/>
-      <button onClick={adminNotiSend} disabled ={disabled} >발송</button>
+      <button onClick={adminNotiSend} disabled ={disabled}>발송</button>
     </div>
     </div>
   );

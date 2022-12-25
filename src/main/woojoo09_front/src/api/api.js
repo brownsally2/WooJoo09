@@ -5,6 +5,7 @@ import { getCookie } from "../util/cookie";
 const HEADER = {"Content-type" : "application/json"}
 // const HEADER = 'application/json';
 const BASE_URL = "http://localhost:9009/developerkirby/";
+// const BASE_URL = "/developerkirby/";
 
 axios.defaults.withCredentials = true; // withCredentials 전역 설정
   // const cookieSet = {
@@ -252,7 +253,14 @@ const api = {
       cmd: "bannerSelect"
     }
     return await axios.post(BASE_URL+ "bannerselect", bannerSelectCmd, HEADER);
-  }, 
+  },
+  memberDelete: async function(id, pwd) {
+    const memberDeleteCmd = {
+      id : id,
+      pwd : pwd
+    }
+    return await axios.post(BASE_URL+ "memberdelete", memberDeleteCmd, HEADER);
+  },
   //로그아웃
   logout: async function() {
     const logoutCmd = {

@@ -8,15 +8,10 @@ import com.WooJoo09.entity.Member;
 import com.WooJoo09.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.transaction.Transactional;
 import java.util.*;
 
 @Slf4j
@@ -48,16 +43,19 @@ public class MemberService {
             if (!passwordEncoder.matches(pwd, loginMember.get().getPwd())){
                 map.put("login", false);
             } else {
-                String token;
-                if(id.equals("admin")){
-                    log.info("관리자입니다 관리자용 토큰 발급합니다");
-                    token = jwtController.tokenCreate("admin");
-                    map.put("token", token);
-                } else {
-                    token = jwtController.tokenCreate(loginMember.get().getMemberNum().toString());
-                    map.put("token", token);
+                if(loginMember.get().getIsActive() == IsActive.ACTIVE){
+                    String token;
+                    if(id.equals("admin")){
+                        log.info("관리자입니다 관리자용 토큰 발급합니다");
+                        token = jwtController.tokenCreate("admin");
+                        map.put("token", token);
+                    } else {
+                        token = jwtController.tokenCreate(loginMember.get().getMemberNum().toString());
+                        map.put("token", token);
+                    }
+                    map.put("login", true);
                 }
-                map.put("login", true);
+                else map.put("login", false);
             }
         }
         return map;
@@ -187,7 +185,9 @@ public class MemberService {
     //회원정보수정 - 비밀번호 변경
     public boolean infoNewPwdService(Long memberNum, String pwd) {
         Member member = memberRepository.findByMemberNum(memberNum);
-        if(member == null) return false;
+        if(member == null) {
+            return false;
+        }
         member.setPwd(passwordEncoder.encode(pwd));
         Member savedMember = memberRepository.save(member);
         log.info(savedMember.toString());
@@ -232,5 +232,50 @@ public class MemberService {
         Member savedMember = memberRepository.save(member);
         log.info(savedMember.toString());
         return true;
+    }
+
+    public Map<String, String> memberDelete(Long memberNum, String id, String pwd){
+        Map<String ,String> map = new HashMap<>();
+        Optional<Member> member= memberRepository.findByMemberNumAndId(memberNum, id);
+        if (member.isEmpty()) {
+            map.put("memberDelete", "notData");
+            return map;
+        }
+        if(passwordEncoder.matches(pwd, member.get().getPwd())){
+            member.get().setIsActive(IsActive.INACTIVE);
+            Member savedMember = memberRepository.save(member.get());
+            log.info(savedMember.toString());
+            map.put("memberDelete", "OK");
+            return map;
+        }
+        map.put("memberDelete", "NOK");
+        return map;
+    }
+
+    public Map<String, Object> adminMemberSelect(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("memberData", memberRepository.adminMemberSelect());
+        map.put("adminMemberSelect", "OK");
+        return map;
+    }
+
+    public Map<String, Object> adminMemberSearch(String target){
+        Map<String,Object> map = new HashMap<>();
+        map.put("memberData", memberRepository.adminMemberSearch("%"+target+"%"));
+        map.put("adminMemberSearch", "OK");
+        return map;
+    }
+
+    public Map<String, Object> adminMemberDelete(List<Integer> targets){
+        Map<String,Object> map = new HashMap<>();
+        for (Integer e : targets){
+            Long memberNum = Long.valueOf(e);
+            Member member = memberRepository.findByMemberNum(memberNum);
+            member.setIsActive(IsActive.INACTIVE);
+            Member savedMember = memberRepository.save(member);
+            log.info(savedMember.toString());
+        }
+        map.put("adminMemberDelete", "OK");
+        return map;
     }
 }

@@ -40,6 +40,7 @@ import AdManagement from "./admin/pages/adManagement/AdManagement";
 import AdManagementAdd from "./admin/pages/adManagement/AdManagementAdd";
 import AdManagementDetail from "./admin/pages/adManagement/AdManagementDetail";
 import NotiSend from "./admin/pages/notiManagement/NotiSend";
+import ChatManagementDetail from "./admin/pages/contentManagement/ChatManagementDetail";
 
 function App() {
   return (
@@ -75,8 +76,9 @@ function App() {
           <Route path="/ilovekirby/content/writeManagement" element={<WriteManagement/>}/>
           <Route path="/ilovekirby/content/writeManagement/search/:query" element={<WriteManagementSearch/>}/>
           <Route path="/ilovekirby/content/chatManagement" element={<ChatManagement/>}/>
+          <Route path="/ilovekirby/content/chatManagementDetail/:partnerNum" element={<ChatManagementDetail/>}/>
           <Route path="/ilovekirby/adManagement" element={<AdManagement/>}/>
-          <Route path="/ilovekirby/adManagement/AdManagementDetail/:ad_num" element = {<AdManagementDetail/>}/>
+          <Route path="/ilovekirby/adManagement/AdManagementDetail/:banner_num" element = {<AdManagementDetail/>}/>
           <Route path="/ilovekirby/adManagement/AdManagementAdd" element = {<AdManagementAdd/>}/>
           <Route path="/ilovekirby/noti/send" element={<NotiSend/>}/>
           

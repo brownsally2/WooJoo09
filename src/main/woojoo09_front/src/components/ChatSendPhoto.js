@@ -5,7 +5,7 @@ import { storage } from "../api/firebase"
 import {uuidv4} from "../util/util"
 import imgIcon from "../resources/add-photo.png"
 
-const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend}) => {
+const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend, sendImgbutton}) => {
 
   const [chatImgUrl, setChatImgUrl] = useState("");
   const [chatImg, setChatImg] = useState(null);
@@ -18,6 +18,7 @@ const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend}) => {
       console.log("파일이 선택되지 않았습니다");
       setChatImgErr("파일이 선택되지 않았습니다");
       setChatImg("");
+      changeChatSendImg("");
       setChatImgUrl("");
       return;
     }
@@ -66,6 +67,7 @@ const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend}) => {
       }
     );
     setChatImg('');
+    changeChatSendImg('');
   };
 
   return (
@@ -89,7 +91,8 @@ const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend}) => {
             </div>
           )}
       </div>
-      <button onClick={onClickImgMsgSend}>전송</button>
+      
+      <button onClick={ (e) => {onClickImgMsgSend(e); sendImgbutton(e);}} >전송</button>
     </div>
   )
 }

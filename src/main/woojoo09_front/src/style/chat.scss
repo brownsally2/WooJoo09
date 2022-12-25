@@ -29,11 +29,14 @@
 }   
 
 .chatSendFile{
-    background-color: #FAef91;
     width: 100%;
     display: flex;
     flex-direction: column;
     height: 150px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
     >div{
         display: flex;
         flex-direction: row;
@@ -51,6 +54,20 @@
     img{
         height: 100px;
     }
+    >button{
+            width: 5vw;
+            height: 3vh;
+            border: 0;
+            outline: 0; 
+            background-color: $purple2Alpha3;
+            border-radius: 5px;
+            margin: 5px;
+    
+    }
+}
+.chatImg{
+    width: 100px;
+    height: 100px;
 }
 
 
@@ -61,15 +78,15 @@
     // background-color: $lightGray1Alpha6;
     position: relative;
     padding: 2%;
+    cursor: pointer;
     div{
         position: absolute;
         left: 135px; 
-        top: 60px;
-
-    }
-    div{
+        top: 55px;
         display: flex;
+        flex-direction: column;
     }
+
   }
   a{
     text-decoration: none; // 밑줄 제거
@@ -108,7 +125,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    display: relative;
+    // display: relative;
     span > img{
         width: 100px;
         height: 70px;
@@ -296,6 +313,7 @@
     height: calc(100vh - 350px);
     margin : 133px 0px 0px 0px ;
     width: 100%;
+    position: relative ;
 }
 .chatContent::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
@@ -347,6 +365,7 @@
         margin: 10px;
         width: 100px;
         height: 35px;
+        cursor: pointer;
      
     }
     button:active{
@@ -359,6 +378,7 @@
     width:70%;
     position:fixed;
     bottom:0;
+
     // position: relative;
     // bottom: 50;
     button{
@@ -366,6 +386,7 @@
         // height: 10px;
         border: 0;
         outline: 0; 
+        cursor: pointer;
     }
     img{
         position:fixed;
@@ -381,11 +402,17 @@
     display: flex;
     text-align: center;
     justify-content: center;
-    // align-items: center;
+    align-items: center;
+    >div{
+        margin-right: 5px;
+    }
 
     select{
         border-radius: 5px;
         text-align: center;
+        width: 100px;
+        height: 30px;
+        margin-right: 5px;
     }
     input{
         width: 10vw;
@@ -444,21 +471,18 @@
     min-width: 7vw;
     max-width: 12vw;
     height: auto;
-    
     justify-content: center;
     align-items: center;
     display: flex;
     border-radius: 5px;
     margin-left: 7%;
-    margin-top: 40px;
+    margin-top: 20px;
     background-color: $lightGray1Alpha5;
     border: 1px solid $lightPurple4Alpha5 ;
-
 }
 
 
 .chatMessage-My{
-    
     padding : 15px;
     min-width: 7vw;
     max-width: 12vw;
@@ -468,22 +492,26 @@
     display: flex;
     border-radius: 5px;
     margin-left: 70%;
-    margin-top:  30px;
+    margin-top: 20px;
     background-color: $lightPurple4Alpha5;
-
 }
 .chatTalkTime{
-    position: relative ;
-    left: 17.5vw;
-    top: -20px;
+    position: absolute;
+    // left: 17.5vw;
+    // top: -20px;
+    left : 17.5vw;
+    // bottom : 10px;
+    
     font-size: .8rem;
 
 }
 .chatTalkTime-My{
-    position:relative ;
+    position: absolute;
     // left: 40vw;
-    right : -43vw;
-    top: -15px;
+    // right : -43vw;
+    // top: 10px;
+    // top : 0px;
+    right : 21.5vw;
     font-size: .8rem;
 }
 
@@ -496,6 +524,9 @@
 }
 
 .PartAcceptBtn{
+    button{
+        cursor: pointer;
+    }
     button:hover{
         background-color: $purple1Alpha4;
     }
@@ -727,15 +758,15 @@
         top: -15px;
         font-size: .8rem;
     }
-    .chatMessage-My{
-        padding : 10px;
-        min-width: 200px;
-        height: auto;
-        max-height: 25vw;
-        font-size: .8rem;
-        // overflow:hidden;
+    // .chatMessage-My{
+    //     padding : 10px;
+    //     min-width: 200px;
+    //     height: auto;
+    //     max-height: 25vw;
+    //     font-size: .8rem;
+    //     // overflow:hidden;
     
-    }
+    // }
     .sendPrivacy{
         width: 100%;
     }

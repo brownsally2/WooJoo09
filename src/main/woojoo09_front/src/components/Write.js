@@ -99,7 +99,7 @@ const Write = () =>{
           setInsertMsg("공동구매가 등록 되었습니다\n 메인으로 이동됩니다");
           setTimeout(()=>{ 
             navigate('/main');
-          }, 5000);
+          }, 2500);
         }else{
           setInsertMsg("공동구매 등록에 실패했습니다");
         }
@@ -152,7 +152,7 @@ const Write = () =>{
     if(month > 12 || month < 1){
       setDueDateErr("날짜 형식을 확인해주세요");
       setIsDate(false);
-      setDueMonth(1);
+      setDueMonth(month);
     }
     else{
       const monthStr = (String(month -1).length === 1 ? "0"+String(month -1) : String(month -1));
@@ -191,7 +191,7 @@ const Write = () =>{
       }
     }else{
       setDueDateErr("날짜 형식을 확인해주세요");
-      setDueDay(1);
+      setDueDay(day);
       setIsDate(false);
     }
   }

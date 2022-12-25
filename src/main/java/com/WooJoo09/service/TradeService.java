@@ -1,9 +1,6 @@
 package com.WooJoo09.service;
 
-import com.WooJoo09.constant.AcceptTrade;
-import com.WooJoo09.constant.DoneTrade;
-import com.WooJoo09.constant.IsRepresent;
-import com.WooJoo09.constant.TradeMethod;
+import com.WooJoo09.constant.*;
 import com.WooJoo09.entity.*;
 import com.WooJoo09.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -318,5 +315,32 @@ public class TradeService {
 
     public Page<?> starTradeSelect(Long memberNum, int page, int size) {
         return tradeRepository.starTradeSelect(memberNum, PageRequest.of(page, size));
+    }
+
+    public Map<String, Object> adminWriteSelect(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("writeData", tradeRepository.adminWriteSelect());
+        map.put("adminWriteSelect", "OK");
+        return map;
+    }
+
+    public Map<String, Object> adminWriteSearch(String target){
+        Map<String,Object> map = new HashMap<>();
+        map.put("writeData", tradeRepository.adminWriteSearch("%"+target+"%"));
+        map.put("adminWriteSearch", "OK");
+        return map;
+    }
+
+    public Map<String, Object> adminWriteDelete(List<Integer> targets){
+        Map<String,Object> map = new HashMap<>();
+        for (Integer e : targets){
+            Long tradeNum = Long.valueOf(e);
+            Trade trade = tradeRepository.findByTradeNum(tradeNum);
+            trade.setDoneTrade(DoneTrade.DELETE);
+            Trade savedTrade = tradeRepository.save(trade);
+            log.info(savedTrade.toString());
+        }
+        map.put("adminWriteDelete", "OK");
+        return map;
     }
 }

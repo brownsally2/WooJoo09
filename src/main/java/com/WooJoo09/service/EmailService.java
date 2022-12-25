@@ -1,5 +1,8 @@
 package com.WooJoo09.service;
 
+import com.WooJoo09.constant.ReceiveAd;
+import com.WooJoo09.entity.Member;
+import com.WooJoo09.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +20,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Random;
 
 @PropertySource("classpath:application.properties")
@@ -27,6 +31,8 @@ public class EmailService {
 
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
+
+    private final MemberRepository memberRepository;
 
     //인증번호 생성
     private final String ePw = createKey();
@@ -114,6 +120,82 @@ public class EmailService {
         }catch(MailException es){
             es.printStackTrace();
             throw new IllegalArgumentException();
+        }
+        return true;
+    }
+
+    // 어드민 광고 이메일
+    public MimeMessage createAdMessage(String to, String title, String content) throws MessagingException, UnsupportedEncodingException {
+        log.info("보내는 대상 : "+ to);
+        log.info("인증 번호 : " + ePw);
+        MimeMessage  message = javaMailSender.createMimeMessage();
+
+        message.addRecipients(MimeMessage.RecipientType.TO, to); // to 보내는 대상
+        message.setSubject(title); //메일 제목
+
+        // 메일 내용 메일의 subtype을 html로 지정하여 html문법 사용 가능
+        String msg="";
+        msg += "<h1 style=\"font-size: 30px; padding-right: 30px; padding-left: 30px;\">우주공구 광고</h1>";
+        msg += "<p style=\"font-size: 17px; padding-right: 30px; padding-left: 30px;\">";
+        msg += content;
+        msg += "</p>";
+
+        message.setText(msg, "utf-8", "html"); //내용, charset타입, subtype
+        message.setFrom(new InternetAddress(id,"WooJoo09")); //보내는 사람의 메일 주소, 보내는 사람 이름
+
+        return message;
+    }
+
+    // 어드민 광고 이메일
+    public MimeMessage createNoticeMessage(String to, String title, String content) throws MessagingException, UnsupportedEncodingException {
+        log.info("보내는 대상 : "+ to);
+        log.info("인증 번호 : " + ePw);
+        MimeMessage  message = javaMailSender.createMimeMessage();
+
+        message.addRecipients(MimeMessage.RecipientType.TO, to); // to 보내는 대상
+        message.setSubject(title); //메일 제목
+
+        // 메일 내용 메일의 subtype을 html로 지정하여 html문법 사용 가능
+        String msg="";
+        msg += "<h1 style=\"font-size: 30px; padding-right: 30px; padding-left: 30px;\">우주공구 공지</h1>";
+        msg += "<p style=\"font-size: 17px; padding-right: 30px; padding-left: 30px;\">";
+        msg += content;
+        msg += "</p>";
+
+        message.setText(msg, "utf-8", "html"); //내용, charset타입, subtype
+        message.setFrom(new InternetAddress(id,"WooJoo09")); //보내는 사람의 메일 주소, 보내는 사람 이름
+
+        return message;
+    }
+
+    //공지 이메일
+    public boolean sendSimpleNoticeMessage(String title, String content) throws Exception {
+        List<Member> emails = memberRepository.findAll();
+        for (Member e : emails){
+            String to = e.getEmail();
+            MimeMessage message = createNoticeMessage(to, title, content);
+            try{
+                javaMailSender.send(message); // 메일 발송
+            }catch(MailException es){
+                es.printStackTrace();
+                throw new IllegalArgumentException();
+            }
+        }
+        return true;
+    }
+
+    // 광고 이메일
+    public boolean sendSimpleAdMessage(String title, String content) throws Exception {
+        List<Member> emails = memberRepository.findByReceiveAd(ReceiveAd.POSITIVE);
+        for (Member e : emails){
+            String to = e.getEmail();
+            MimeMessage message = createAdMessage(to, title, content);
+            try{
+                javaMailSender.send(message); // 메일 발송
+            }catch(MailException es){
+                es.printStackTrace();
+                throw new IllegalArgumentException();
+            }
         }
         return true;
     }

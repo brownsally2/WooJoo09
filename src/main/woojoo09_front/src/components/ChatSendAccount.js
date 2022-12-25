@@ -7,6 +7,7 @@ import api from "../api/api";
 const SendAccount = ({partner_num}) => {
         
     const [bank, setBank] = useState("");
+    const [directBank, setDirectBank] = useState("");
     const [account, setAccount] = useState("");
     const [accountholder, setAccountholder] = useState("");
     const [bankSelect, setbankSelect] = useState("");
@@ -18,6 +19,10 @@ const SendAccount = ({partner_num}) => {
     setBank(e.target.value);
     console.log(e.target.value);
   }
+  const onChangeDirectBank = (e) => {
+    setDirectBank(e.target.value);
+    console.log(e.target.value);
+  }
   const onChangeAccount = (e) => {
     setAccount(e.target.value);
   }
@@ -27,16 +32,30 @@ const SendAccount = ({partner_num}) => {
 
   const accountInsert = () =>{
     const fetchData = async () => {
-      try {
-        console.log();
-          const res = await api.accountsend(partner_num, bank, account, accountholder);
-          console.log(res.data);
-          setBank("");
-          setAccount("");
-          setAccountholder("");
-          setbankSelect("");
-      } catch {
-          console.log("error");
+      if(bank == "직접입력"){
+        try {
+          console.log();
+            const res = await api.accountsend(partner_num, directBank, account, accountholder);
+            console.log(res.data);
+            setBank("");
+            setAccount("");
+            setAccountholder("");
+            setbankSelect("");
+        } catch {
+            console.log("error");
+        }
+      }else{
+        try {
+          console.log();
+            const res = await api.accountsend(partner_num, bank, account, accountholder);
+            console.log(res.data);
+            setBank("");
+            setAccount("");
+            setAccountholder("");
+            setbankSelect("");
+        } catch {
+            console.log("error");
+        }
       }
     };
     fetchData();
@@ -53,7 +72,7 @@ const SendAccount = ({partner_num}) => {
               </option>
                ))}
           </select>
-          {bank === "directInput" && <input onChange= {onChangeBank} placeholder={"은행"} value={bank} />}
+          {bank === "직접입력" && <input onChange= {onChangeDirectBank} placeholder={"은행"} value={directBank} />}
           <input value={account} onChange={onChangeAccount} placeholder={"계좌번호"}/>
           <input value={accountholder} onChange={onChangeAccountholder} placeholder={"예금주"}/>
           <button onClick={accountInsert}>전송</button>

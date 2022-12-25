@@ -119,7 +119,8 @@ const RegisterPage = () =>{
     if(!idRegEx.test(inputId) && !(inputId.length === 0)) {
       setIsRegId(false);
       setRegIdMsg("3~15자리 영문자 또는 숫자를 입력해주세요.");
-    } else if(!isRegIdCk && !(inputId.length === 0)){
+    } else if(!(inputId.length === 0)){
+      setIsRegId(false);
       setIsRegIdCk(false)
       setRegIdMsg("아이디 중복 확인이 필요합니다.");
     } else if(inputId.length === 0) {
@@ -141,7 +142,7 @@ const RegisterPage = () =>{
           setRegIdOkMsg("사용 가능한 아이디 입니다.");
         } else if (response.data === false) {
           setIsRegId(false);
-          setIsRegIdCk(true);
+          setIsRegIdCk(false);
           setRegIdMsg("이미 존재하는 아이디 입니다.");
         } 
       } catch (e) {
@@ -220,7 +221,7 @@ const RegisterPage = () =>{
           setRegNickOkMsg("사용 가능한 닉네임 입니다.");
         } else if (response.data === false) {
           setIsRegNick(false);
-          setIsRegNickCk(true);
+          setIsRegNickCk(false);
           setRegNickMsg("이미 존재하는 닉네임 입니다.");
         } 
       } catch (e) {
@@ -379,6 +380,7 @@ const RegisterPage = () =>{
 
   //전화번호 다시 입력 버튼
   const onClickregPhoneReWriteBtn = () => {
+    setIsRegPhoneVer(false);
     regPhoneCodeInput.style.display = 'none';
     regPhoneCodeOk.style.display = 'none';
 

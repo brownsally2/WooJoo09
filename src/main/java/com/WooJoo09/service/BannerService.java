@@ -31,6 +31,18 @@ public class BannerService {
         }
         return map;
     }
+
+    public Map<String, Object> adminBannerSelect(){
+        Map<String,Object> map = new HashMap<>();
+        if(bannerRepository.findAll().isEmpty()){
+            map.put("bannerSelect", "notData");
+        }else{
+            List<Banner> bannerList = bannerRepository.findAll();
+            map.put("bannerSelect", "OK");
+            map.put("banner", bannerList);
+        }
+        return map;
+    }
     public Map<String, String> bannerInsert(String bannerName, String imgUrl, String directUrl){
         Map<String,String> map = new HashMap<>();
         Banner banner = new Banner();
@@ -56,14 +68,28 @@ public class BannerService {
         map.put("bannerUpdate", "OK");
         return map;
     }
-    public Map<String, String> bannerDelete(Long bannerNum){
+    public Map<String, String> bannerDelete(List<Integer> bannerNums){
         // 삭제가 아닌 비활성화 상태로 만들기
         Map<String,String> map = new HashMap<>();
-        Banner banner = bannerRepository.findByBannerNum(bannerNum);
-        banner.setIsActive(IsActive.INACTIVE);
-        Banner savedBanner = bannerRepository.save(banner);
-        log.info(savedBanner.toString());
+        for(Integer e : bannerNums){
+            Long bannerNum = Long.valueOf(e);
+            Banner banner = bannerRepository.findByBannerNum(bannerNum);
+            banner.setIsActive(IsActive.INACTIVE);
+            Banner savedBanner = bannerRepository.save(banner);
+            log.info(savedBanner.toString());
+        }
         map.put("bannerDelete", "OK");
         return map;
     }
+
+//    public Map<String, String> bannerDelete(Long bannerNum){
+//        // 삭제가 아닌 비활성화 상태로 만들기
+//        Map<String,String> map = new HashMap<>();
+//        Banner banner = bannerRepository.findByBannerNum(bannerNum);
+//        banner.setIsActive(IsActive.INACTIVE);
+//        Banner savedBanner = bannerRepository.save(banner);
+//        log.info(savedBanner.toString());
+//        map.put("bannerDelete", "OK");
+//        return map;
+//    }
 }
