@@ -24,6 +24,7 @@ const ChatSellButton = ({partner_num, changeChatSendImg, onClickImgMsgSend}) => 
         setVisibleDel(false);
         setVisiblePho(false);
         setVisibleDelAddr(false);
+        setVisiblePho(false);
         setType(e.target.value)
     }
         // console.log("값이 있나요?" +type);
@@ -32,7 +33,7 @@ const ChatSellButton = ({partner_num, changeChatSendImg, onClickImgMsgSend}) => 
         setVisible(false);
         setVisiblePho(false);
         setVisibleDelAddr(false);
-
+        setVisiblePho(false);
     }
     const visiblePhoto = (e) => {
         setVisiblePho(!visiblePho);
@@ -45,11 +46,18 @@ const ChatSellButton = ({partner_num, changeChatSendImg, onClickImgMsgSend}) => 
         setVisibleDelAddr(!visibleDelAddr);
         setVisible(false);
         setVisibleDel(false);
+        setVisiblePho(false);
         console.log(partner_num);
     }
 
     const sendImgbutton = (e) => {
         setVisiblePho(false);
+    }
+    const sendAccountButton = (e) => {
+        setVisible(false);
+    }
+    const sendDelButton = (e) => {
+        setVisibleDel(false);
     }
 
     return(
@@ -58,8 +66,8 @@ const ChatSellButton = ({partner_num, changeChatSendImg, onClickImgMsgSend}) => 
             { visiblePho && <SendPhoto partner_num={partner_num}
              changeChatSendImg={changeChatSendImg} onClickImgMsgSend={onClickImgMsgSend}
              sendImgbutton={sendImgbutton}/>}
-            { visible && <SendAccount partner_num={partner_num} /> }
-            { visibleDel && <SendDelivery  partner_num={partner_num} /> }
+            { visible && <SendAccount partner_num={partner_num} sendAccountButton={sendAccountButton}/> }
+            { visibleDel && <SendDelivery  partner_num={partner_num} sendDelButton={sendDelButton}/> }
             { visibleDelAddr && <DelAddrLook partner_num={partner_num}/> }
         
         </div>

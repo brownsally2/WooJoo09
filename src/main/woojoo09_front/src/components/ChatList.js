@@ -5,6 +5,7 @@ import house from "../resources/house.png"
 import "../style/chat.scss"
 import "../style/common.scss"
 import api from "../api/api"
+import { defaultImgs } from "../util/util"
 
 const ChatList = () =>{
 
@@ -120,11 +121,14 @@ const ChatList = () =>{
             <div className="chatDetail"> 
               <div className="chatButton">
                     <p onClick={()=>{chatTest(list.partner_num); move(list);}}>
-                      <span><img src = {list.img_url} alt="물품이미지"/></span>
+                      <span><img src = {list.img_url? list.img_url : list.category_num === 1 ? defaultImgs.패션.imgUrl :
+                      list.category_num === 2 ? defaultImgs.뷰티.imgUrl : list.category_num === 3 ? defaultImgs.생활.imgUrl :
+                      list.category_num === 4 ? defaultImgs.식품.imgUrl : list.category_num === 5 ? defaultImgs.취미.imgUrl :
+                      defaultImgs.반려동물.imgUrl} alt="물품이미지"/></span>
                       <p className="chatDetailNick">{list.nickname}</p>
                       <p className="chatTime">{new Date(list.chat_time).toLocaleDateString("ko-KR", options)}</p>
-                      <div>{list.chat_content.length > 10 ? list.chat_content.substring(0,10)+"...": list.chat_content}</div>
-                      {list.countUnreadChat > 0 && <p className="chatAlert"/>}
+                      <div>{list.msgType == "IMG"? "사진" : list.chat_content.length > 10 ? list.chat_content.substring(0,10)+"...": list.chat_content}</div>                     
+                           {list.countUnreadChat > 0 && <p className="chatAlert"/>}
                     </p>
                 </div>
                </div>

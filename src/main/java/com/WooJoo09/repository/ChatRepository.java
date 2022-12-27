@@ -25,8 +25,8 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     List<Chat> findByPartnerNum(Partner partnerNum);
 
     @Query(
-            value = "select ANY_VALUE(m.nickname) nickname, ANY_VALUE(pi2.img_url) img_url, max(c.chat_time) as chat_time, \n" +
-                    "ANY_VALUE(c.chat_content) chat_content,\n" +
+            value = "select ANY_VALUE(m.nickname) nickname, ANY_VALUE(pi2.img_url) img_url, max(c.chat_time) as chat_time,\n" +
+                    "ANY_VALUE(c.chat_content) chat_content, ANY_VALUE(t.category) category_num, \n" +
                     "ANY_VALUE(c.is_read) is_read, ANY_VALUE(p.partner_num) partner_num,ANY_VALUE(p.accept_trade) accept_trade,\n" +
                     "ANY_VALUE(t.done_trade) done_trade,ANY_VALUE(t.product) product, ANY_VALUE(t.price) price, ANY_VALUE(t.host) host, \n" +
                     "ANY_VALUE(t.trade_num) trade_num, ANY_VALUE(p.part_mem_num) part_mem_num, ANY_VALUE(c.sender) sender,\n" +
@@ -47,9 +47,33 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
                     "and case p.part_mem_num when :memberNum then p.trade_num = t.trade_num\n" +
                     "else (p.trade_num = t.trade_num and t.host = :memberNum) end\n" +
                     "and pi2.is_represent = 'REPRESENT'\n" +
-                    "and accept_trade != 'DELETE' " +
-                    "and done_trade != 'DELETE' " +
-                    "group by p.partner_num, pi2.img_url\n" +
+                    "and accept_trade != 'DELETE' \n" +
+                    "and done_trade != 'DELETE'\n" +
+                    "group by p.partner_num\n" +
+                    "union \n" +
+                    "select ANY_VALUE(m.nickname) nickname, null img_url, max(c.chat_time) as chat_time,\n" +
+                    "ANY_VALUE(c.chat_content) chat_content, ANY_VALUE(t.category) category_num, \n" +
+                    "ANY_VALUE(c.is_read) is_read, ANY_VALUE(p.partner_num) partner_num,ANY_VALUE(p.accept_trade) accept_trade,\n" +
+                    "ANY_VALUE(t.done_trade) done_trade,ANY_VALUE(t.product) product, ANY_VALUE(t.price) price, ANY_VALUE(t.host) host, \n" +
+                    "ANY_VALUE(t.trade_num) trade_num, ANY_VALUE(p.part_mem_num) part_mem_num, ANY_VALUE(c.sender) sender,\n" +
+                    "(select count(case when is_read = 'UNREAD' then 1 end) from chat\n" +
+                    "where (partner_num in (select partner_num from partner p, trade t \n" +
+                    "where (p.trade_num = t.trade_num and host = :memberNum) or part_mem_num = :memberNum)) \n" +
+                    "and sender != :memberNum and partner_num = p.partner_num) as countUnreadChat\n" +
+                    "from\n" +
+                    "(select * from chat\n" +
+                    "where(partner_num, chat_time) in (select partner_num, max(chat_time) as chat_time\n" +
+                    "from chat group by partner_num)\n" +
+                    "order by chat_time desc) c,\n" +
+                    "partner p, member m, trade t \n" +
+                    "where p.partner_num = c.partner_num  \n" +
+                    "and case p.part_mem_num when :memberNum then m.member_num = t.host \n" +
+                    "else p.part_mem_num = m.member_num end\n" +
+                    "and case p.part_mem_num when :memberNum then p.trade_num = t.trade_num\n" +
+                    "else (p.trade_num = t.trade_num and t.host = :memberNum) end\n" +
+                    "and accept_trade != 'DELETE' \n" +
+                    "and done_trade != 'DELETE' and t.trade_num not in (select trade_num from product_img)\n" +
+                    "group by p.partner_num\n" +
                     "order by chat_time desc",
             nativeQuery = true
     )

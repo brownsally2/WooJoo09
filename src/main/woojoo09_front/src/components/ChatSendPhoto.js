@@ -84,7 +84,7 @@ const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend, sendImgbut
           {chatImgErr && <p className='imgErr'>{chatImgErr}</p>}
           {chatImgUrl && (
             <div>
-              <p>이미지 미리보기</p>
+              <p className="chatSendImgPre">이미지 미리보기</p>
               <div>
               <img src={chatImgUrl} alt="uploaded" />
               </div>

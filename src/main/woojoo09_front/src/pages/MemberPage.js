@@ -28,6 +28,10 @@ const MemberPage = () =>{
     setIsAdmin(value);
   };
 
+  useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [])
+
   useEffect(() => {
     const fetchData = async () => {
       try {
