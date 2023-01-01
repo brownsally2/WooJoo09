@@ -86,7 +86,7 @@ const MemberInfo = ({memberNum, memberInfo, isChange, changeIsChange}) =>{
         <MyTrade memberInfo={memberInfo}/>
         <div className="mobileFooter">
           <Link to ="/term">이용약관</Link>
-          <Link to ="/privacypolicy">개인정보처리방침</Link>
+          <span onClick={() => window.open('https://www.notion.so/8872912a168b42d48b065b8e2d05a017', '_blank')}>개인정보처리방침</span>
           <span onClick={() => window.open('https://sneaky-mascara-833.notion.site/bee0329b1932492a8faace3df9ab7a72', '_blank')}>서비스소개</span>
           <span onClick={() => window.open('https://open.kakao.com/o/gdOB3SUe', '_blank')}>카카오톡 문의하기</span>
         </div>
