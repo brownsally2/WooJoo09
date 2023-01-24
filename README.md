@@ -11,6 +11,8 @@
 
 - [프로젝트 소개](#프로젝트-소개)
 - [프로젝트 주요 기능](#프로젝트-주요-기능)
+- [ERD](#ERD)
+- [팀원](#팀원)
 - [개발 기간](#개발-기간)
 - [개발 환경](#개발-환경)
 - [업데이트 내역](#업데이트-내역)
@@ -21,7 +23,8 @@
 다른 지역간의 택배거래도 지원하여 많은 상품을 공동구매 할 수 있는   
 공동구매 중개 플랫폼입니다   
 
-![](../header.png)
+<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4198cd9c-c433-4f07-9f38-c66b030c964f/%EB%A9%94%EC%9D%B8%ED%99%94%EB%A9%B4.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230124%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230124T124607Z&X-Amz-Expires=86400&X-Amz-Signature=2a1370458bfe0fded742a56aef34dbd610836446bc0f60c960d0ab4733889bb9&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22%25EB%25A9%2594%25EC%259D%25B8%25ED%2599%2594%25EB%25A9%25B4.png%22&x-id=GetObject" width="800"/>
+
 
 ### :stars: 프로젝트 주요 기능
 - 사이트 자체 회원가입시 문자 및 이메일 인증(Naver Cloud Platform Sens api, Java Mail api)
@@ -32,6 +35,10 @@
 - 공동구매 글 작성시 이미지 업로드(firebase) 및 지도 확인 가능(카카오 지도 api)
 - 실시간 채팅 및 채팅 읽음 여부 알림(WebSocket)
 - Admin 페이지에서 편리하게 각 공동구매와 회원을 관리
+
+### :stars: ERD
+<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/25b688b7-1084-4395-a9a2-4ce8015b19f2/woojoo0922.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230124%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230124T124025Z&X-Amz-Expires=86400&X-Amz-Signature=ea5b390af57f887079cbc7e5a8ee35d63d4bd1554264e77c191f7d53ce3fc9fe&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22woojoo0922.png%22&x-id=GetObject" width="600"/>
+
 
 ### :stars: 팀원
 - [:rabbit2:신은지](https://github.com/eunjishinrabbit)
