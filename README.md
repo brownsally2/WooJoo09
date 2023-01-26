@@ -26,7 +26,7 @@
 다른 지역간의 택배거래도 지원하여 많은 상품을 공동구매 할 수 있는   
 공동구매 중개 플랫폼입니다   
 
-<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4198cd9c-c433-4f07-9f38-c66b030c964f/%EB%A9%94%EC%9D%B8%ED%99%94%EB%A9%B4.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230124%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230124T124607Z&X-Amz-Expires=86400&X-Amz-Signature=2a1370458bfe0fded742a56aef34dbd610836446bc0f60c960d0ab4733889bb9&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22%25EB%25A9%2594%25EC%259D%25B8%25ED%2599%2594%25EB%25A9%25B4.png%22&x-id=GetObject" width="800"/>
+<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4198cd9c-c433-4f07-9f38-c66b030c964f/%EB%A9%94%EC%9D%B8%ED%99%94%EB%A9%B4.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230126%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230126T123834Z&X-Amz-Expires=86400&X-Amz-Signature=68611a0178f7e20a5368d04b29dd6fdfff7ede0498480bef84830f8856e1552c&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22%25EB%25A9%2594%25EC%259D%25B8%25ED%2599%2594%25EB%25A9%25B4.png%22&x-id=GetObject" width="800"/>
 
 
 ### :stars: 프로젝트 주요 기능
