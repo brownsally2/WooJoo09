@@ -41,7 +41,8 @@
 - Admin 페이지에서 편리하게 각 공동구매와 회원을 관리
 
 ### :stars: ERD
-<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/25b688b7-1084-4395-a9a2-4ce8015b19f2/woojoo0922.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230124%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230124T124025Z&X-Amz-Expires=86400&X-Amz-Signature=ea5b390af57f887079cbc7e5a8ee35d63d4bd1554264e77c191f7d53ce3fc9fe&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22woojoo0922.png%22&x-id=GetObject" width="600"/>
+![2023-02-06 (1)](https://user-images.githubusercontent.com/94952434/221483722-ce063d91-b367-4629-8544-45b455af9c9c.png)
+
 
 
 ### :stars: 팀원
