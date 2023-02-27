@@ -42,7 +42,7 @@
 - Admin 페이지에서 편리하게 각 공동구매와 회원을 관리
 
 ### :stars: ERD
-![2023-02-06 (1)](https://user-images.githubusercontent.com/94952434/221483722-ce063d91-b367-4629-8544-45b455af9c9c.png)
+![woojoo0922](https://user-images.githubusercontent.com/94952434/221485331-506594c7-0ab5-4ace-972f-449e0930e601.png)
 
 
 
